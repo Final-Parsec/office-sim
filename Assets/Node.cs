@@ -57,8 +57,6 @@ public class Node
         //Draw Node on screen for debugging purposes
         Debug = GameObject.Instantiate(Resources.Load("Node"), GameObject.Find("Pathfinding").transform) as GameObject;
         Debug.transform.position = Position;
-        Debug.GetComponent<Debug>().X = X;
-        Debug.GetComponent<Debug>().Y = Y;
     }
 
 	public void SetColor(Color color)

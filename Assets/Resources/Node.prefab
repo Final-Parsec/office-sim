@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 441050}
   - component: {fileID: 21205520}
   - component: {fileID: 12058908}
-  - component: {fileID: 11416712}
   m_Layer: 0
   m_Name: Node
   m_TagString: Untagged
@@ -191,17 +190,3 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &11416712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201deb89449fe6743a187f0b04ec68e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  X: 0
-  Y: 0

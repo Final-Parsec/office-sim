@@ -8,9 +8,9 @@ public class EnvironmentManager : MonoBehaviour
 {
     public Text HudClock;
 
-    private float minToSecond = .01f;
+    private float minToSecond = 1f;
     private int currentMin;
-    private const int MinInDay = 1440;
+    private const int MinInDay = 60 * 24;
     private float timeSinceLastMin;
     private int dayOfWeek = 0;
 
@@ -19,10 +19,17 @@ public class EnvironmentManager : MonoBehaviour
     {
         get { return instance; }
     }
+
+    private List<IActor> actors;
+    public List<IActor> Actors
+    {
+        get { return actors; }
+    }
     
     void Start()
     {
         instance = this;
+        actors = new List<IActor>();
     }
 
     void Update()
@@ -40,6 +47,11 @@ public class EnvironmentManager : MonoBehaviour
 
     private void MinutePassed()
     {
+        foreach (var actor in Actors)
+        {
+            actor.Act(currentMin);
+        }
+
         ++currentMin;
         if (currentMin >= MinInDay)
         {

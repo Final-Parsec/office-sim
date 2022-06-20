@@ -181,7 +181,7 @@ public class Pathfinding : MonoBehaviour
 
 		if (node == null)
         {
-			UnityEngine.Debug.Log("Node was null for " + worldPosition);
+			Debug.Log("Node was null for " + worldPosition);
 			return null;
         }
 
@@ -302,7 +302,7 @@ public class Pathfinding : MonoBehaviour
 			var mousePosition = Input.mousePosition;
 			var desiredPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10.0f));
 			//Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			UnityEngine.Debug.Log(desiredPosition);
+			Debug.Log(desiredPosition);
 			Point gridPos = WorldToGrid(desiredPosition);			
 
 			if (gridPos != null)

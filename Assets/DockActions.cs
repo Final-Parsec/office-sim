@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DockActions : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class DockActions : MonoBehaviour
 
     public void OnHireClick()
     {
+        var employee = new Employee();
+        EnvironmentManager.Instance.Actors.Add(employee);
         var newHire = Instantiate(employeeListItemPrefab, employeeListViewContent.transform);
+        newHire.GetComponentInChildren<Text>().text = employee.Name;
     }
 }
