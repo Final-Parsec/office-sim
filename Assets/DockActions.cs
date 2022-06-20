@@ -22,9 +22,8 @@ public class DockActions : MonoBehaviour
 
     public void OnHireClick()
     {
-        var employee = new Employee();
+        var guiListItem = Instantiate(employeeListItemPrefab, employeeListViewContent.transform);
+        var employee = new Employee(guiListItem);
         EnvironmentManager.Instance.Actors.Add(employee);
-        var newHire = Instantiate(employeeListItemPrefab, employeeListViewContent.transform);
-        newHire.GetComponentInChildren<Text>().text = employee.Name;
     }
 }

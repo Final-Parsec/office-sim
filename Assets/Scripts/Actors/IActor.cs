@@ -1,4 +1,8 @@
+using System;
+
 public interface IActor
 {
-    void Act(int currentTurn);
+    void Act(DateTime currentTime);
+
+    bool Active();
 }

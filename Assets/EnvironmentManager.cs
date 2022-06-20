@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,10 @@ public class EnvironmentManager : MonoBehaviour
 {
     public Text HudClock;
 
-    private float minToSecond = 1f;
-    private int currentMin;
-    private const int MinInDay = 60 * 24;
+    private const float minToSecond = 1f;
+
     private float timeSinceLastMin;
-    private int dayOfWeek = 0;
+    private DateTime currentTime;
 
     private static EnvironmentManager instance;
     public static EnvironmentManager Instance
@@ -30,11 +30,13 @@ public class EnvironmentManager : MonoBehaviour
     {
         instance = this;
         actors = new List<IActor>();
+        currentTime = new DateTime(1999, 2, 19);
     }
 
     void Update()
     {
-        if (timeSinceLastMin >= minToSecond)
+        if (Actors.All(a => !a.Active()) ||
+            timeSinceLastMin >= minToSecond)
         {
             timeSinceLastMin = 0f;
             MinutePassed();
@@ -49,22 +51,10 @@ public class EnvironmentManager : MonoBehaviour
     {
         foreach (var actor in Actors)
         {
-            actor.Act(currentMin);
+            actor.Act(currentTime);
         }
 
-        ++currentMin;
-        if (currentMin >= MinInDay)
-        {
-            currentMin = 0;
-            dayOfWeek++;
-            if (dayOfWeek > 6)
-            {
-                dayOfWeek = 0;
-            }
-        }
-
-        int min = currentMin % 60;
-        int hrs = currentMin / 60;
-        HudClock.text = $"{Enum.GetName(typeof(DayOfWeek), dayOfWeek)} {hrs:D2}:{min:D2}";
+        currentTime = currentTime.AddMinutes(1);
+        HudClock.text = $"{currentTime:yyyy-MM-dd HH:mm}";
     }
 }
