@@ -27,7 +27,7 @@ public class Employee : IActor
     public Employee(GameObject guiListItem)
     {
         Id = Guid.NewGuid();
-        Name = Id.ToString();
+        Name = NameGenerator.Generate();
         this.guiListItem = guiListItem;
         guiListItem.transform.Find("Name").GetComponent<Text>().text = Name;
         SetStatus(EmployeeStatus.OffWork);
