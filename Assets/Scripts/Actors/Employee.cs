@@ -4,8 +4,12 @@ using UnityEngine.UI;
 
 public class Employee : IActor
 {
+    private const int WORK_START_TIME = 8;
+    private const int WORK_QUIT_TIME = 17;
+
     private GameObject guiListItem;
     private GameObject avatar;
+    private GameObject workInProgressWidget;
 
     public Guid Id
     {
@@ -51,10 +55,15 @@ public class Employee : IActor
         switch (Status)
         {
             case EmployeeStatus.WorkingPlanning:
-                WorkPlanningActivity(currentTime);
+                WorkingActivity(currentTime);
+                WorkPlanningActivity();
                 break;
             case EmployeeStatus.OffWork:
                 OffWorkActivity(currentTime);
+                break;
+            case EmployeeStatus.WorkingBuilding:
+                WorkingActivity(currentTime);
+                WorkBuildingActivity();
                 break;
             default:
                 throw new NotImplementedException("Employee status invalid.");
@@ -63,7 +72,7 @@ public class Employee : IActor
 
     public bool Active()
     {
-        return Status == EmployeeStatus.AtWork;
+        return Status == EmployeeStatus.WorkingPlanning;
     }
 
     private void OffWorkActivity(DateTime currentTime)
@@ -77,28 +86,53 @@ public class Employee : IActor
         {
             // It's a weekday.
             // Go to work at 8 AM.
-            if (currentTime.Hour >= 8 && currentTime.Hour < 17)
+            if (currentTime.Hour >= WORK_START_TIME && currentTime.Hour < WORK_QUIT_TIME)
             {
-                SetStatus(EmployeeStatus.AtWork);
+                SetStatus(EmployeeStatus.WorkingPlanning);
             }
         }
     }
 
-    private void WorkPlanningActivity(DateTime currentTime)
+    private void WorkingActivity(DateTime currentTime)
     {
-        // 5 PM is quittin' time.
-        if (currentTime.Hour >= 17)
+        if (currentTime.Hour >= WORK_QUIT_TIME)
         {
             SetStatus(EmployeeStatus.OffWork);
             return;
         }
+    }
 
-        
+    private void WorkPlanningActivity()
+    {
+        workInProgressWidget = new GameObject($"Widget WIP");
+        workInProgressWidget.transform.SetParent(avatar.transform);
+        SetStatus(EmployeeStatus.WorkingBuilding);
+    }
+
+    private void WorkBuildingActivity()
+    {
+
     }
 
     private void SetStatus(EmployeeStatus status)
     {
+        var activeAvatar = status == EmployeeStatus.WorkingPlanning;
+        avatar.SetActive(activeAvatar);
+
         this.Status = status;
+        var statusText = status.ToString();
+        if (status == EmployeeStatus.WorkingPlanning)
+        {
+            statusText = "Working - Planning";
+        } else if (status == EmployeeStatus.OffWork)
+        {
+            statusText = "Off Work";
+        }
+        else if (status == EmployeeStatus.WorkingBuilding)
+        {
+            statusText = "Working - Building";
+        }
+        
         guiListItem.transform.Find("Status").GetComponent<Text>().text = Status.ToString();
     }
 }
