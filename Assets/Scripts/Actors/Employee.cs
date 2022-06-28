@@ -50,8 +50,8 @@ public class Employee : IActor
     {
         switch (Status)
         {
-            case EmployeeStatus.AtWork:
-                AtWorkActivity(currentTime);
+            case EmployeeStatus.WorkingPlanning:
+                WorkPlanningActivity(currentTime);
                 break;
             case EmployeeStatus.OffWork:
                 OffWorkActivity(currentTime);
@@ -84,13 +84,16 @@ public class Employee : IActor
         }
     }
 
-    private void AtWorkActivity(DateTime currentTime)
+    private void WorkPlanningActivity(DateTime currentTime)
     {
         // 5 PM is quittin' time.
         if (currentTime.Hour >= 17)
         {
             SetStatus(EmployeeStatus.OffWork);
+            return;
         }
+
+        
     }
 
     private void SetStatus(EmployeeStatus status)
