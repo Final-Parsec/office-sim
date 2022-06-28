@@ -32,15 +32,15 @@ public class Employee : IActor
     public Employee(GameObject guiListItem)
     {
         var avatarColor = UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        Name = NameGenerator.Generate();
+        avatar = new GameObject(Name);
 
         Id = Guid.NewGuid();
-        Name = NameGenerator.Generate();
         this.guiListItem = guiListItem;
         guiListItem.transform.Find("Name").GetComponent<Text>().text = Name;
         guiListItem.transform.Find("AvatarColor").GetComponent<Image>().color = avatarColor;
         SetStatus(EmployeeStatus.OffWork);
 
-        avatar = new GameObject(Name);
         var spawnLocation = GameObject.Find("EmployeeSpawn").transform.position;
         avatar.transform.position = new Vector2(spawnLocation.x, spawnLocation.y);
         avatar.transform.localScale = new Vector3(.2f, .2f, 1f);
@@ -72,7 +72,8 @@ public class Employee : IActor
 
     public bool Active()
     {
-        return Status == EmployeeStatus.WorkingPlanning;
+        return Status == EmployeeStatus.WorkingPlanning ||
+        Status == EmployeeStatus.WorkingBuilding;
     }
 
     private void OffWorkActivity(DateTime currentTime)
@@ -104,20 +105,40 @@ public class Employee : IActor
 
     private void WorkPlanningActivity()
     {
-        workInProgressWidget = new GameObject($"Widget WIP");
-        workInProgressWidget.transform.SetParent(avatar.transform);
-        SetStatus(EmployeeStatus.WorkingBuilding);
+        if (workInProgressWidget == null)
+        {
+            workInProgressWidget = new GameObject($"Widget WIP");
+            workInProgressWidget.transform.SetParent(avatar.transform);
+            workInProgressWidget.transform.position = (Vector2)avatar.transform.position + (Vector2)UnityEngine.Random.insideUnitCircle * 5;
+            workInProgressWidget.AddComponent<BoxCollider2D>();
+            var collider = workInProgressWidget.GetComponent<BoxCollider2D>();
+            var validSpot = collider.OverlapCollider(new ContactFilter2D(), new Collider2D[1]) == 0;
+            if (validSpot)
+            {
+                workInProgressWidget.AddComponent<SpriteRenderer>();
+                var wipWidgetSpriteRenderer = workInProgressWidget.GetComponent<SpriteRenderer>();
+                wipWidgetSpriteRenderer.sprite = Resources.Load<Sprite>("Circle");
+            }
+            else
+            {
+                UnityEngine.Object.Destroy(workInProgressWidget);
+                workInProgressWidget = null;
+            }
+        }
+        else
+        {
+            SetStatus(EmployeeStatus.WorkingBuilding);
+        }
     }
 
     private void WorkBuildingActivity()
     {
-
+        
     }
 
     private void SetStatus(EmployeeStatus status)
     {
-        var activeAvatar = status == EmployeeStatus.WorkingPlanning;
-        avatar.SetActive(activeAvatar);
+        avatar.SetActive(Active());
 
         this.Status = status;
         var statusText = status.ToString();
