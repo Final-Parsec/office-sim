@@ -244,6 +244,6 @@ public class Employee : IActor
             statusText = "Working - Building";
         }
         
-        guiListItem.transform.Find("Status").GetComponent<Text>().text = Status.ToString();
+        guiListItem.transform.Find("Status").GetComponent<Text>().text = statusText;
     }
 }
