@@ -48,6 +48,10 @@ public class Employee : IActor
         var avatarSpriteRenderer = avatar.GetComponent<SpriteRenderer>();
         avatarSpriteRenderer.sprite = Resources.Load<Sprite>("Circle");
         avatarSpriteRenderer.color = avatarColor;
+        avatar.AddComponent<CircleCollider2D>();
+        var collider = avatar.GetComponent<CircleCollider2D>();
+        collider.radius = 1f;
+        avatar.AddComponent<Rigidbody2D>();
     }
 
     public void Act(DateTime currentTime)
@@ -108,22 +112,15 @@ public class Employee : IActor
         if (workInProgressWidget == null)
         {
             workInProgressWidget = new GameObject($"Widget WIP");
-            workInProgressWidget.transform.SetParent(avatar.transform);
             workInProgressWidget.transform.position = (Vector2)avatar.transform.position + (Vector2)UnityEngine.Random.insideUnitCircle * 5;
-            workInProgressWidget.AddComponent<BoxCollider2D>();
-            var collider = workInProgressWidget.GetComponent<BoxCollider2D>();
-            var validSpot = collider.OverlapCollider(new ContactFilter2D(), new Collider2D[1]) == 0;
-            if (validSpot)
-            {
-                workInProgressWidget.AddComponent<SpriteRenderer>();
-                var wipWidgetSpriteRenderer = workInProgressWidget.GetComponent<SpriteRenderer>();
-                wipWidgetSpriteRenderer.sprite = Resources.Load<Sprite>("Circle");
-            }
-            else
-            {
-                UnityEngine.Object.Destroy(workInProgressWidget);
-                workInProgressWidget = null;
-            }
+            workInProgressWidget.transform.localScale = new Vector3(.2f, .2f, 1f);
+            workInProgressWidget.AddComponent<CircleCollider2D>();
+            var collider = workInProgressWidget.GetComponent<CircleCollider2D>();
+            collider.radius = 1f;
+            workInProgressWidget.AddComponent<Rigidbody2D>();
+            workInProgressWidget.AddComponent<SpriteRenderer>();
+            var wipWidgetSpriteRenderer = workInProgressWidget.GetComponent<SpriteRenderer>();
+            wipWidgetSpriteRenderer.sprite = Resources.Load<Sprite>("Circle");
         }
         else
         {
@@ -133,7 +130,11 @@ public class Employee : IActor
 
     private void WorkBuildingActivity()
     {
-        
+        // am I close enough to build?
+        var myPosition = (Vector2)avatar.transform.position;
+        var widgetPosition = (Vector2)workInProgressWidget.transform.position;
+        var distanceToWidget = Vector2.Distance(myPosition, widgetPosition);
+        Debug.Log(distanceToWidget);
     }
 
     private void SetStatus(EmployeeStatus status)
