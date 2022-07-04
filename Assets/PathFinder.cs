@@ -49,6 +49,18 @@ public static class PathFinder
 	    current.cost = 0;
 	
 	    BreadCrumb finish = new BreadCrumb(end);
+
+        if (current == null)
+        {
+            Debug.Log("current is null");
+            return null;
+        }
+        else if (current.position == null)
+        {
+            Debug.Log("current.position is null");
+            return null;
+        }
+
 	    brWorld[current.position.X, current.position.Y] = current;
 	    openList.Add(current);
 	

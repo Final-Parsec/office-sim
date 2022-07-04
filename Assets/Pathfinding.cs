@@ -296,46 +296,46 @@ public class Pathfinding : MonoBehaviour
 	void Update()
 	{
 		//Pathfinding demo
-		if (Input.GetMouseButtonDown(0))
-		{
-			//Convert mouse click point to grid coordinates
-			var mousePosition = Input.mousePosition;
-			var desiredPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10.0f));
-			//Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			//Debug.Log(desiredPosition);
-			Point gridPos = WorldToGrid(desiredPosition);			
+		// if (Input.GetMouseButtonDown(0))
+		// {
+		// 	//Convert mouse click point to grid coordinates
+		// 	var mousePosition = Input.mousePosition;
+		// 	var desiredPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10.0f));
+		// 	//Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		// 	//Debug.Log(desiredPosition);
+		// 	Point gridPos = WorldToGrid(desiredPosition);			
 
-			if (gridPos != null)
-			{
-				Nodes[gridPos.X, gridPos.Y].SetColor(Color.green);
+		// 	if (gridPos != null)
+		// 	{
+		// 		Nodes[gridPos.X, gridPos.Y].SetColor(Color.green);
 
-				if (gridPos.X > 0 && gridPos.Y > 0 && gridPos.X < Width && gridPos.Y < Height)
-				{
+		// 		if (gridPos.X > 0 && gridPos.Y > 0 && gridPos.X < Width && gridPos.Y < Height)
+		// 		{
 
-					//Convert player point to grid coordinates
-					Point playerPos = WorldToGrid(EmployeeSpawn.transform.position);
-					Nodes[playerPos.X, playerPos.Y].SetColor(Color.blue);
+		// 			//Convert player point to grid coordinates
+		// 			Point playerPos = WorldToGrid(EmployeeSpawn.transform.position);
+		// 			Nodes[playerPos.X, playerPos.Y].SetColor(Color.blue);
 
-					//Find path from player to clicked position
-					BreadCrumb bc = PathFinder.FindPath(this, playerPos, gridPos);
+		// 			//Find path from player to clicked position
+		// 			BreadCrumb bc = PathFinder.FindPath(this, playerPos, gridPos);
 
-					int count = 0;
-					LineRenderer lr = EmployeeSpawn.GetComponent<LineRenderer>();
-					lr.SetVertexCount(100);  //Need a higher number than 2, or crashes out
-					lr.SetWidth(0.1f, 0.1f);
-					lr.SetColors(Color.yellow, Color.yellow);
+		// 			int count = 0;
+		// 			LineRenderer lr = EmployeeSpawn.GetComponent<LineRenderer>();
+		// 			lr.SetVertexCount(100);  //Need a higher number than 2, or crashes out
+		// 			lr.SetWidth(0.1f, 0.1f);
+		// 			lr.SetColors(Color.yellow, Color.yellow);
 
-					//Draw out our path
-					while (bc != null)
-					{
-						lr.SetPosition(count, Pathfinding.GridToWorld(bc.position));
-						bc = bc.next;
-						count += 1;
-					}
-					lr.SetVertexCount(count);
-				}
-			}
-		}
+		// 			//Draw out our path
+		// 			while (bc != null)
+		// 			{
+		// 				lr.SetPosition(count, Pathfinding.GridToWorld(bc.position));
+		// 				bc = bc.next;
+		// 				count += 1;
+		// 			}
+		// 			lr.SetVertexCount(count);
+		// 		}
+		// 	}
+		// }
 	}
 
 }

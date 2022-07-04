@@ -54,6 +54,8 @@
     },
     "omnisharp.useModernNet": false,
     "cSpell.words": [
+        "Behaviour",
+        "Pathfinding",
         "Rigidbody"
     ]
 }

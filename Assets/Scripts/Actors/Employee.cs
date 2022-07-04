@@ -48,10 +48,10 @@ public class Employee : IActor
         var avatarSpriteRenderer = avatar.GetComponent<SpriteRenderer>();
         avatarSpriteRenderer.sprite = Resources.Load<Sprite>("Circle");
         avatarSpriteRenderer.color = avatarColor;
-        avatar.AddComponent<CircleCollider2D>();
-        var collider = avatar.GetComponent<CircleCollider2D>();
+        var collider = avatar.AddComponent<CircleCollider2D>();
         collider.radius = 1f;
-        avatar.AddComponent<Rigidbody2D>();
+        var rigidBody = avatar.AddComponent<Rigidbody2D>();
+        rigidBody.bodyType = RigidbodyType2D.Kinematic;
     }
 
     public void Act(DateTime currentTime)
@@ -93,6 +93,8 @@ public class Employee : IActor
             // Go to work at 8 AM.
             if (currentTime.Hour >= WORK_START_TIME && currentTime.Hour < WORK_QUIT_TIME)
             {
+                var spawnLocation = GameObject.Find("EmployeeSpawn").transform.position;
+                avatar.transform.position = new Vector2(spawnLocation.x, spawnLocation.y);
                 SetStatus(EmployeeStatus.WorkingPlanning);
             }
         }
@@ -130,18 +132,105 @@ public class Employee : IActor
 
     private void WorkBuildingActivity()
     {
-        // am I close enough to build?
         var myPosition = (Vector2)avatar.transform.position;
         var widgetPosition = (Vector2)workInProgressWidget.transform.position;
         var distanceToWidget = Vector2.Distance(myPosition, widgetPosition);
-        Debug.Log(distanceToWidget);
+        if (distanceToWidget < .75f)
+        {
+            MoveToward moveToward;
+            if (avatar.TryGetComponent<MoveToward>(out moveToward))
+            {
+                GameObject.Destroy(moveToward);
+            }
+
+            var wipWidgetSpriteRenderer = workInProgressWidget.GetComponent<SpriteRenderer>();
+            var currentColor = wipWidgetSpriteRenderer.color;
+            if (currentColor.r <= .01f && currentColor.g <= .01f && currentColor.b <= .01f)
+            {
+                workInProgressWidget = null;
+                SetStatus(EmployeeStatus.WorkingPlanning);
+            }
+            else
+            {
+                currentColor.r -= .01f;
+                currentColor.g -= .01f;
+                currentColor.b -= .01f;
+                wipWidgetSpriteRenderer.color = currentColor;
+            }
+        }
+        else
+        {
+            var pathfinding = GameObject.Find("Pathfinding").GetComponent<Pathfinding>();
+            var desiredPosition = workInProgressWidget.transform.position;
+            var gridPosition = pathfinding.WorldToGrid(desiredPosition);
+            if (gridPosition != null)
+            {
+                pathfinding.Nodes[gridPosition.X, gridPosition.Y].SetColor(Color.blue);
+
+				if (gridPosition.X > 0 &&
+                    gridPosition.Y > 0 &&
+                    gridPosition.X < pathfinding.Width &&
+                    gridPosition.Y < pathfinding.Height)
+				{
+					//Convert player point to grid coordinates
+					var avatarPosition = pathfinding.WorldToGrid(avatar.transform.position);
+                    if (avatarPosition == null)
+                    {
+                        Debug.Log($"No point for avatar {Name}.");
+                    }
+                    else
+                    {
+                        var nodeForAvatar = pathfinding.Nodes[avatarPosition.X, avatarPosition.Y];
+                        if (nodeForAvatar == null)
+                        {
+                            Debug.Log($"No node for avatar {Name}.");
+                        }
+                        else
+                        {
+                            nodeForAvatar.SetColor(Color.blue);
+                            //Find path from player to clicked position
+                            BreadCrumb bc = PathFinder.FindPath(pathfinding, avatarPosition, gridPosition);
+
+                            MoveToward moveToward;
+                            if (!avatar.TryGetComponent<MoveToward>(out moveToward))
+                            {
+                                moveToward = avatar.AddComponent<MoveToward>();
+                            }
+
+                            moveToward.breadCrumb = bc;
+
+                            int count = 0;
+                            LineRenderer lr = GameObject.Find("EmployeeSpawn").GetComponent<LineRenderer>();
+                            lr.SetVertexCount(100);  //Need a higher number than 2, or crashes out
+                            lr.SetWidth(0.1f, 0.1f);
+                            lr.SetColors(Color.yellow, Color.yellow);
+
+                            //Draw out our path
+                            while (bc != null)
+                            {
+                                lr.SetPosition(count, Pathfinding.GridToWorld(bc.position));
+                                bc = bc.next;
+                                count += 1;
+                            }
+                            lr.SetVertexCount(count);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log($"Widget is not accessible for {Name}. Recreating...");
+                GameObject.Destroy(workInProgressWidget);
+                workInProgressWidget = null;
+                SetStatus(EmployeeStatus.WorkingPlanning);
+            }
+        }
     }
 
     private void SetStatus(EmployeeStatus status)
     {
-        avatar.SetActive(Active());
-
         this.Status = status;
+        avatar.SetActive(Active());
         var statusText = status.ToString();
         if (status == EmployeeStatus.WorkingPlanning)
         {
