@@ -1,5 +1,8 @@
+using System;
+
 public enum EmployeeStatus
 {
-    AtWork,
-    OffWork
+    OffWork,
+    WorkingPlanning,
+    WorkingBuilding,
 }
