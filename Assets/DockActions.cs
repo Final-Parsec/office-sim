@@ -26,4 +26,10 @@ public class DockActions : MonoBehaviour
         var employee = new Employee(guiListItem);
         EnvironmentManager.Instance.Actors.Add(employee);
     }
+
+    public void OnCustomerSpawnClick()
+    {
+        var customer = new Customer();
+        EnvironmentManager.Instance.Actors.Add(customer);
+    }
 }
