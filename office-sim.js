@@ -2,13 +2,13 @@ main();
 
 function main() {
   const canvas = document.querySelector("#glcanvas");
-  const gl = canvas.getContext("webgl");
+  const canvasContext = canvas.getContext("webgl");
 
-  if (gl == null) {
+  if (canvasContext == null) {
     alert("Unable to initialize WebGL.");
     return;
   }
 
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  canvasContext.clearColor(0.0, 0.0, 0.0, 1.0);
+  canvasContext.clear(canvasContext.COLOR_BUFFER_BIT);
 }
