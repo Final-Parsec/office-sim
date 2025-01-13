@@ -23,3 +23,10 @@ func _process(delta: float):
 
 func _on_button_pressed() -> void:
 	set_process(not is_processing())
+
+func _ready() -> void:
+	var timer = get_node("Timer")
+	timer.timeout.connect(_on_timer_timeout)
+	
+func _on_timer_timeout():
+	visible = not visible

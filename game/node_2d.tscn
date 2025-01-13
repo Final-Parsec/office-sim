@@ -11,4 +11,7 @@ text = "Toggle motion"
 
 [node name="Sprite2D" parent="." instance=ExtResource("1_q8k6v")]
 
+[node name="Timer" type="Timer" parent="Sprite2D"]
+autostart = true
+
 [connection signal="pressed" from="Button" to="Sprite2D" method="_on_button_pressed"]
