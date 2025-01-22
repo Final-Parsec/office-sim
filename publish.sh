@@ -1,34 +1,37 @@
-DATA_BASE64="data:application/octet-stream;base64,$(base64 -i fake_build_output/GARS_1_0.data.unityweb)"
-DATA_FRAMEWORK64="data:application/octet-stream;base64,$(base64 -i fake_build_output/GARS_1_0.framework.js.unityweb)"
-DATA_LOADER64="data:application/octet-stream;base64,$(base64 -i fake_build_output/GARS_1_0.loader.js)"
-DATA_WASM64="data:application/octet-stream;base64,$(base64 -i fake_build_output/GARS_1_0.wasm.unityweb)"
-cat <<EOF > payload.json
-{
-  "game": {
-    "name": "anon game",
-    "assets": [
-      {
-        "filename": "GARS_1_0.data.unityweb",
-        "data": "$DATA_BASE64"
-      },
-      {
-        "filename": "GARS_1_0.framework.js.unityweb",
-        "data": "$DATA_FRAMEWORK64"
-      },
-      {
-        "filename": "GARS_1_0.loader.js",
-        "data": "$DATA_LOADER64"
-      },
-      {
-        "filename": "GARS_1_0.wasm.unityweb",
-        "data": "$DATA_WASM64"
-      }
-    ]
-  }
-}
+#!/bin/bash
+
+OUTPUT_DIR="fake_build_output"
+PAYLOAD_FILE="payload.json"
+
+# Start the JSON payload
+echo '{ "game": { "name": "anon game", "assets": [' > $PAYLOAD_FILE
+
+# Iterate over all files in the directory
+FIRST=true
+for FILE in "$OUTPUT_DIR"/*; do
+  BASE64_DATA="data:application/octet-stream;base64,$(base64 -i "$FILE")"
+  FILENAME=$(basename "$FILE")
+  
+  # Add a comma before each entry except the first
+  if [ "$FIRST" = true ]; then
+    FIRST=false
+  else
+    echo ',' >> $PAYLOAD_FILE
+  fi
+
+  # Append the asset object to the JSON payload
+  cat <<EOF >> $PAYLOAD_FILE
+    {
+      "filename": "$FILENAME",
+      "data": "$BASE64_DATA"
+    }
 EOF
+done
 
+# Close the JSON payload
+echo '  ] } }' >> $PAYLOAD_FILE
 
+# POST to Final Parsec
 curl -X POST https://www.finalparsec.com/api/games \
 -H "Content-Type: application/json" \
 -d @payload.json
