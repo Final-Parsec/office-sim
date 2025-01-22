@@ -1,0 +1,14 @@
+name: 'Publish Office Sim'
+on:
+  pull_request:
+    branches: [ main ]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
