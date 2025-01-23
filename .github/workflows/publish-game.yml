@@ -17,6 +17,7 @@ jobs:
         with:
           version: 4.3.0-stable
           use-dotnet: false
+          include-templates: true
       - name: 🔬 Verify Setup
         run: |
           godot --version
