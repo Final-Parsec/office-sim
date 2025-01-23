@@ -12,11 +12,11 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - name: Publish game
-        id: fp-publish
-        uses: Final-Parsec/publish-game@v1
-        with:
-          game-name: 'Office Sim'
-          asset-directory: 'fake_build_output'
-      - name: Show output from the publish
-        run: echo "The time was ${{ steps.fp-publish.outputs.time }}"
+      # - name: Publish game
+      #   id: fp-publish
+      #   uses: Final-Parsec/publish-game@v1
+      #   with:
+      #     game-name: 'Office Sim'
+      #     asset-directory: 'fake_build_output'
+      # - name: Show output from the publish
+      #   run: echo "The time was ${{ steps.fp-publish.outputs.time }}"
