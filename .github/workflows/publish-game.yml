@@ -12,6 +12,22 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - uses: chickensoft-games/setup-godot@v1
+        name: 🤖 Setup Godot
+        with:
+          version: 4.3
+          use-dotnet: false
+      - name: 🔬 Verify Setup
+        run: |
+          godot --version
+      - name: Web Build
+        run: |
+          mkdir -v -p build/web
+          godot -v --path game --export-release "Web" ./build/web/index.html
+      - uses: actions/upload-artifact@v2
+        with:
+          name: web
+          path: build/web
       # - name: Publish game
       #   id: fp-publish
       #   uses: Final-Parsec/publish-game@v1
