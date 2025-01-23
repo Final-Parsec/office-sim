@@ -19,11 +19,20 @@ jobs:
         run: |
           mkdir -v -p ${{ github.workspace }}/build/web
           godot -v --headless --path ${{ github.workspace }}/game --export-release "Web" ${{ github.workspace }}/build/web/index.html
+          ls -al ${{ github.workspace }}/build/web
+      - name: Check if build/web exists
+        run: |
+          echo "Checking if build/web exists..."
+          ls -al ${{ github.workspace }}/build/web || echo "build/web does not exist"
       - name: Cache build directory
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/build/web
           key: web-build-${{ github.sha }}
+      - name: Check if build/web exists again
+        run: |
+          echo "Checking if build/web exists..."
+          ls -al ${{ github.workspace }}/build/web || echo "build/web does not exist"
       - name: Publish game
         id: fp-publish
         uses: Final-Parsec/publish-game@v1
