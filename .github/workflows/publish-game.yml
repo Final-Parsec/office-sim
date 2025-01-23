@@ -12,8 +12,6 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - name: Run bash script
-        run: bash publish.sh
       - name: Publish game
         id: fp-publish
         uses: Final-Parsec/publish-game@v1
