@@ -66,3 +66,4 @@ crashlytics-build.properties
 /game/.godot/
 /game/android/
 /game/export/
+payload.json
