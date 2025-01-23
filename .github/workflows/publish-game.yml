@@ -9,22 +9,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
       - uses: chickensoft-games/setup-godot@v1
         name: 🤖 Setup Godot
         with:
           version: 4.3.0-stable
           use-dotnet: false
           include-templates: true
-      - name: 🔬 Verify Setup
-        run: |
-          godot --version
       - name: Web Build
         run: |
           mkdir -v -p ${{ github.workspace }}/build/web
-          ls ${{ github.workspace }}/build
           godot -v --headless --path game --export-release "Web" ${{ github.workspace }}/build/web/index.html
       - uses: actions/upload-artifact@v4
         with:
