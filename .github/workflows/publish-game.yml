@@ -17,13 +17,18 @@ jobs:
           include-templates: true
       - name: Web Build
         run: |
-          mkdir -v -p ${{ github.workspace }}/build/web
-          godot -v --headless --path ${{ github.workspace }}/game --export-release "Web" ${{ github.workspace }}/build/web/index.html
+          mkdir -v -p build/web
+          godot -v --headless --path game --export-release "Web" build/web/index.html
+      - name: Cache build directory
+        uses: actions/cache@v3
+        with:
+          path: build/web
+          key: web-build-${{ github.sha }}
       - name: Publish game
         id: fp-publish
         uses: Final-Parsec/publish-game@v1
         with:
           game-name: 'Office Sim'
-          asset-directory: ${{ github.workspace }}/build/web
+          asset-directory: build/web
       - name: Show output from the publish
         run: echo "The time was ${{ steps.fp-publish.outputs.time }}"
