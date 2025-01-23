@@ -7,23 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Checkout code
+      - name: 🛒 Checkout code
         uses: actions/checkout@v4
-      - uses: chickensoft-games/setup-godot@v1
-        name: 🤖 Setup Godot
+      - name: 🤖 Setup Godot
+        uses: chickensoft-games/setup-godot@v1
         with:
           version: 4.3.0-stable
           use-dotnet: false
           include-templates: true
-      - name: Web Build
+      - name: 📦 Web Build
         run: |
           mkdir -v -p ${{ github.workspace }}/build/web
           godot -v --headless --path ${{ github.workspace }}/game --export-release "Web" ${{ github.workspace }}/build/web/index.html
-      - name: Publish game
+      - name: 🚀 Publish game
+        uses: Final-Parsec/publish-game@v1  
         id: fp-publish
-        uses: Final-Parsec/publish-game@v1
         with:
           game-name: 'Office Sim'
           asset-directory: build/web
-      - name: Show output from the publish
+      - name: 🔎 Show output from publish
         run: echo "The time was ${{ steps.fp-publish.outputs.time }}"
