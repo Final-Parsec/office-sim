@@ -23,7 +23,7 @@ jobs:
       - name: Web Build
         run: |
           mkdir -v -p build/web
-          godot -v --path game --export-release "Web" ./build/web/index.html
+          godot -v --headless --path game --export-release "Web" ./build/web/index.html
       - uses: actions/upload-artifact@v4
         with:
           name: web
