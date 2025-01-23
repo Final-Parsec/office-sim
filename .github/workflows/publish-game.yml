@@ -19,15 +19,11 @@ jobs:
         run: |
           mkdir -v -p ${{ github.workspace }}/build/web
           godot -v --headless --path ${{ github.workspace }}/game --export-release "Web" ${{ github.workspace }}/build/web/index.html
-      - uses: actions/upload-artifact@v4
+      - name: Publish game
+        id: fp-publish
+        uses: Final-Parsec/publish-game@v1
         with:
-          name: web
-          path: build/web
-      # - name: Publish game
-      #   id: fp-publish
-      #   uses: Final-Parsec/publish-game@v1
-      #   with:
-      #     game-name: 'Office Sim'
-      #     asset-directory: 'fake_build_output'
-      # - name: Show output from the publish
-      #   run: echo "The time was ${{ steps.fp-publish.outputs.time }}"
+          game-name: 'Office Sim'
+          asset-directory: ${{ github.workspace }}/build/web
+      - name: Show output from the publish
+        run: echo "The time was ${{ steps.fp-publish.outputs.time }}"
