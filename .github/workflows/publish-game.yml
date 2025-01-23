@@ -24,7 +24,7 @@ jobs:
         run: |
           mkdir -v -p build/web
           godot -v --path game --export-release "Web" ./build/web/index.html
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: web
           path: build/web
