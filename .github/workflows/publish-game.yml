@@ -17,5 +17,6 @@ jobs:
         uses: Final-Parsec/publish-game@v1
         with:
           game-name: 'Office Sim'
+          asset-directory: '/fake_build_output'
       - name: Show output from the publish
         run: echo "The time was ${{ steps.fp-publish.outputs.time }}"
