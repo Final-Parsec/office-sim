@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=8 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
-[ext_resource type="PackedScene" uid="uid://c4xywe4atv1fa" path="res://mob.tscn" id="2_w4sh6"]
 [ext_resource type="PackedScene" uid="uid://bw6td1ka2uv5c" path="res://hud.tscn" id="4_oo6vi"]
 [ext_resource type="AudioStream" uid="uid://bmow02dut2ayu" path="res://art/gameover.wav" id="5_ppkhf"]
 
@@ -23,7 +22,6 @@ loop = true
 
 [node name="Main" type="Node"]
 script = ExtResource("1_jxwdf")
-mob_scene = ExtResource("2_w4sh6")
 
 [node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -33,7 +31,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.294118, 0.415686, 0.811765, 1)
 
-[node name="Player" parent="." instance=ExtResource("1_7mjmw")]
+[node name="Player" parent="." node_paths=PackedStringArray("widget_cotainer") instance=ExtResource("1_7mjmw")]
+widget_cotainer = NodePath("../WidgetContainer")
 
 [node name="ScoreTimer" type="Timer" parent="."]
 
@@ -56,6 +55,8 @@ stream = SubResource("AudioStreamOggVorbis_5efd5")
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ppkhf")
+
+[node name="WidgetContainer" type="Node2D" parent="."]
 
 [connection signal="hit" from="Player" to="." method="game_over"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]

@@ -3,6 +3,8 @@ extends Area2D
 signal hit
 
 @export var speed = 400
+@export var mob_scene: PackedScene
+@export var widget_cotainer: Node2D
 var screen_size
 
 func _ready() -> void:
@@ -47,3 +49,17 @@ func start(pos):
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
+	
+func _input(event):
+	if event.is_action_released("perform_action"):
+		place_widget(event.position);
+	
+func place_widget(spawn_location: Vector2):
+	var mob = mob_scene.instantiate()
+	var direction = Transform2D.IDENTITY.get_rotation() + PI / 2
+	mob.position = spawn_location
+	direction += randf_range(-PI / 4, PI / 4)
+	mob.rotation = direction
+	var velocity = Vector2(randf_range(1.0, 2.0), 0.0)
+	mob.linear_velocity = velocity.rotated(direction)
+	widget_cotainer.add_child(mob)
