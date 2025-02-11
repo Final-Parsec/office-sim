@@ -1,4 +1,4 @@
-extends Area2D
+extends CharacterBody2D
 
 signal hit
 
@@ -12,38 +12,43 @@ func _ready() -> void:
 	hide()
 
 func _process(delta: float) -> void:
-	var velocity = Vector2.ZERO
-	if Input.is_action_pressed("move_right"):
-		velocity.x += 1
-	if Input.is_action_pressed("move_left"):
-		velocity.x -= 1
-	if Input.is_action_pressed("move_up"):
-		velocity.y -= 1
-	if Input.is_action_pressed("move_down"):
-		velocity.y += 1
+	#var velocity = Vector2.ZERO
+	#if Input.is_action_pressed("move_right"):
+		#velocity.x += 1
+	#if Input.is_action_pressed("move_left"):
+		#velocity.x -= 1
+	#if Input.is_action_pressed("move_up"):
+		#velocity.y -= 1
+	#if Input.is_action_pressed("move_down"):
+		#velocity.y += 1
 		
+	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	velocity = input_dir * speed
+	
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
+		
 		$AnimatedSprite2D.play()
 	else:
 		$AnimatedSprite2D.stop()
 		
-	position += velocity * delta
+	#position += velocity * delta
+	move_and_collide(velocity * delta)
 	position = position.clamp(Vector2.ZERO, screen_size)
 	
 	if velocity.x != 0:
 		$AnimatedSprite2D.animation = "walk"
-		$AnimatedSprite2D.flip_v = false
+		#$AnimatedSprite2D.flip_v = false
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 	elif velocity.y != 0:
 		$AnimatedSprite2D.animation = "up"
 		$AnimatedSprite2D.flip_h = false
-		$AnimatedSprite2D.flip_v = velocity.y > 0
+		#$AnimatedSprite2D.flip_v = velocity.y > 0
 
 func _on_body_entered(_body: Node2D) -> void:
-	hide()
+	#hide()
 	hit.emit()
-	$CollisionShape2D.set_deferred("disabled", true)
+	#$CollisionShape2D.set_deferred("disabled", true)
 	
 func start(pos):
 	position = pos
@@ -60,6 +65,6 @@ func place_widget(spawn_location: Vector2):
 	mob.position = spawn_location
 	direction += randf_range(-PI / 4, PI / 4)
 	mob.rotation = direction
-	var velocity = Vector2(randf_range(1.0, 2.0), 0.0)
-	mob.linear_velocity = velocity.rotated(direction)
+	#var velocity = Vector2(randf_range(1.0, 2.0), 0.0)
+	#mob.linear_velocity = velocity.rotated(direction)
 	widget_cotainer.add_child(mob)
