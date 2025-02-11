@@ -1,10 +1,8 @@
 extends CharacterBody2D
 
-signal hit
-
 @export var speed = 400
 @export var mob_scene: PackedScene
-@export var widget_cotainer: Node2D
+@export var widget_container: Node2D
 var screen_size
 
 func _ready() -> void:
@@ -12,43 +10,24 @@ func _ready() -> void:
 	hide()
 
 func _process(delta: float) -> void:
-	#var velocity = Vector2.ZERO
-	#if Input.is_action_pressed("move_right"):
-		#velocity.x += 1
-	#if Input.is_action_pressed("move_left"):
-		#velocity.x -= 1
-	#if Input.is_action_pressed("move_up"):
-		#velocity.y -= 1
-	#if Input.is_action_pressed("move_down"):
-		#velocity.y += 1
-		
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = input_dir * speed
 	
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
-		
 		$AnimatedSprite2D.play()
 	else:
 		$AnimatedSprite2D.stop()
-		
-	#position += velocity * delta
+
 	move_and_collide(velocity * delta)
 	position = position.clamp(Vector2.ZERO, screen_size)
 	
 	if velocity.x != 0:
 		$AnimatedSprite2D.animation = "walk"
-		#$AnimatedSprite2D.flip_v = false
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 	elif velocity.y != 0:
 		$AnimatedSprite2D.animation = "up"
 		$AnimatedSprite2D.flip_h = false
-		#$AnimatedSprite2D.flip_v = velocity.y > 0
-
-func _on_body_entered(_body: Node2D) -> void:
-	#hide()
-	hit.emit()
-	#$CollisionShape2D.set_deferred("disabled", true)
 	
 func start(pos):
 	position = pos
@@ -57,7 +36,21 @@ func start(pos):
 	
 func _input(event):
 	if event.is_action_released("perform_action"):
-		place_widget(event.position);
+		# Build Widget Action
+		var clicked_a_widget = false
+		
+		# Determine if you are clicking existing widget.
+		for widget in widget_container.get_children():
+			print("Evaluating widget: ", widget.position)
+			var collision_shape = widget.get_node("CollisionShape2D") as CollisionShape2D
+			var circle = collision_shape.shape as CircleShape2D
+			var radius = circle.radius
+			if event.position.distance_to(collision_shape.global_position) <= radius * 2:
+				clicked_a_widget = true
+		
+		# If not, place a new widget.
+		if !clicked_a_widget:
+			place_widget(event.position)
 	
 func place_widget(spawn_location: Vector2):
 	var mob = mob_scene.instantiate()
@@ -65,6 +58,4 @@ func place_widget(spawn_location: Vector2):
 	mob.position = spawn_location
 	direction += randf_range(-PI / 4, PI / 4)
 	mob.rotation = direction
-	#var velocity = Vector2(randf_range(1.0, 2.0), 0.0)
-	#mob.linear_velocity = velocity.rotated(direction)
-	widget_cotainer.add_child(mob)
+	widget_container.add_child(mob)

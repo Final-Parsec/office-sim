@@ -31,8 +31,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.294118, 0.415686, 0.811765, 1)
 
-[node name="Player" parent="." node_paths=PackedStringArray("widget_cotainer") instance=ExtResource("1_7mjmw")]
-widget_cotainer = NodePath("../WidgetContainer")
+[node name="Player" parent="." node_paths=PackedStringArray("widget_container") instance=ExtResource("1_7mjmw")]
+widget_container = NodePath("../WidgetContainer")
 
 [node name="ScoreTimer" type="Timer" parent="."]
 
