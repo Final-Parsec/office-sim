@@ -27,3 +27,9 @@ func _on_start_button_pressed() -> void:
 
 func _on_message_timer_timeout() -> void:
 	$Message.hide()
+
+func on_widget_button_pressed() -> void:
+	GameState.selected_action = Enums.Actions.WIDGET
+	
+func on_furniture_button_pressed() -> void:
+	GameState.selected_action = Enums.Actions.FURNITURE
