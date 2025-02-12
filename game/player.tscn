@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhcswl07nrnps"]
+[gd_scene load_steps=6 format=3 uid="uid://bhcswl07nrnps"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_eb275"]
 [ext_resource type="Texture2D" uid="uid://dp7jp6vb80u4s" path="res://art/main_character_idle1.png" id="2_0i2h7"]
-[ext_resource type="PackedScene" uid="uid://c4xywe4atv1fa" path="res://mob.tscn" id="2_p8pcm"]
 [ext_resource type="Texture2D" uid="uid://t3fa4urmgypp" path="res://art/main_character_walk.png" id="3_lwpqn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xmfv8"]
@@ -36,7 +35,6 @@ height = 96.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_eb275")
-mob_scene = ExtResource("2_p8pcm")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var speed = 400
-@export var mob_scene: PackedScene
+@export var widget_scene: PackedScene
 @export var widget_container: Node2D
 var screen_size
 
@@ -41,7 +41,6 @@ func _input(event):
 		
 		# Determine if you are clicking existing widget.
 		for widget in widget_container.get_children():
-			print("Evaluating widget: ", widget.position)
 			var collision_shape = widget.get_node("CollisionShape2D") as CollisionShape2D
 			var circle = collision_shape.shape as CircleShape2D
 			var radius = circle.radius
@@ -53,9 +52,9 @@ func _input(event):
 			place_widget(event.position)
 	
 func place_widget(spawn_location: Vector2):
-	var mob = mob_scene.instantiate()
+	var widget = widget_scene.instantiate()
 	var direction = Transform2D.IDENTITY.get_rotation() + PI / 2
-	mob.position = spawn_location
+	widget.position = spawn_location
 	direction += randf_range(-PI / 4, PI / 4)
-	mob.rotation = direction
-	widget_container.add_child(mob)
+	widget.rotation = direction
+	widget_container.add_child(widget)

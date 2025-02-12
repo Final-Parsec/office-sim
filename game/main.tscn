@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=9 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
+[ext_resource type="PackedScene" uid="uid://c4xywe4atv1fa" path="res://widget.tscn" id="3_xbnie"]
 [ext_resource type="PackedScene" uid="uid://bw6td1ka2uv5c" path="res://hud.tscn" id="4_oo6vi"]
 [ext_resource type="AudioStream" uid="uid://bmow02dut2ayu" path="res://art/gameover.wav" id="5_ppkhf"]
 
@@ -32,6 +33,7 @@ grow_vertical = 2
 color = Color(0.294118, 0.415686, 0.811765, 1)
 
 [node name="Player" parent="." node_paths=PackedStringArray("widget_container") instance=ExtResource("1_7mjmw")]
+widget_scene = ExtResource("3_xbnie")
 widget_container = NodePath("../WidgetContainer")
 
 [node name="ScoreTimer" type="Timer" parent="."]

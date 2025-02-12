@@ -1,17 +1,17 @@
 [gd_scene load_steps=6 format=3 uid="uid://c4xywe4atv1fa"]
 
-[ext_resource type="Script" path="res://mob.gd" id="1_go0dr"]
-[ext_resource type="Texture2D" uid="uid://dqlvc1tmxi238" path="res://art/widget1.png" id="2_ipo8k"]
-[ext_resource type="Texture2D" uid="uid://bcgy26qltbwl6" path="res://art/widget2.png" id="3_co6bx"]
+[ext_resource type="Script" path="res://widget.gd" id="1_fy1tb"]
+[ext_resource type="Texture2D" uid="uid://dqlvc1tmxi238" path="res://art/widget1.png" id="2_smp31"]
+[ext_resource type="Texture2D" uid="uid://bcgy26qltbwl6" path="res://art/widget2.png" id="3_hhl13"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nxxwv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_ipo8k")
+"texture": ExtResource("2_smp31")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_co6bx")
+"texture": ExtResource("3_hhl13")
 }],
 "loop": true,
 "name": &"idle",
@@ -21,10 +21,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_6hbh8"]
 radius = 37.0135
 
-[node name="Mob" type="RigidBody2D" groups=["mobs"]]
+[node name="Mob" type="RigidBody2D"]
 collision_mask = 0
 gravity_scale = 0.0
-script = ExtResource("1_go0dr")
+script = ExtResource("1_fy1tb")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
