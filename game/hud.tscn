@@ -2,12 +2,9 @@
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
+[ext_resource type="ButtonGroup" uid="uid://ccfmiaex7mmvt" path="res://action_bar.tres" id="3_63eek"]
 
-[sub_resource type="InputEventAction" id="InputEventAction_sxca6"]
-action = &"start_game"
-
-[sub_resource type="Shortcut" id="Shortcut_4xekt"]
-events = [SubResource("InputEventAction_sxca6")]
+[sub_resource type="Shortcut" id="Shortcut_wpxgg"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0jbru")
@@ -60,12 +57,38 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("1_3xhbu")
 theme_override_font_sizes/font_size = 64
-shortcut = SubResource("Shortcut_4xekt")
+shortcut = SubResource("Shortcut_wpxgg")
 text = "Start"
 
 [node name="MessageTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
 
+[node name="WidgetButton" type="Button" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 8.0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+toggle_mode = true
+button_group = ExtResource("3_63eek")
+text = "Widget"
+
+[node name="FurnitureButton" type="Button" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = -31.0
+offset_right = 145.0
+grow_vertical = 0
+toggle_mode = true
+text = "Furniture"
+
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
+[connection signal="pressed" from="WidgetButton" to="." method="on_widget_button_pressed"]
+[connection signal="pressed" from="FurnitureButton" to="." method="on_furniture_button_pressed"]
