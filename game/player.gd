@@ -34,7 +34,7 @@ func start(pos):
 	show()
 	$CollisionShape2D.disabled = false
 	
-func _input(event):
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("perform_action"):
 		# Build Widget Action
 		var clicked_a_widget = false
