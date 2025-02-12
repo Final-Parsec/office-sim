@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=10 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
 [ext_resource type="PackedScene" uid="uid://c4xywe4atv1fa" path="res://widget.tscn" id="3_xbnie"]
+[ext_resource type="PackedScene" uid="uid://cu5shp7i66fhf" path="res://furniture.tscn" id="4_mg1l2"]
 [ext_resource type="PackedScene" uid="uid://bw6td1ka2uv5c" path="res://hud.tscn" id="4_oo6vi"]
 [ext_resource type="AudioStream" uid="uid://bmow02dut2ayu" path="res://art/gameover.wav" id="5_ppkhf"]
 
@@ -33,9 +34,11 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.294118, 0.415686, 0.811765, 1)
 
-[node name="Player" parent="." node_paths=PackedStringArray("widget_container") instance=ExtResource("1_7mjmw")]
+[node name="Player" parent="." node_paths=PackedStringArray("widget_container", "furniture_container") instance=ExtResource("1_7mjmw")]
 widget_scene = ExtResource("3_xbnie")
 widget_container = NodePath("../WidgetContainer")
+furniture_scene = ExtResource("4_mg1l2")
+furniture_container = NodePath("../FurnitureContainer")
 
 [node name="ScoreTimer" type="Timer" parent="."]
 
@@ -58,6 +61,8 @@ stream = SubResource("AudioStreamOggVorbis_5efd5")
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ppkhf")
+
+[node name="FurnitureContainer" type="Node2D" parent="."]
 
 [node name="WidgetContainer" type="Node2D" parent="."]
 

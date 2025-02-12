@@ -3,6 +3,8 @@ extends CharacterBody2D
 @export var speed = 400
 @export var widget_scene: PackedScene
 @export var widget_container: Node2D
+@export var furniture_scene: PackedScene
+@export var furniture_container: Node2D
 var screen_size
 
 func _ready() -> void:
@@ -64,6 +66,6 @@ func place_widget(spawn_location: Vector2):
 	widget_container.add_child(widget)
 
 func place_furniture(spawn_location: Vector2):
-	var widget = widget_scene.instantiate()
-	widget.position = spawn_location
-	widget_container.add_child(widget)
+	var furniture = furniture_scene.instantiate()
+	furniture.position = spawn_location
+	furniture_container.add_child(furniture)
