@@ -46,6 +46,7 @@ func _input(event):
 			var radius = circle.radius
 			if event.position.distance_to(collision_shape.global_position) <= radius * 2:
 				clicked_a_widget = true
+				widget.build(10)
 		
 		# If not, place a new widget.
 		if !clicked_a_widget:
@@ -53,8 +54,5 @@ func _input(event):
 	
 func place_widget(spawn_location: Vector2):
 	var widget = widget_scene.instantiate()
-	var direction = Transform2D.IDENTITY.get_rotation() + PI / 2
 	widget.position = spawn_location
-	direction += randf_range(-PI / 4, PI / 4)
-	widget.rotation = direction
 	widget_container.add_child(widget)
