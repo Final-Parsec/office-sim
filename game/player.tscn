@@ -33,7 +33,7 @@ animations = [{
 radius = 16.0
 height = 96.0
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_eb275")
 metadata/_edit_group_ = true
 
@@ -44,5 +44,3 @@ animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_7eu3l")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
