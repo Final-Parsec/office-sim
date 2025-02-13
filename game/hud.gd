@@ -32,3 +32,9 @@ func on_widget_button_pressed() -> void:
 	
 func on_furniture_button_pressed() -> void:
 	GameState.selected_action = Enums.Actions.FURNITURE
+	
+func update_time(time):
+	var meridiem_suffix = "AM" if time < 12 * 60 else "PM"
+	var display_hour = str(time / 60 if time < 12 * 60 else (time / 60 - 12))
+	var display_minute = "%02d" % (time % 60)
+	$TimeLabel.text = display_hour + ":" + display_minute + " " + meridiem_suffix
