@@ -22,8 +22,10 @@ sampling_rate = 44100.0
 packet_sequence = SubResource("OggPacketSequence_piud5")
 loop = true
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" node_paths=PackedStringArray("furniture_container")]
 script = ExtResource("1_jxwdf")
+furniture_scene = ExtResource("4_mg1l2")
+furniture_container = NodePath("FurnitureContainer")
 
 [node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -34,11 +36,9 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.294118, 0.415686, 0.811765, 1)
 
-[node name="Player" parent="." node_paths=PackedStringArray("widget_container", "furniture_container") instance=ExtResource("1_7mjmw")]
+[node name="Player" parent="." node_paths=PackedStringArray("widget_container") instance=ExtResource("1_7mjmw")]
 widget_scene = ExtResource("3_xbnie")
 widget_container = NodePath("../WidgetContainer")
-furniture_scene = ExtResource("4_mg1l2")
-furniture_container = NodePath("../FurnitureContainer")
 
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -64,4 +64,5 @@ stream = ExtResource("5_ppkhf")
 
 [node name="WidgetContainer" type="Node2D" parent="."]
 
+[connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
