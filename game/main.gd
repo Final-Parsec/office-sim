@@ -1,6 +1,7 @@
 extends Node
 
 var net_worth
+var current_time
 
 @export var furniture_scene: PackedScene
 @export var furniture_container: Node2D
@@ -13,9 +14,11 @@ func game_over() -> void:
 
 func new_game():
 	net_worth = 1000
+	current_time = 6 * 60
 	$Player.start($StartPosition.position)
-	$StartTimer.start()
+	$DayTimer.start()
 	$HUD.update_net_worth(net_worth)
+	$HUD.update_time(current_time)
 	$HUD.show_message("Rise & Grind")
 	#$Music.play()
 
@@ -33,3 +36,10 @@ func _on_player_furniture_placement_requested(position: Vector2) -> void:
 		var furniture = furniture_scene.instantiate()
 		furniture.position = position
 		furniture_container.add_child(furniture)
+
+
+func _on_day_timer_timeout() -> void:
+	current_time += 5
+	if current_time >= 24 * 60:
+		current_time = 0
+	$HUD.update_time(current_time)

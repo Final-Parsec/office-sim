@@ -40,10 +40,6 @@ color = Color(0.294118, 0.415686, 0.811765, 1)
 widget_scene = ExtResource("3_xbnie")
 widget_container = NodePath("../WidgetContainer")
 
-[node name="StartTimer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(240, 450)
 
@@ -64,5 +60,9 @@ stream = ExtResource("5_ppkhf")
 
 [node name="WidgetContainer" type="Node2D" parent="."]
 
+[node name="DayTimer" type="Timer" parent="."]
+wait_time = 5.0
+
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="timeout" from="DayTimer" to="." method="_on_day_timer_timeout"]
