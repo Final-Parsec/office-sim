@@ -40,4 +40,6 @@ func _on_player_furniture_placement_requested(position: Vector2) -> void:
 
 func _on_day_timer_timeout() -> void:
 	current_time += 5
+	if current_time >= 24 * 60:
+		current_time = 0
 	$HUD.update_time(current_time)
