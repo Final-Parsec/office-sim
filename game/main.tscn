@@ -40,8 +40,6 @@ widget_container = NodePath("../WidgetContainer")
 furniture_scene = ExtResource("4_mg1l2")
 furniture_container = NodePath("../FurnitureContainer")
 
-[node name="ScoreTimer" type="Timer" parent="."]
-
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
@@ -66,6 +64,4 @@ stream = ExtResource("5_ppkhf")
 
 [node name="WidgetContainer" type="Node2D" parent="."]
 
-[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
-[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]

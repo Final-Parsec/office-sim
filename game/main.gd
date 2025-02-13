@@ -1,7 +1,6 @@
 extends Node
 
-var score
-
+var net_worth
 
 func game_over() -> void:
 	$ScoreTimer.stop()
@@ -10,17 +9,9 @@ func game_over() -> void:
 	$DeathSound.play()
 
 func new_game():
-	score = 0
+	net_worth = 1000
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
-	$HUD.update_score(score)
-	$HUD.show_message("Get Ready")
+	$HUD.update_net_worth(net_worth)
+	$HUD.show_message("Rise & Grind")
 	#$Music.play()
-
-func _on_score_timer_timeout() -> void:
-	score += 1
-	$HUD.update_score(score)
-
-
-func _on_start_timer_timeout() -> void:
-	$ScoreTimer.start()
