@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
+signal furniture_placement_requested(position: Vector2)
+
 @export var speed = 400
 @export var widget_scene: PackedScene
 @export var widget_container: Node2D
-@export var furniture_scene: PackedScene
-@export var furniture_container: Node2D
+
 var screen_size
 
 func _ready() -> void:
@@ -58,14 +59,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			if !clicked_ineligible_placement:
 				place_widget(event.position)
 		if GameState.selected_action == Enums.Actions.FURNITURE:
-			place_furniture(event.position)
+			furniture_placement_requested.emit(event.position)
 	
 func place_widget(spawn_location: Vector2):
 	var widget = widget_scene.instantiate()
 	widget.position = spawn_location
 	widget_container.add_child(widget)
-
-func place_furniture(spawn_location: Vector2):
-	var furniture = furniture_scene.instantiate()
-	furniture.position = spawn_location
-	furniture_container.add_child(furniture)

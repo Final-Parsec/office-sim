@@ -17,9 +17,8 @@ func show_game_over():
 	await get_tree().create_timer(1.0).timeout
 	$StartButton.show()
 	
-func update_score(score):
-	$ScoreLabel.text = str(score)
-	
+func update_net_worth(net_worth):
+	$NetWorthLabel.text = "$" + str(net_worth)
 
 func _on_start_button_pressed() -> void:
 	$StartButton.hide()

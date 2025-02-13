@@ -1,7 +1,9 @@
 extends Node
 
-var score
+var net_worth
 
+@export var furniture_scene: PackedScene
+@export var furniture_container: Node2D
 
 func game_over() -> void:
 	$ScoreTimer.stop()
@@ -10,17 +12,24 @@ func game_over() -> void:
 	$DeathSound.play()
 
 func new_game():
-	score = 0
+	net_worth = 1000
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
-	$HUD.update_score(score)
-	$HUD.show_message("Get Ready")
+	$HUD.update_net_worth(net_worth)
+	$HUD.show_message("Rise & Grind")
 	#$Music.play()
 
-func _on_score_timer_timeout() -> void:
-	score += 1
-	$HUD.update_score(score)
+
+func _on_player_furniture_placed() -> void:
+	net_worth -= 100
+	$HUD.update_net_worth(net_worth)
 
 
-func _on_start_timer_timeout() -> void:
-	$ScoreTimer.start()
+func _on_player_furniture_placement_requested(position: Vector2) -> void:
+	var FURNITURE_COST = 100
+	if net_worth >= FURNITURE_COST:
+		net_worth -= FURNITURE_COST
+		$HUD.update_net_worth(net_worth)
+		var furniture = furniture_scene.instantiate()
+		furniture.position = position
+		furniture_container.add_child(furniture)
