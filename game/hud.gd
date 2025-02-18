@@ -41,3 +41,7 @@ func update_time(time):
 	var display_hour = "%02d" % hour
 	var display_minute = "%02d" % (time % 60)
 	$TimeLabel.text = display_hour + ":" + display_minute + " " + meridiem_suffix
+
+
+func _on_pack_button_pressed() -> void:
+	GameState.selected_action = Enums.Actions.PACK

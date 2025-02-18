@@ -1,10 +1,13 @@
 extends CharacterBody2D
 
 signal furniture_placement_requested(position: Vector2)
+signal package_widget_requested(position: Vector2)
 
 @export var speed = 400
 @export var widget_scene: PackedScene
 @export var widget_container: Node2D
+@export var package_scene: PackedScene
+@export var package_container: Node2D
 
 var screen_size
 
@@ -60,6 +63,17 @@ func _unhandled_input(event: InputEvent) -> void:
 				place_widget(event.position)
 		if GameState.selected_action == Enums.Actions.FURNITURE:
 			furniture_placement_requested.emit(event.position)
+		if GameState.selected_action == Enums.Actions.PACK:
+			package_widget_requested.emit(event.position)
+			for widget in widget_container.get_children():
+				var collision_shape = widget.get_node("CollisionShape2D") as CollisionShape2D
+				var circle = collision_shape.shape as CircleShape2D
+				var radius = circle.radius
+				if event.position.distance_to(collision_shape.global_position) <= radius && widget.is_packable():
+					var package = package_scene.instantiate()
+					package.position = widget.position
+					package_container.add_child(package)
+					widget.queue_free()
 	
 func place_widget(spawn_location: Vector2):
 	var widget = widget_scene.instantiate()

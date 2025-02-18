@@ -37,9 +37,11 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.294118, 0.415686, 0.811765, 1)
 
-[node name="Player" parent="." node_paths=PackedStringArray("widget_container") instance=ExtResource("1_7mjmw")]
+[node name="Player" parent="." node_paths=PackedStringArray("widget_container", "package_container") instance=ExtResource("1_7mjmw")]
 widget_scene = ExtResource("3_xbnie")
 widget_container = NodePath("../WidgetContainer")
+package_scene = ExtResource("7_g140p")
+package_container = NodePath("../PackageContainer")
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(240, 450)
@@ -61,11 +63,10 @@ stream = ExtResource("5_ppkhf")
 
 [node name="WidgetContainer" type="Node2D" parent="."]
 
+[node name="PackageContainer" type="Node2D" parent="."]
+
 [node name="DayTimer" type="Timer" parent="."]
 wait_time = 5.0
-
-[node name="Mob" parent="." instance=ExtResource("7_g140p")]
-position = Vector2(184, 168)
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
