@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://cpn25wurr7ckt"]
+
+[ext_resource type="Script" path="res://widget.gd" id="1_jd4ln"]
+[ext_resource type="Texture2D" uid="uid://c01n20w6awjy7" path="res://art/cardboard_box.png" id="2_615hs"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nxxwv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_615hs")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ol2lb"]
+size = Vector2(6.83367, 24.3452)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0lpdg"]
+size = Vector2(8.29519, 16.7627)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oxev6"]
+size = Vector2(5.83883, 36.0248)
+
+[node name="Package" type="RigidBody2D"]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_jd4ln")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_nxxwv")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-6.3666, 12.8394)
+rotation = 1.86872
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_ol2lb")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(9.81774, 13.4688)
+rotation = 1.2702
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_0lpdg")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(-0.499141, 9.62065)
+rotation = 1.558
+scale = Vector2(1.15899, 1.02951)
+shape = SubResource("RectangleShape2D_oxev6")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=11 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cu5shp7i66fhf" path="res://furniture.tscn" id="4_mg1l2"]
 [ext_resource type="PackedScene" uid="uid://bw6td1ka2uv5c" path="res://hud.tscn" id="4_oo6vi"]
 [ext_resource type="AudioStream" uid="uid://bmow02dut2ayu" path="res://art/gameover.wav" id="5_ppkhf"]
+[ext_resource type="PackedScene" uid="uid://cpn25wurr7ckt" path="res://package.tscn" id="7_g140p"]
 
 [sub_resource type="Curve2D" id="Curve2D_oeg6j"]
 _data = {
@@ -62,6 +63,9 @@ stream = ExtResource("5_ppkhf")
 
 [node name="DayTimer" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="Mob" parent="." instance=ExtResource("7_g140p")]
+position = Vector2(184, 168)
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
