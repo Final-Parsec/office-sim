@@ -3,6 +3,7 @@ extends CanvasLayer
 signal start_game
 signal action_bar_button_pressed
 signal employee_recruited
+signal employee_fired
 
 func show_message(text):
 	$Message.text = text
@@ -20,7 +21,7 @@ func show_game_over():
 	$StartButton.show()
 	
 func update_net_worth(net_worth):
-	$NetWorthLabel.text = "$" + str(net_worth)
+	$NetWorthLabel.text = "$" + str(snapped(net_worth, 0.01))
 
 func _on_start_button_pressed() -> void:
 	$StartButton.hide()
@@ -59,3 +60,9 @@ func _on_recruit_pressed() -> void:
 	$HRPanel/TabContainer/Recruiting/Recruit.visible = false
 	$HRPanel/TabContainer/Employees/Employee.visible = true
 	employee_recruited.emit()
+
+
+func _on_employee_pressed() -> void:
+	$HRPanel/TabContainer/Recruiting/Recruit.visible = true
+	$HRPanel/TabContainer/Employees/Employee.visible = false
+	employee_fired.emit()

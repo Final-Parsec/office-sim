@@ -58,3 +58,10 @@ func _on_hud_employee_recruited() -> void:
 	var employee = employee_scene.instantiate()
 	employee.position = $StartPosition.position
 	employee_container.add_child(employee)
+
+
+func _on_hud_employee_fired() -> void:
+	var employee = employee_container.get_children().front()
+	net_worth -= employee.money_owed
+	$HUD.update_net_worth(net_worth)
+	employee.queue_free()

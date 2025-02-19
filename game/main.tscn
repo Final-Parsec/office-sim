@@ -95,6 +95,7 @@ scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
+[connection signal="employee_fired" from="HUD" to="." method="_on_hud_employee_fired"]
 [connection signal="employee_recruited" from="HUD" to="." method="_on_hud_employee_recruited"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="timeout" from="DayTimer" to="." method="_on_day_timer_timeout"]
