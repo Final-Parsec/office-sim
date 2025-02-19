@@ -21,7 +21,7 @@ func show_game_over():
 	$StartButton.show()
 	
 func update_net_worth(net_worth):
-	$NetWorthLabel.text = "$" + str(snapped(net_worth, 0.01))
+	$NetWorthLabel.text = "$" + str(snapped(net_worth, 0))
 
 func _on_start_button_pressed() -> void:
 	$StartButton.hide()
