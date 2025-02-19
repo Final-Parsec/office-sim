@@ -15,6 +15,7 @@ func _process(delta: float) -> void:
 	cooldown -= delta
 	if cooldown <= 0:
 		print('claim package')
+		cooldown = 1
 
 func summon() -> void:
 	visible = true
