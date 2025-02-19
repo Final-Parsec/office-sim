@@ -15,3 +15,6 @@ func build(additional_progress: int):
 	if progress > 100:
 		progress = 100
 	$ProgressLabel.text = str(progress) + "%"
+
+func is_packable() -> bool:
+	return progress == 100

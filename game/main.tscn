@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=14 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cu5shp7i66fhf" path="res://furniture.tscn" id="4_mg1l2"]
 [ext_resource type="PackedScene" uid="uid://bw6td1ka2uv5c" path="res://hud.tscn" id="4_oo6vi"]
 [ext_resource type="AudioStream" uid="uid://bmow02dut2ayu" path="res://art/gameover.wav" id="5_ppkhf"]
+[ext_resource type="PackedScene" uid="uid://cpn25wurr7ckt" path="res://package.tscn" id="7_g140p"]
+[ext_resource type="Script" path="res://mailman.gd" id="8_px6ih"]
+[ext_resource type="Texture2D" uid="uid://c3ujp3okifr51" path="res://art/mailman.png" id="9_daadb"]
 
 [sub_resource type="Curve2D" id="Curve2D_oeg6j"]
 _data = {
@@ -22,6 +25,17 @@ sampling_rate = 44100.0
 packet_sequence = SubResource("OggPacketSequence_piud5")
 loop = true
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_i8n55"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_daadb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Main" type="Node" node_paths=PackedStringArray("furniture_container")]
 script = ExtResource("1_jxwdf")
 furniture_scene = ExtResource("4_mg1l2")
@@ -36,9 +50,11 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.294118, 0.415686, 0.811765, 1)
 
-[node name="Player" parent="." node_paths=PackedStringArray("widget_container") instance=ExtResource("1_7mjmw")]
+[node name="Player" parent="." node_paths=PackedStringArray("widget_container", "package_container") instance=ExtResource("1_7mjmw")]
 widget_scene = ExtResource("3_xbnie")
 widget_container = NodePath("../WidgetContainer")
+package_scene = ExtResource("7_g140p")
+package_container = NodePath("../PackageContainer")
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(240, 450)
@@ -60,9 +76,21 @@ stream = ExtResource("5_ppkhf")
 
 [node name="WidgetContainer" type="Node2D" parent="."]
 
+[node name="PackageContainer" type="Node2D" parent="."]
+
 [node name="DayTimer" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="Mailman" type="Node2D" parent="." node_paths=PackedStringArray("package_container")]
+script = ExtResource("8_px6ih")
+package_container = NodePath("../PackageContainer")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mailman"]
+position = Vector2(728, 552)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="timeout" from="DayTimer" to="." method="_on_day_timer_timeout"]
+[connection signal="package_collected" from="Mailman" to="." method="_on_mailman_package_collected"]
