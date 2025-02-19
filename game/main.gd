@@ -45,7 +45,6 @@ func _on_day_timer_timeout() -> void:
 	if current_time % 60 == 0:
 		$Mailman.summon()
 
-
 func _on_mailman_package_collected() -> void:
 	net_worth += 10
 	$HUD.update_net_worth(net_worth)
