@@ -81,8 +81,9 @@ stream = ExtResource("5_ppkhf")
 [node name="DayTimer" type="Timer" parent="."]
 wait_time = 5.0
 
-[node name="Mailman" type="Node2D" parent="."]
+[node name="Mailman" type="Node2D" parent="." node_paths=PackedStringArray("package_container")]
 script = ExtResource("8_px6ih")
+package_container = NodePath("../PackageContainer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mailman"]
 position = Vector2(728, 552)
@@ -92,3 +93,4 @@ sprite_frames = SubResource("SpriteFrames_i8n55")
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="timeout" from="DayTimer" to="." method="_on_day_timer_timeout"]
+[connection signal="package_collected" from="Mailman" to="." method="_on_mailman_package_collected"]

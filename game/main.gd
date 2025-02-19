@@ -23,11 +23,9 @@ func new_game():
 	$HUD.show_message("Rise & Grind")
 	#$Music.play()
 
-
 func _on_player_furniture_placed() -> void:
 	net_worth -= 100
 	$HUD.update_net_worth(net_worth)
-
 
 func _on_player_furniture_placement_requested(position: Vector2) -> void:
 	var FURNITURE_COST = 100
@@ -38,7 +36,6 @@ func _on_player_furniture_placement_requested(position: Vector2) -> void:
 		furniture.position = position
 		furniture_container.add_child(furniture)
 
-
 func _on_day_timer_timeout() -> void:
 	current_time += 5
 	if current_time >= 24 * 60:
@@ -47,3 +44,8 @@ func _on_day_timer_timeout() -> void:
 	
 	if current_time % 60 == 0:
 		$Mailman.summon()
+
+
+func _on_mailman_package_collected() -> void:
+	net_worth += 10
+	$HUD.update_net_worth(net_worth)

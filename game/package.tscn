@@ -37,13 +37,11 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-6.3666, 12.8394)
 rotation = 1.86872
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ol2lb")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(9.81774, 13.4688)
 rotation = 1.2702
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_0lpdg")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
