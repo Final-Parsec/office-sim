@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 signal start_game
+signal action_bar_button_pressed
 
 func show_message(text):
 	$Message.text = text
@@ -28,10 +29,10 @@ func _on_message_timer_timeout() -> void:
 	$Message.hide()
 
 func on_widget_button_pressed() -> void:
-	GameState.selected_action = Enums.Actions.WIDGET
+	set_selected_action(Enums.Actions.WIDGET)
 	
 func on_furniture_button_pressed() -> void:
-	GameState.selected_action = Enums.Actions.FURNITURE
+	set_selected_action(Enums.Actions.FURNITURE)
 	
 func update_time(time):
 	var meridiem_suffix = "AM" if time < 12 * 60 else "PM"
@@ -42,6 +43,12 @@ func update_time(time):
 	var display_minute = "%02d" % (time % 60)
 	$TimeLabel.text = display_hour + ":" + display_minute + " " + meridiem_suffix
 
-
 func _on_pack_button_pressed() -> void:
-	GameState.selected_action = Enums.Actions.PACK
+	set_selected_action(Enums.Actions.PACK)
+
+func _on_hr_button_pressed() -> void:
+	set_selected_action(Enums.Actions.HR)
+
+func set_selected_action(selected_action: int) -> void:
+	GameState.selected_action = selected_action
+	action_bar_button_pressed.emit()

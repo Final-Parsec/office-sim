@@ -4,5 +4,6 @@ enum Actions {
 	NONE = 0,
 	WIDGET = 1,
 	FURNITURE = 2,
-	PACK = 3
+	PACK = 3,
+	HR = 4
 }
