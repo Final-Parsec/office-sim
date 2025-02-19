@@ -5,6 +5,7 @@ var current_time
 
 @export var furniture_scene: PackedScene
 @export var furniture_container: Node2D
+@export var mailmain_scene: PackedScene
 
 func game_over() -> void:
 	$ScoreTimer.stop()
@@ -43,3 +44,6 @@ func _on_day_timer_timeout() -> void:
 	if current_time >= 24 * 60:
 		current_time = 0
 	$HUD.update_time(current_time)
+	
+	if current_time % 60 == 0:
+		$Mailman.summon()
