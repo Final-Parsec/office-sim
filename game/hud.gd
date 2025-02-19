@@ -1,6 +1,9 @@
 extends CanvasLayer
 
 signal start_game
+signal action_bar_button_pressed
+signal employee_recruited
+signal employee_fired
 
 func show_message(text):
 	$Message.text = text
@@ -18,7 +21,7 @@ func show_game_over():
 	$StartButton.show()
 	
 func update_net_worth(net_worth):
-	$NetWorthLabel.text = "$" + str(net_worth)
+	$NetWorthLabel.text = "$" + str(snapped(net_worth, 0))
 
 func _on_start_button_pressed() -> void:
 	$StartButton.hide()
@@ -28,10 +31,10 @@ func _on_message_timer_timeout() -> void:
 	$Message.hide()
 
 func on_widget_button_pressed() -> void:
-	GameState.selected_action = Enums.Actions.WIDGET
+	set_selected_action(Enums.Actions.WIDGET)
 	
 func on_furniture_button_pressed() -> void:
-	GameState.selected_action = Enums.Actions.FURNITURE
+	set_selected_action(Enums.Actions.FURNITURE)
 	
 func update_time(time):
 	var meridiem_suffix = "AM" if time < 12 * 60 else "PM"
@@ -42,6 +45,24 @@ func update_time(time):
 	var display_minute = "%02d" % (time % 60)
 	$TimeLabel.text = display_hour + ":" + display_minute + " " + meridiem_suffix
 
-
 func _on_pack_button_pressed() -> void:
-	GameState.selected_action = Enums.Actions.PACK
+	set_selected_action(Enums.Actions.PACK)
+
+func _on_hr_button_pressed() -> void:
+	set_selected_action(Enums.Actions.HR)
+
+func set_selected_action(selected_action: Enums.Actions) -> void:
+	GameState.selected_action = selected_action
+	action_bar_button_pressed.emit()
+
+
+func _on_recruit_pressed() -> void:
+	$HRPanel/TabContainer/Recruiting/Recruit.visible = false
+	$HRPanel/TabContainer/Employees/Employee.visible = true
+	employee_recruited.emit()
+
+
+func _on_employee_pressed() -> void:
+	$HRPanel/TabContainer/Recruiting/Recruit.visible = true
+	$HRPanel/TabContainer/Employees/Employee.visible = false
+	employee_fired.emit()

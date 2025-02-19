@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=15 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
+[ext_resource type="PackedScene" uid="uid://0xswmswqjexh" path="res://employee.tscn" id="3_u4axo"]
 [ext_resource type="PackedScene" uid="uid://c4xywe4atv1fa" path="res://widget.tscn" id="3_xbnie"]
 [ext_resource type="PackedScene" uid="uid://cu5shp7i66fhf" path="res://furniture.tscn" id="4_mg1l2"]
 [ext_resource type="PackedScene" uid="uid://bw6td1ka2uv5c" path="res://hud.tscn" id="4_oo6vi"]
@@ -36,10 +37,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("furniture_container")]
+[node name="Main" type="Node" node_paths=PackedStringArray("furniture_container", "employee_container")]
 script = ExtResource("1_jxwdf")
 furniture_scene = ExtResource("4_mg1l2")
 furniture_container = NodePath("FurnitureContainer")
+employee_scene = ExtResource("3_u4axo")
+employee_container = NodePath("EmployeeContainer")
 
 [node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -78,8 +81,9 @@ stream = ExtResource("5_ppkhf")
 
 [node name="PackageContainer" type="Node2D" parent="."]
 
+[node name="EmployeeContainer" type="Node2D" parent="."]
+
 [node name="DayTimer" type="Timer" parent="."]
-wait_time = 5.0
 
 [node name="Mailman" type="Node2D" parent="." node_paths=PackedStringArray("package_container")]
 script = ExtResource("8_px6ih")
@@ -91,6 +95,8 @@ scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
+[connection signal="employee_fired" from="HUD" to="." method="_on_hud_employee_fired"]
+[connection signal="employee_recruited" from="HUD" to="." method="_on_hud_employee_recruited"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="timeout" from="DayTimer" to="." method="_on_day_timer_timeout"]
 [connection signal="package_collected" from="Mailman" to="." method="_on_mailman_package_collected"]

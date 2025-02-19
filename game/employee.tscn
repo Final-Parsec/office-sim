@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://0xswmswqjexh"]
+
+[ext_resource type="Script" path="res://employee.gd" id="1_5cld6"]
+[ext_resource type="Texture2D" uid="uid://ndlb74qnveg0" path="res://art/colm_reeves1.png" id="1_maxdl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nxxwv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_maxdl")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvmmo"]
+radius = 7.0
+height = 64.0
+
+[node name="Employee" type="RigidBody2D"]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_5cld6")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_nxxwv")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_cvmmo")

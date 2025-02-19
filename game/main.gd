@@ -5,7 +5,8 @@ var current_time
 
 @export var furniture_scene: PackedScene
 @export var furniture_container: Node2D
-@export var mailmain_scene: PackedScene
+@export var employee_scene: PackedScene
+@export var employee_container: Node2D
 
 func game_over() -> void:
 	$ScoreTimer.stop()
@@ -44,7 +45,23 @@ func _on_day_timer_timeout() -> void:
 	
 	if current_time % 60 == 0:
 		$Mailman.summon()
+		
+	for employee in employee_container.get_children():
+		employee.act(current_time)
 
 func _on_mailman_package_collected() -> void:
 	net_worth += 10
 	$HUD.update_net_worth(net_worth)
+
+
+func _on_hud_employee_recruited() -> void:
+	var employee = employee_scene.instantiate()
+	employee.position = $StartPosition.position
+	employee_container.add_child(employee)
+
+
+func _on_hud_employee_fired() -> void:
+	var employee = employee_container.get_children().front()
+	net_worth -= employee.money_owed
+	$HUD.update_net_worth(net_worth)
+	employee.queue_free()

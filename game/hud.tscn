@@ -1,10 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=8 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
 [ext_resource type="ButtonGroup" uid="uid://ccfmiaex7mmvt" path="res://action_bar.tres" id="3_63eek"]
+[ext_resource type="Script" path="res://hr_panel.gd" id="4_lgdrw"]
+[ext_resource type="Texture2D" uid="uid://ndlb74qnveg0" path="res://art/colm_reeves1.png" id="5_epwqy"]
 
 [sub_resource type="Shortcut" id="Shortcut_wpxgg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fm8g5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_epwqy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0jbru")
@@ -110,8 +123,104 @@ grow_vertical = 0
 toggle_mode = true
 text = "Pack"
 
+[node name="HRButton" type="Button" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 231.0
+offset_top = -31.0
+offset_right = 312.0
+grow_vertical = 0
+toggle_mode = true
+text = "HR"
+
+[node name="HRPanel" type="Panel" parent="."]
+offset_right = 1152.0
+offset_bottom = 616.0
+script = ExtResource("4_lgdrw")
+
+[node name="TabContainer" type="TabContainer" parent="HRPanel"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 616.0
+current_tab = 0
+
+[node name="Recruiting" type="Control" parent="HRPanel/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Recruit" type="Button" parent="HRPanel/TabContainer/Recruiting"]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 129.0
+tooltip_text = "Click to hire"
+
+[node name="Name" type="Label" parent="HRPanel/TabContainer/Recruiting/Recruit"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 49.0
+offset_right = 248.0
+offset_bottom = 72.0
+text = "Colm Reeves"
+
+[node name="Rate" type="Label" parent="HRPanel/TabContainer/Recruiting/Recruit"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 73.0
+offset_right = 248.0
+offset_bottom = 96.0
+text = "$5 / hour"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HRPanel/TabContainer/Recruiting/Recruit"]
+position = Vector2(73, 61)
+sprite_frames = SubResource("SpriteFrames_fm8g5")
+
+[node name="Employees" type="Control" parent="HRPanel/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Employee" type="Button" parent="HRPanel/TabContainer/Employees"]
+visible = false
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 129.0
+tooltip_text = "Click to fire"
+
+[node name="Name" type="Label" parent="HRPanel/TabContainer/Employees/Employee"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 49.0
+offset_right = 248.0
+offset_bottom = 72.0
+text = "Colm Reeves"
+
+[node name="Schedule" type="Label" parent="HRPanel/TabContainer/Employees/Employee"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 97.0
+offset_right = 248.0
+offset_bottom = 120.0
+text = "7 AM - 4 PM"
+
+[node name="Rate" type="Label" parent="HRPanel/TabContainer/Employees/Employee"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 73.0
+offset_right = 248.0
+offset_bottom = 96.0
+text = "$5 / hour"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HRPanel/TabContainer/Employees/Employee"]
+position = Vector2(73, 61)
+sprite_frames = SubResource("SpriteFrames_fm8g5")
+
+[connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
 [connection signal="pressed" from="WidgetButton" to="." method="on_widget_button_pressed"]
 [connection signal="pressed" from="FurnitureButton" to="." method="on_furniture_button_pressed"]
 [connection signal="pressed" from="PackButton" to="." method="_on_pack_button_pressed"]
+[connection signal="pressed" from="HRButton" to="." method="_on_hr_button_pressed"]
+[connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
+[connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee" to="." method="_on_employee_pressed"]
