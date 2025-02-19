@@ -2,6 +2,7 @@ extends CanvasLayer
 
 signal start_game
 signal action_bar_button_pressed
+signal employee_recruited
 
 func show_message(text):
 	$Message.text = text
@@ -49,6 +50,12 @@ func _on_pack_button_pressed() -> void:
 func _on_hr_button_pressed() -> void:
 	set_selected_action(Enums.Actions.HR)
 
-func set_selected_action(selected_action: int) -> void:
+func set_selected_action(selected_action: Enums.Actions) -> void:
 	GameState.selected_action = selected_action
 	action_bar_button_pressed.emit()
+
+
+func _on_recruit_pressed() -> void:
+	$HRPanel/TabContainer/Recruiting/Recruit.visible = false
+	$HRPanel/TabContainer/Employees/Employee.visible = true
+	employee_recruited.emit()

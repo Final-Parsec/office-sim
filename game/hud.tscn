@@ -153,6 +153,7 @@ metadata/_tab_index = 0
 layout_mode = 0
 offset_right = 320.0
 offset_bottom = 129.0
+tooltip_text = "Click to hire"
 
 [node name="Name" type="Label" parent="HRPanel/TabContainer/Recruiting/Recruit"]
 layout_mode = 0
@@ -161,6 +162,13 @@ offset_top = 49.0
 offset_right = 248.0
 offset_bottom = 72.0
 text = "Colm Reeves"
+
+[node name="Rate" type="Label" parent="HRPanel/TabContainer/Recruiting/Recruit"]
+offset_left = 144.0
+offset_top = 73.0
+offset_right = 248.0
+offset_bottom = 96.0
+text = "$5 / hour"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HRPanel/TabContainer/Recruiting/Recruit"]
 position = Vector2(73, 61)
@@ -171,6 +179,38 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
+[node name="Employee" type="Button" parent="HRPanel/TabContainer/Employees"]
+visible = false
+offset_right = 320.0
+offset_bottom = 129.0
+tooltip_text = "Click to fire"
+
+[node name="Name" type="Label" parent="HRPanel/TabContainer/Employees/Employee"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 49.0
+offset_right = 248.0
+offset_bottom = 72.0
+text = "Colm Reeves"
+
+[node name="Schedule" type="Label" parent="HRPanel/TabContainer/Employees/Employee"]
+offset_left = 144.0
+offset_top = 97.0
+offset_right = 248.0
+offset_bottom = 120.0
+text = "7 AM - 4 PM"
+
+[node name="Rate" type="Label" parent="HRPanel/TabContainer/Employees/Employee"]
+offset_left = 144.0
+offset_top = 73.0
+offset_right = 248.0
+offset_bottom = 96.0
+text = "$5 / hour"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HRPanel/TabContainer/Employees/Employee"]
+position = Vector2(73, 61)
+sprite_frames = SubResource("SpriteFrames_fm8g5")
+
 [connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
@@ -178,3 +218,4 @@ metadata/_tab_index = 1
 [connection signal="pressed" from="FurnitureButton" to="." method="on_furniture_button_pressed"]
 [connection signal="pressed" from="PackButton" to="." method="_on_pack_button_pressed"]
 [connection signal="pressed" from="HRButton" to="." method="_on_hr_button_pressed"]
+[connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
