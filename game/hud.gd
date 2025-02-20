@@ -4,6 +4,7 @@ signal start_game
 signal action_bar_button_pressed
 signal employee_recruited
 signal employee_fired
+signal employee_run_payroll_pressed
 
 func show_message(text):
 	$Message.text = text
@@ -61,8 +62,11 @@ func _on_recruit_pressed() -> void:
 	$HRPanel/TabContainer/Employees/Employee.visible = true
 	employee_recruited.emit()
 
-
-func _on_employee_pressed() -> void:
+func _on_fire_button_pressed() -> void:
 	$HRPanel/TabContainer/Recruiting/Recruit.visible = true
 	$HRPanel/TabContainer/Employees/Employee.visible = false
 	employee_fired.emit()
+
+
+func _on_run_payroll_button_pressed() -> void:
+	employee_run_payroll_pressed.emit()
