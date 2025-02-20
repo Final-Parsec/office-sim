@@ -96,6 +96,10 @@ func _on_player_widget_action_requested(position: Vector2) -> void:
 			widget.build(10)
 		if position.distance_to(collision_shape.global_position) <= radius * 2:
 			clicked_ineligible_placement = true
+			
+	for package in $PackageContainer.get_children():
+		if position.distance_to(package.global_position) <= 50:
+			clicked_ineligible_placement = true
 
 	# If not, place a new widget.
 	if !clicked_ineligible_placement:
