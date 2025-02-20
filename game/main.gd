@@ -7,6 +7,7 @@ var current_time
 @export var furniture_container: Node2D
 @export var employee_scene: PackedScene
 @export var employee_container: Node2D
+@export var widget_scene: PackedScene
 
 func game_over() -> void:
 	$ScoreTimer.stop()
@@ -59,6 +60,7 @@ func _on_hud_employee_recruited() -> void:
 	employee.position = $StartPosition.position
 	employee_container.add_child(employee)
 	employee.money_owed_updated.connect(_on_employee_money_owed_updated)
+	employee.widget_action_requested.connect(_on_player_widget_action_requested)
 
 
 func _on_hud_employee_fired() -> void:
@@ -77,3 +79,33 @@ func _on_hud_employee_run_payroll_pressed() -> void:
 	employee.pay(amount_to_pay)
 	$HUD.update_net_worth(net_worth)
 	
+
+
+func _on_player_widget_action_requested(position: Vector2) -> void:
+	# Build Widget Action
+	var clicked_a_widget = false
+	var clicked_ineligible_placement = false
+
+	# Determine if you are clicking existing widget.
+	for widget in $WidgetContainer.get_children():
+		var collision_shape = widget.get_node("CollisionShape2D") as CollisionShape2D
+		var circle = collision_shape.shape as CircleShape2D
+		var radius = circle.radius
+		if position.distance_to(collision_shape.global_position) <= radius && !clicked_a_widget:
+			clicked_a_widget = true
+			widget.build(10)
+		if position.distance_to(collision_shape.global_position) <= radius * 2:
+			clicked_ineligible_placement = true
+			
+	for package in $PackageContainer.get_children():
+		if position.distance_to(package.global_position) <= 50:
+			clicked_ineligible_placement = true
+
+	# If not, place a new widget.
+	if !clicked_ineligible_placement:
+		place_widget(position)
+
+func place_widget(spawn_location: Vector2):
+	var widget = widget_scene.instantiate()
+	widget.position = spawn_location
+	$WidgetContainer.add_child(widget)

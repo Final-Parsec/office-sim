@@ -43,6 +43,7 @@ furniture_scene = ExtResource("4_mg1l2")
 furniture_container = NodePath("FurnitureContainer")
 employee_scene = ExtResource("3_u4axo")
 employee_container = NodePath("EmployeeContainer")
+widget_scene = ExtResource("3_xbnie")
 
 [node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -54,7 +55,6 @@ mouse_filter = 2
 color = Color(0.294118, 0.415686, 0.811765, 1)
 
 [node name="Player" parent="." node_paths=PackedStringArray("widget_container", "package_container") instance=ExtResource("1_7mjmw")]
-widget_scene = ExtResource("3_xbnie")
 widget_container = NodePath("../WidgetContainer")
 package_scene = ExtResource("7_g140p")
 package_container = NodePath("../PackageContainer")
@@ -95,6 +95,7 @@ scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
+[connection signal="widget_action_requested" from="Player" to="." method="_on_player_widget_action_requested"]
 [connection signal="employee_fired" from="HUD" to="." method="_on_hud_employee_fired"]
 [connection signal="employee_recruited" from="HUD" to="." method="_on_hud_employee_recruited"]
 [connection signal="employee_run_payroll_pressed" from="HUD" to="." method="_on_hud_employee_run_payroll_pressed"]
