@@ -60,6 +60,7 @@ func _on_hud_employee_recruited() -> void:
 	employee.position = $StartPosition.position
 	employee_container.add_child(employee)
 	employee.money_owed_updated.connect(_on_employee_money_owed_updated)
+	employee.widget_action_requested.connect(_on_player_widget_action_requested)
 
 
 func _on_hud_employee_fired() -> void:

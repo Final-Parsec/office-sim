@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 signal money_owed_updated(money_owed)
+signal widget_action_requested(position: Vector2)
 
 var schedule_start = 7 * 60
 var schedule_end = 16 * 60
@@ -19,6 +20,9 @@ func act(current_time: int) -> void:
 		$CollisionShape2D.disabled = false
 		money_owed += hourly_rate * (5.0 / 60.0)
 		money_owed_updated.emit(money_owed)
+		
+		if RandomNumberGenerator.new().randf() > .3:
+			widget_action_requested.emit(position + Vector2(50,0))
 	else:
 		visible = false
 		$CollisionShape2D.disabled = true
