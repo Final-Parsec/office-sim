@@ -58,6 +58,7 @@ func _on_hud_employee_recruited() -> void:
 	var employee = employee_scene.instantiate()
 	employee.position = $StartPosition.position
 	employee_container.add_child(employee)
+	employee.money_owed_updated.connect(_on_employee_money_owed_updated)
 
 
 func _on_hud_employee_fired() -> void:
@@ -65,3 +66,14 @@ func _on_hud_employee_fired() -> void:
 	net_worth -= employee.money_owed
 	$HUD.update_net_worth(net_worth)
 	employee.queue_free()
+
+func _on_employee_money_owed_updated(money_owed) -> void:
+	$HUD/HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton.text = "Run Payroll ($" + str(snapped(money_owed, 0)) + ")"
+	
+func _on_hud_employee_run_payroll_pressed() -> void:
+	var employee = employee_container.get_children().front()
+	var amount_to_pay = employee.money_owed
+	net_worth -= amount_to_pay
+	employee.pay(amount_to_pay)
+	$HUD.update_net_worth(net_worth)
+	

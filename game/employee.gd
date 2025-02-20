@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+signal money_owed_updated(money_owed)
+
 var schedule_start = 7 * 60
 var schedule_end = 16 * 60
 var money_owed = 0.0
@@ -16,6 +18,11 @@ func act(current_time: int) -> void:
 		visible = true
 		$CollisionShape2D.disabled = false
 		money_owed += hourly_rate * (5.0 / 60.0)
+		money_owed_updated.emit(money_owed)
 	else:
 		visible = false
 		$CollisionShape2D.disabled = true
+
+func pay(money_paid) -> void:
+	money_owed -= money_paid
+	money_owed_updated.emit(money_owed)

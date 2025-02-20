@@ -143,9 +143,10 @@ script = ExtResource("4_lgdrw")
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 616.0
-current_tab = 0
+current_tab = 1
 
 [node name="Recruiting" type="Control" parent="HRPanel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -176,44 +177,41 @@ position = Vector2(73, 61)
 sprite_frames = SubResource("SpriteFrames_fm8g5")
 
 [node name="Employees" type="Control" parent="HRPanel/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Employee" type="Button" parent="HRPanel/TabContainer/Employees"]
-visible = false
+[node name="Employee" type="HBoxContainer" parent="HRPanel/TabContainer/Employees"]
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 129.0
-tooltip_text = "Click to fire"
+offset_right = 449.0
+offset_bottom = 224.0
 
-[node name="Name" type="Label" parent="HRPanel/TabContainer/Employees/Employee"]
-layout_mode = 0
-offset_left = 144.0
-offset_top = 49.0
-offset_right = 248.0
-offset_bottom = 72.0
-text = "Colm Reeves"
+[node name="TextureRect" type="TextureRect" parent="HRPanel/TabContainer/Employees/Employee"]
+layout_mode = 2
+texture = ExtResource("5_epwqy")
+stretch_mode = 2
 
-[node name="Schedule" type="Label" parent="HRPanel/TabContainer/Employees/Employee"]
-layout_mode = 0
-offset_left = 144.0
-offset_top = 97.0
-offset_right = 248.0
-offset_bottom = 120.0
-text = "7 AM - 4 PM"
+[node name="VBoxContainer" type="VBoxContainer" parent="HRPanel/TabContainer/Employees/Employee"]
+layout_mode = 2
 
-[node name="Rate" type="Label" parent="HRPanel/TabContainer/Employees/Employee"]
-layout_mode = 0
-offset_left = 144.0
-offset_top = 73.0
-offset_right = 248.0
-offset_bottom = 96.0
+[node name="Rate" type="Label" parent="HRPanel/TabContainer/Employees/Employee/VBoxContainer"]
+layout_mode = 2
 text = "$5 / hour"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HRPanel/TabContainer/Employees/Employee"]
-position = Vector2(73, 61)
-sprite_frames = SubResource("SpriteFrames_fm8g5")
+[node name="Name" type="Label" parent="HRPanel/TabContainer/Employees/Employee/VBoxContainer"]
+layout_mode = 2
+text = "Colm Reeves"
+
+[node name="Schedule" type="Label" parent="HRPanel/TabContainer/Employees/Employee/VBoxContainer"]
+layout_mode = 2
+text = "7 AM - 4 PM"
+
+[node name="RunPayrollButton" type="Button" parent="HRPanel/TabContainer/Employees/Employee/VBoxContainer"]
+layout_mode = 2
+text = "Run Payroll ($0)"
+
+[node name="FireButton" type="Button" parent="HRPanel/TabContainer/Employees/Employee/VBoxContainer"]
+layout_mode = 2
+text = "Fire"
 
 [connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
@@ -223,4 +221,5 @@ sprite_frames = SubResource("SpriteFrames_fm8g5")
 [connection signal="pressed" from="PackButton" to="." method="_on_pack_button_pressed"]
 [connection signal="pressed" from="HRButton" to="." method="_on_hr_button_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
-[connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee" to="." method="_on_employee_pressed"]
+[connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton" to="." method="_on_run_payroll_button_pressed"]
+[connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/FireButton" to="." method="_on_fire_button_pressed"]
