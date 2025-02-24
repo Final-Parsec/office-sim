@@ -2,6 +2,8 @@ extends AnimatedSprite2D
 
 func _ready() -> void:
 	visible = false
+	play()
+	speed_scale = 0.5
 
 func _process(_delta: float) -> void:
 	if GameState.selected_action == Enums.Actions.WIDGET:

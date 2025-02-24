@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dp7jp6vb80u4s" path="res://art/main_character_idle1.png" id="2_0i2h7"]
 [ext_resource type="Texture2D" uid="uid://t3fa4urmgypp" path="res://art/main_character_walk.png" id="3_lwpqn"]
 [ext_resource type="Script" path="res://range_marker.gd" id="4_xip5p"]
-[ext_resource type="Texture2D" uid="uid://dqlvc1tmxi238" path="res://art/widget1.png" id="5_bvrv7"]
-[ext_resource type="Texture2D" uid="uid://bcgy26qltbwl6" path="res://art/widget2.png" id="6_7hivx"]
+[ext_resource type="Texture2D" uid="uid://ycjfn1nfmonq" path="res://art/widget_create1.png" id="5_bxt7g"]
+[ext_resource type="Texture2D" uid="uid://ke0rfj74784h" path="res://art/widget_create2.png" id="6_i4b6l"]
 [ext_resource type="Script" path="res://cursor_indicator.gd" id="7_qsbl2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xmfv8"]
@@ -41,10 +41,10 @@ height = 96.0
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_bvrv7")
+"texture": ExtResource("5_bxt7g")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_7hivx")
+"texture": ExtResource("6_i4b6l")
 }],
 "loop": true,
 "name": &"widget_placement",
@@ -71,4 +71,5 @@ script = ExtResource("4_xip5p")
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_60g7n")
 animation = &"widget_placement"
+frame_progress = 0.652963
 script = ExtResource("7_qsbl2")
