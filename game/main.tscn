@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=19 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -9,7 +9,10 @@
 [ext_resource type="AudioStream" uid="uid://bmow02dut2ayu" path="res://art/gameover.wav" id="5_ppkhf"]
 [ext_resource type="PackedScene" uid="uid://cpn25wurr7ckt" path="res://package.tscn" id="7_g140p"]
 [ext_resource type="Script" path="res://mailman.gd" id="8_px6ih"]
+[ext_resource type="Texture2D" uid="uid://ycjfn1nfmonq" path="res://art/widget_create1.png" id="9_71qoh"]
 [ext_resource type="Texture2D" uid="uid://c3ujp3okifr51" path="res://art/mailman.png" id="9_daadb"]
+[ext_resource type="Texture2D" uid="uid://ke0rfj74784h" path="res://art/widget_create2.png" id="10_c7lq0"]
+[ext_resource type="Script" path="res://cursor_indicator.gd" id="11_j04ey"]
 
 [sub_resource type="Curve2D" id="Curve2D_oeg6j"]
 _data = {
@@ -25,6 +28,20 @@ sampling_rate = 44100.0
 [sub_resource type="AudioStreamOggVorbis" id="AudioStreamOggVorbis_5efd5"]
 packet_sequence = SubResource("OggPacketSequence_piud5")
 loop = true
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hsts8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_71qoh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_c7lq0")
+}],
+"loop": true,
+"name": &"widget_placement",
+"speed": 5.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i8n55"]
 animations = [{
@@ -74,6 +91,12 @@ stream = SubResource("AudioStreamOggVorbis_5efd5")
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ppkhf")
+
+[node name="CursorIndicator" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_hsts8")
+animation = &"widget_placement"
+script = ExtResource("11_j04ey")
 
 [node name="FurnitureContainer" type="Node2D" parent="."]
 

@@ -1,12 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhcswl07nrnps"]
+[gd_scene load_steps=7 format=3 uid="uid://bhcswl07nrnps"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_eb275"]
 [ext_resource type="Texture2D" uid="uid://dp7jp6vb80u4s" path="res://art/main_character_idle1.png" id="2_0i2h7"]
 [ext_resource type="Texture2D" uid="uid://t3fa4urmgypp" path="res://art/main_character_walk.png" id="3_lwpqn"]
 [ext_resource type="Script" path="res://range_marker.gd" id="4_xip5p"]
-[ext_resource type="Texture2D" uid="uid://ycjfn1nfmonq" path="res://art/widget_create1.png" id="5_bxt7g"]
-[ext_resource type="Texture2D" uid="uid://ke0rfj74784h" path="res://art/widget_create2.png" id="6_i4b6l"]
-[ext_resource type="Script" path="res://cursor_indicator.gd" id="7_qsbl2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xmfv8"]
 animations = [{
@@ -37,20 +34,6 @@ animations = [{
 radius = 16.0
 height = 96.0
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_60g7n"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_bxt7g")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_i4b6l")
-}],
-"loop": true,
-"name": &"widget_placement",
-"speed": 5.0
-}]
-
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_eb275")
 metadata/_edit_group_ = true
@@ -66,10 +49,3 @@ shape = SubResource("CapsuleShape2D_7eu3l")
 
 [node name="RangeMarker" type="Node2D" parent="."]
 script = ExtResource("4_xip5p")
-
-[node name="CursorIndicator" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-sprite_frames = SubResource("SpriteFrames_60g7n")
-animation = &"widget_placement"
-frame_progress = 0.652963
-script = ExtResource("7_qsbl2")
