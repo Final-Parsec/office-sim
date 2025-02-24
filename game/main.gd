@@ -84,28 +84,12 @@ func _on_hud_employee_run_payroll_pressed() -> void:
 func _on_player_widget_action_requested(position: Vector2, actor_position: Vector2) -> void:
 	if position.distance_to(actor_position) > 100:
 		return
-	
-	# Build Widget Action
-	var clicked_a_widget = false
-	var clicked_ineligible_placement = false
+		
+	var clicked_widget = $WidgetContainer.get_widget_at_position(position)
+	if clicked_widget != null:
+		clicked_widget.build(10)
 
-	# Determine if you are clicking existing widget.
-	for widget in $WidgetContainer.get_children():
-		var collision_shape = widget.get_node("CollisionShape2D") as CollisionShape2D
-		var circle = collision_shape.shape as CircleShape2D
-		var radius = circle.radius
-		if position.distance_to(collision_shape.global_position) <= radius && !clicked_a_widget:
-			clicked_a_widget = true
-			widget.build(10)
-		if position.distance_to(collision_shape.global_position) <= radius * 2:
-			clicked_ineligible_placement = true
-			
-	for package in $PackageContainer.get_children():
-		if position.distance_to(package.global_position) <= 50:
-			clicked_ineligible_placement = true
-
-	# If not, place a new widget.
-	if !clicked_ineligible_placement:
+	if $WidgetContainer.is_buildable_position(position):
 		place_widget(position)
 
 func place_widget(spawn_location: Vector2):
