@@ -96,6 +96,7 @@ sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="widget_action_requested" from="Player" to="." method="_on_player_widget_action_requested"]
+[connection signal="action_bar_button_pressed" from="HUD" to="." method="_on_hud_action_bar_button_pressed"]
 [connection signal="employee_fired" from="HUD" to="." method="_on_hud_employee_fired"]
 [connection signal="employee_recruited" from="HUD" to="." method="_on_hud_employee_recruited"]
 [connection signal="employee_run_payroll_pressed" from="HUD" to="." method="_on_hud_employee_run_payroll_pressed"]

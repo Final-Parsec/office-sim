@@ -57,3 +57,6 @@ func _unhandled_input(event: InputEvent) -> void:
 					package.position = widget.position
 					package_container.add_child(package)
 					widget.queue_free()
+					
+func action_selected() -> void:
+	$RangeMarker.queue_redraw()

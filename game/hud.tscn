@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=12 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
 [ext_resource type="ButtonGroup" uid="uid://ccfmiaex7mmvt" path="res://action_bar.tres" id="3_63eek"]
 [ext_resource type="Script" path="res://hr_panel.gd" id="4_lgdrw"]
 [ext_resource type="Texture2D" uid="uid://ndlb74qnveg0" path="res://art/colm_reeves1.png" id="5_epwqy"]
+[ext_resource type="Texture2D" uid="uid://dqlvc1tmxi238" path="res://art/widget1.png" id="6_e4uvh"]
+[ext_resource type="Texture2D" uid="uid://bcgy26qltbwl6" path="res://art/widget2.png" id="7_epjfe"]
+[ext_resource type="Script" path="res://cursor_indicator.gd" id="8_qxk6n"]
 
 [sub_resource type="Shortcut" id="Shortcut_wpxgg"]
 
@@ -16,6 +19,20 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g7kof"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_e4uvh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_epjfe")
+}],
+"loop": true,
+"name": &"widget_placement",
 "speed": 5.0
 }]
 
@@ -213,7 +230,14 @@ text = "Run Payroll ($0)"
 layout_mode = 2
 text = "Fire"
 
+[node name="CursorIndicator" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_g7kof")
+animation = &"widget_placement"
+script = ExtResource("8_qxk6n")
+
 [connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
+[connection signal="action_bar_button_pressed" from="." to="CursorIndicator" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
 [connection signal="pressed" from="WidgetButton" to="." method="on_widget_button_pressed"]

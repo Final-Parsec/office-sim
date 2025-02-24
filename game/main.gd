@@ -109,3 +109,7 @@ func place_widget(spawn_location: Vector2):
 	var widget = widget_scene.instantiate()
 	widget.position = spawn_location
 	$WidgetContainer.add_child(widget)
+
+
+func _on_hud_action_bar_button_pressed() -> void:
+	$Player.action_selected()
