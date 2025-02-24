@@ -43,7 +43,7 @@ func start(pos):
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("perform_action"):
 		if GameState.selected_action == Enums.Actions.WIDGET:
-			widget_action_requested.emit(event.position)
+			widget_action_requested.emit(event.position, position)
 		if GameState.selected_action == Enums.Actions.FURNITURE:
 			furniture_placement_requested.emit(event.position)
 		if GameState.selected_action == Enums.Actions.PACK:

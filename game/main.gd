@@ -81,7 +81,10 @@ func _on_hud_employee_run_payroll_pressed() -> void:
 	
 
 
-func _on_player_widget_action_requested(position: Vector2) -> void:
+func _on_player_widget_action_requested(position: Vector2, actor_position: Vector2) -> void:
+	if position.distance_to(actor_position) > 100:
+		return
+	
 	# Build Widget Action
 	var clicked_a_widget = false
 	var clicked_ineligible_placement = false

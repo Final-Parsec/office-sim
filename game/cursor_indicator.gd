@@ -3,7 +3,7 @@ extends AnimatedSprite2D
 func _ready() -> void:
 	visible = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if GameState.selected_action == Enums.Actions.WIDGET:
 		position = get_viewport().get_mouse_position()
 
