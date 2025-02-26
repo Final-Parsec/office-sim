@@ -100,3 +100,7 @@ func place_widget(spawn_location: Vector2):
 
 func _on_hud_action_bar_button_pressed() -> void:
 	$Player.action_selected()
+
+
+func _on_hud_accelerate_time_pressed(irl_seconds_per_5_min: float) -> void:
+	$DayTimer.wait_time = irl_seconds_per_5_min

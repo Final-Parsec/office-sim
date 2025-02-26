@@ -124,6 +124,7 @@ script = ExtResource("14_0md0v")
 [node name="EmployeeContainer" type="Node2D" parent="."]
 
 [node name="DayTimer" type="Timer" parent="."]
+wait_time = 5.0
 
 [node name="Mailman" type="Node2D" parent="." node_paths=PackedStringArray("package_container")]
 script = ExtResource("8_px6ih")
@@ -142,6 +143,7 @@ script = ExtResource("11_j04ey")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="widget_action_requested" from="Player" to="." method="_on_player_widget_action_requested"]
+[connection signal="accelerate_time_pressed" from="HUD" to="." method="_on_hud_accelerate_time_pressed"]
 [connection signal="action_bar_button_pressed" from="HUD" to="." method="_on_hud_action_bar_button_pressed"]
 [connection signal="employee_fired" from="HUD" to="." method="_on_hud_employee_fired"]
 [connection signal="employee_recruited" from="HUD" to="." method="_on_hud_employee_recruited"]

@@ -5,6 +5,15 @@ signal action_bar_button_pressed
 signal employee_recruited
 signal employee_fired
 signal employee_run_payroll_pressed
+signal accelerate_time_pressed(irl_seconds_per_5_min: float)
+
+enum AccelerateTimeOptions {
+	DEFAULT = 0,
+	DOUBLE = 1,
+	TRIPLE = 2
+}
+
+var current_accelerate_time_option = AccelerateTimeOptions.DEFAULT
 
 func show_message(text):
 	$Message.text = text
@@ -38,6 +47,9 @@ func on_furniture_button_pressed() -> void:
 	set_selected_action(Enums.Actions.FURNITURE)
 	
 func update_time(time):
+	if !$AccelerateTimeButton.visible:
+		$AccelerateTimeButton.visible = true
+	
 	var meridiem_suffix = "AM" if time < 12 * 60 else "PM"
 	var hour = time / 60 if time < 12 * 60 else (time / 60 - 12)
 	if hour == 0:
@@ -70,3 +82,22 @@ func _on_fire_button_pressed() -> void:
 
 func _on_run_payroll_button_pressed() -> void:
 	employee_run_payroll_pressed.emit()
+
+
+func _on_accelerate_time_pressed() -> void:
+	match current_accelerate_time_option:
+		AccelerateTimeOptions.DOUBLE:
+			$AccelerateTimeButton.text = ">>>"
+			current_accelerate_time_option = AccelerateTimeOptions.TRIPLE
+			accelerate_time_pressed.emit(1.0)
+		AccelerateTimeOptions.TRIPLE:
+			$AccelerateTimeButton.text = ">"
+			current_accelerate_time_option = AccelerateTimeOptions.DEFAULT
+			accelerate_time_pressed.emit(5.0)
+		_:
+			$AccelerateTimeButton.text = ">>"
+			current_accelerate_time_option = AccelerateTimeOptions.DOUBLE
+			accelerate_time_pressed.emit(2.5)
+			
+func _ready() -> void:
+	$AccelerateTimeButton.visible = false
