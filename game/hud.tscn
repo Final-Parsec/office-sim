@@ -39,11 +39,12 @@ vertical_alignment = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -45.0
-offset_bottom = 78.0
+offset_left = -96.0
+offset_right = -43.0
+offset_bottom = 39.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("1_3xhbu")
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -135,6 +136,7 @@ toggle_mode = true
 text = "HR"
 
 [node name="HRPanel" type="Panel" parent="."]
+visible = false
 offset_right = 1152.0
 offset_bottom = 616.0
 script = ExtResource("4_lgdrw")
@@ -213,6 +215,17 @@ text = "Run Payroll ($0)"
 layout_mode = 2
 text = "Fire"
 
+[node name="AccelerateTimeButton" type="Button" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 5.0
+offset_bottom = 36.0
+grow_horizontal = 0
+focus_mode = 0
+text = ">"
+
 [connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
@@ -223,3 +236,4 @@ text = "Fire"
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton" to="." method="_on_run_payroll_button_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/FireButton" to="." method="_on_fire_button_pressed"]
+[connection signal="pressed" from="AccelerateTimeButton" to="." method="_on_accelerate_time_pressed"]
