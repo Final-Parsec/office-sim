@@ -15,7 +15,7 @@ texture = ExtResource("2_gkx3y")
 texture_region_size = Vector2i(256, 512)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(0, 178)
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62.9, -32.55, -63, -284.25, 2, -315.25, 126.5, -252.25, 125.3, 1.35, 62.1, 32.95)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-97.4299, -15.2851, -97.2283, -268.866, -33.3354, -301.011, 94.4503, -236.721, 94.2551, 16.8724, 30.9178, 48.5411)
 
 [sub_resource type="TileSet" id="TileSet_gmivp"]
 tile_shape = 1
