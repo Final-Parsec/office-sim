@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=24 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bw6td1ka2uv5c" path="res://hud.tscn" id="4_oo6vi"]
 [ext_resource type="PackedScene" uid="uid://qw1v0gqpd576" path="res://background.tscn" id="5_1cbru"]
 [ext_resource type="AudioStream" uid="uid://bmow02dut2ayu" path="res://art/gameover.wav" id="5_ppkhf"]
+[ext_resource type="Script" path="res://follow_player.gd" id="6_ygvik"]
 [ext_resource type="PackedScene" uid="uid://cpn25wurr7ckt" path="res://package.tscn" id="7_g140p"]
 [ext_resource type="Script" path="res://mailman.gd" id="8_px6ih"]
 [ext_resource type="Texture2D" uid="uid://ycjfn1nfmonq" path="res://art/widget_create1.png" id="9_71qoh"]
@@ -87,6 +88,10 @@ mouse_filter = 2
 color = Color(0.294118, 0.415686, 0.811765, 1)
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("6_ygvik")
+player = NodePath("../Player")
 
 [node name="Player" parent="." node_paths=PackedStringArray("widget_container", "package_container") instance=ExtResource("1_7mjmw")]
 widget_container = NodePath("../WidgetContainer")

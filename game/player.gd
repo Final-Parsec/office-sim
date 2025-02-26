@@ -4,7 +4,7 @@ signal furniture_placement_requested(position: Vector2)
 signal package_widget_requested(position: Vector2)
 signal widget_action_requested(position: Vector2)
 
-@export var speed = 400
+@export var speed = 375
 @export var widget_container: Node2D
 @export var package_scene: PackedScene
 @export var package_container: Node2D
@@ -26,7 +26,6 @@ func _process(delta: float) -> void:
 		$AnimatedSprite2D.stop()
 
 	move_and_collide(velocity * delta)
-	position = position.clamp(Vector2.ZERO, screen_size)
 	
 	if velocity.x != 0:
 		$AnimatedSprite2D.animation = "walk"
@@ -43,16 +42,16 @@ func start(pos):
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("perform_action"):
 		if GameState.selected_action == Enums.Actions.WIDGET:
-			widget_action_requested.emit(event.position, position)
+			widget_action_requested.emit(get_global_mouse_position(), position)
 		if GameState.selected_action == Enums.Actions.FURNITURE:
-			furniture_placement_requested.emit(event.position)
+			furniture_placement_requested.emit(get_global_mouse_position())
 		if GameState.selected_action == Enums.Actions.PACK:
-			package_widget_requested.emit(event.position)
+			package_widget_requested.emit(get_global_mouse_position())
 			for widget in widget_container.get_children():
 				var collision_shape = widget.get_node("CollisionShape2D") as CollisionShape2D
 				var circle = collision_shape.shape as CircleShape2D
 				var radius = circle.radius
-				if event.position.distance_to(collision_shape.global_position) <= radius && widget.is_packable():
+				if get_global_mouse_position().distance_to(collision_shape.global_position) <= radius && widget.is_packable():
 					var package = package_scene.instantiate()
 					package.position = widget.position
 					package_container.add_child(package)
