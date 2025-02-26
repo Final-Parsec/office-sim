@@ -7,7 +7,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if GameState.selected_action == Enums.Actions.WIDGET:
-		global_position = get_viewport().get_mouse_position()
+		global_position = get_global_mouse_position()
 		
 		if $"../WidgetContainer".is_buildable_position(global_position):
 			animation = "widget_placement"
