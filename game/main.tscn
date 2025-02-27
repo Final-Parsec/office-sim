@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=28 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -19,8 +19,9 @@
 [ext_resource type="Script" path="res://cursor_indicator.gd" id="11_j04ey"]
 [ext_resource type="Script" path="res://widget_container.gd" id="14_0md0v"]
 [ext_resource type="Texture2D" uid="uid://d2l0gmod4mml6" path="res://art/basic_workbench_create1.png" id="14_8b740"]
+[ext_resource type="Texture2D" uid="uid://hscmf3ecjywg" path="res://art/basic_workbench_invalid1.png" id="14_8bxa5"]
 [ext_resource type="Texture2D" uid="uid://cn1f8b36um0nh" path="res://art/basic_workbench_create2.png" id="15_2uysg"]
-[ext_resource type="PackedScene" uid="uid://cg1dr04okmiv3" path="res://furniture_collision_shape.tscn" id="21_kwvrg"]
+[ext_resource type="Texture2D" uid="uid://dbarb441y4ck" path="res://art/basic_workbench_invalid2.png" id="15_c5p6a"]
 
 [sub_resource type="Curve2D" id="Curve2D_oeg6j"]
 _data = {
@@ -50,6 +51,17 @@ animations = [{
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hsts8"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_8bxa5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_c5p6a")
+}],
+"loop": true,
+"name": &"basic_workbench_invalid",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("14_8b740")
@@ -150,11 +162,10 @@ scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [node name="CursorIndicator" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_hsts8")
-animation = &"basic_workbench_placement"
+animation = &"basic_workbench_invalid"
+frame_progress = 0.378247
 script = ExtResource("11_j04ey")
-furniture_collision_shape_scene = ExtResource("21_kwvrg")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="widget_action_requested" from="Player" to="." method="_on_player_widget_action_requested"]
