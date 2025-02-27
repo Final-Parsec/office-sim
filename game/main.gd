@@ -36,8 +36,6 @@ func _on_player_furniture_placement_requested(position: Vector2) -> void:
 		$HUD.update_net_worth(net_worth)
 		var furniture = furniture_scene.instantiate()
 		furniture.position = position
-		print(furniture_container.scale)
-		
 		furniture_container.add_child(furniture)
 
 func _on_day_timer_timeout() -> void:
