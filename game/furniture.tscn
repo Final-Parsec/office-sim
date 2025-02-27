@@ -1,6 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cu5shp7i66fhf"]
 
 [ext_resource type="Texture2D" uid="uid://dfxrfhliyxfcg" path="res://art/basic_workbench.png" id="1_ths7t"]
+[ext_resource type="PackedScene" uid="uid://cg1dr04okmiv3" path="res://furniture_collision_shape.tscn" id="2_a84ix"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nxxwv"]
 animations = [{
@@ -13,9 +14,6 @@ animations = [{
 "speed": 3.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2u4yq"]
-size = Vector2(64.0002, 64)
-
 [node name="Furniture" type="RigidBody2D"]
 collision_mask = 0
 gravity_scale = 0.0
@@ -25,10 +23,7 @@ metadata/_edit_group_ = true
 sprite_frames = SubResource("SpriteFrames_nxxwv")
 animation = &"idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.000115395, 1.41307e-05)
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_2u4yq")
+[node name="FurnitureCollisionShape" parent="." instance=ExtResource("2_a84ix")]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
