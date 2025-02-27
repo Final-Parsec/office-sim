@@ -30,6 +30,9 @@ func _on_player_furniture_placed() -> void:
 	$HUD.update_net_worth(net_worth)
 
 func _on_player_furniture_placement_requested(position: Vector2) -> void:
+	if !$CursorIndicator.visible or $CursorIndicator.animation == 'basic_workbench_invalid':
+		return
+
 	var FURNITURE_COST = 100
 	if net_worth >= FURNITURE_COST:
 		net_worth -= FURNITURE_COST

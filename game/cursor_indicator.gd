@@ -4,21 +4,42 @@ func _ready() -> void:
 	visible = false
 	play()
 	speed_scale = 0.5
+	
+func _physics_process(_delta: float) -> void:
+	if GameState.selected_action == Enums.Actions.FURNITURE:
+		var world_space = get_world_2d().direct_space_state
+		var params = PhysicsShapeQueryParameters2D.new()
+		params.collide_with_areas = true
+		params.collide_with_bodies = true
+		params.shape = RectangleShape2D.new()
+		params.shape.size = Vector2(65, 60)
+		params.transform = Transform2D(0, global_position)
+		var collision = world_space.collide_shape(params, 1)
+		scale = Vector2(.75, .75)
+		if !collision.is_empty():
+			animation = "basic_workbench_invalid"
+		else:
+			animation = "basic_workbench_placement"
 
 func _process(_delta: float) -> void:
+	global_position = get_global_mouse_position()
+	
 	if GameState.selected_action == Enums.Actions.WIDGET:
-		global_position = get_global_mouse_position()
-		
+		scale = Vector2(.5, .5)
 		if $"../WidgetContainer".is_buildable_position(global_position):
 			animation = "widget_placement"
 		else:
 			animation = "widget_build"
 		
 		visible = global_position.distance_to($"../Player".position) <= 100
+	elif GameState.selected_action == Enums.Actions.FURNITURE:
+		visible = global_position.distance_to($"../Player".position) <= 100
 
 func _on_hud_action_bar_button_pressed() -> void:
+	if GameState.selected_action == Enums.Actions.FURNITURE:
+		visible = true
+	
 	if GameState.selected_action == Enums.Actions.WIDGET:
-		animation = "widget_placement"
 		visible = true
 	else:
 		visible = false
