@@ -2,6 +2,7 @@ extends Node
 
 var net_worth
 var current_time
+var drive_points
 
 @export var furniture_scene: PackedScene
 @export var furniture_container: Node2D
@@ -18,11 +19,13 @@ func game_over() -> void:
 func new_game():
 	net_worth = 1000
 	current_time = 6 * 60
+	drive_points = 100
 	$Player.start($StartPosition.position)
 	$DayTimer.start()
 	$HUD.update_net_worth(net_worth)
 	$HUD.update_time(current_time)
 	$HUD.show_message("Rise & Grind")
+	$HUD.update_drive_points(drive_points)
 	#$Music.play()
 
 func _on_player_furniture_placed() -> void:
@@ -63,7 +66,7 @@ func _on_hud_employee_recruited() -> void:
 	employee.position = $StartPosition.position
 	employee_container.add_child(employee)
 	employee.money_owed_updated.connect(_on_employee_money_owed_updated)
-	employee.widget_action_requested.connect(_on_player_widget_action_requested)
+	employee.widget_action_requested.connect(_on_employee_widget_action_requested)
 
 
 func _on_hud_employee_fired() -> void:
@@ -89,11 +92,29 @@ func _on_player_widget_action_requested(position: Vector2, actor_position: Vecto
 		return
 		
 	var clicked_widget = $WidgetContainer.get_widget_at_position(position)
-	if clicked_widget != null:
+	if clicked_widget != null && clicked_widget.progress < 100:
+		var max_build = 15 if drive_points > 0 else 1
+		var progress = randi_range(1, max_build )
+		clicked_widget.build(progress)
+		drive_points -= 1
+		$HUD.update_drive_points(drive_points)
+
+	if $WidgetContainer.is_buildable_position(position):
+		place_widget(position)
+		drive_points -= 5
+		$HUD.update_drive_points(drive_points)
+		
+func _on_employee_widget_action_requested(position: Vector2, actor_position: Vector2) -> void:
+	if position.distance_to(actor_position) > 100:
+		return
+		
+	var clicked_widget = $WidgetContainer.get_widget_at_position(position)
+	if clicked_widget != null && clicked_widget.progress < 100:
 		clicked_widget.build(10)
 
 	if $WidgetContainer.is_buildable_position(position):
 		place_widget(position)
+
 
 func place_widget(spawn_location: Vector2):
 	var widget = widget_scene.instantiate()

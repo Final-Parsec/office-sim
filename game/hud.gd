@@ -101,3 +101,7 @@ func _on_accelerate_time_pressed() -> void:
 			
 func _ready() -> void:
 	$AccelerateTimeButton.visible = false
+
+func update_drive_points(drive_points) -> void:
+	$DriveProgressBar.visible = true
+	$DriveProgressBar.value = drive_points

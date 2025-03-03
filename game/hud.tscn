@@ -226,6 +226,11 @@ grow_horizontal = 0
 focus_mode = 0
 text = ">"
 
+[node name="DriveProgressBar" type="ProgressBar" parent="."]
+visible = false
+offset_right = 250.0
+offset_bottom = 27.0
+
 [connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
