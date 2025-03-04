@@ -7,6 +7,7 @@ signal employee_fired
 signal employee_run_payroll_pressed
 signal accelerate_time_pressed(irl_seconds_per_5_min: float)
 signal overlaying_panel_visibility_changed(overlaying_panel_visible: bool)
+signal player_rest_requested
 
 enum AccelerateTimeOptions {
 	DEFAULT = 0,
@@ -128,3 +129,7 @@ func _on_commute_panel_visibility_changed() -> void:
 	if overlaying_panel_visible != $CommutePanel.visible:
 		overlaying_panel_visible = $CommutePanel.visible
 		overlaying_panel_visibility_changed.emit(overlaying_panel_visible)
+
+
+func _on_rest_button_pressed() -> void:
+	player_rest_requested.emit()

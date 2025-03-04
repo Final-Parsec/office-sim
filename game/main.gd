@@ -142,3 +142,13 @@ func _on_player_moved(player_global_position: Vector2) -> void:
 
 func _on_hud_overlaying_panel_visibility_changed(overlaying_panel_visible: bool) -> void:
 	$Player.prevent_player_movement = overlaying_panel_visible
+
+
+func _on_hud_player_rest_requested() -> void:
+	$DayTimer.paused = true
+	while current_time != 6 * 60:
+		_on_day_timer_timeout()
+		drive_points += 1
+		$HUD.update_drive_points(drive_points)
+		
+	$DayTimer.paused = false

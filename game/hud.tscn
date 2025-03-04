@@ -286,4 +286,5 @@ text = "X"
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/FireButton" to="." method="_on_fire_button_pressed"]
 [connection signal="pressed" from="AccelerateTimeButton" to="." method="_on_accelerate_time_pressed"]
 [connection signal="visibility_changed" from="CommutePanel" to="." method="_on_commute_panel_visibility_changed"]
+[connection signal="pressed" from="CommutePanel/RestButton" to="." method="_on_rest_button_pressed"]
 [connection signal="pressed" from="CommutePanel/CloseCommutePanelButton" to="." method="_on_close_commute_panel_button_pressed"]
