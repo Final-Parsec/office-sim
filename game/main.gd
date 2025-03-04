@@ -51,12 +51,11 @@ func _on_day_timer_timeout() -> void:
 	if current_time >= 24 * 60:
 		current_time = 0
 	$HUD.update_time(current_time)
-	
-	if current_time % 60 == 0:
-		$Mailman.summon()
 		
 	for employee in employee_container.get_children():
 		employee.act(current_time)
+		
+	$Mailman.act(current_time)
 
 func _on_mailman_package_collected() -> void:
 	net_worth += 10
