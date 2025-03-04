@@ -38,11 +38,19 @@ func _process(_delta: float) -> void:
 		visible = global_position.distance_to($"../Player".position) <= 100
 		
 		scale = Vector2(.5, .5)
-		var package = $"../PackageContainer".get_package_at_position(global_position)
-		if package != null:
-			animation = "carry_grabbable"
+		if $"../Player".carrying_package:
+			animation = "carry_package"
 		else:
-			animation = "carry"
+			var package = $"../PackageContainer".get_package_at_position(global_position)
+			if package != null:
+				animation = "carry_grabbable"
+			else:
+				animation = "carry"
+				
+	if visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _on_hud_action_bar_button_pressed() -> void:
 	if GameState.selected_action == Enums.Actions.FURNITURE:

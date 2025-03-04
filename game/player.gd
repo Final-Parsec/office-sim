@@ -12,6 +12,7 @@ signal moved(position: Vector2)
 
 var screen_size
 var prevent_player_movement = false
+var carrying_package = false
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -66,6 +67,18 @@ func _unhandled_input(event: InputEvent) -> void:
 					package.position = widget.position
 					package_container.add_child(package)
 					widget.queue_free()
-					
+		if GameState.selected_action == Enums.Actions.CARRY:
+			if carrying_package:
+				var package = package_scene.instantiate()
+				package.position = get_global_mouse_position()
+				package_container.add_child(package)
+				carrying_package = false
+			else:
+				var mouse_position = get_global_mouse_position()
+				var package = package_container.get_package_at_position(mouse_position)
+				if package != null && mouse_position.distance_to(position) < 100:
+					carrying_package = true
+					package.queue_free()
+
 func action_selected() -> void:
 	$RangeMarker.queue_redraw()
