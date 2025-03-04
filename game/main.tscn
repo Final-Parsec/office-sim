@@ -104,15 +104,6 @@ employee_scene = ExtResource("3_u4axo")
 employee_container = NodePath("EmployeeContainer")
 widget_scene = ExtResource("3_xbnie")
 
-[node name="Background" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.294118, 0.415686, 0.811765, 1)
-
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
@@ -168,6 +159,7 @@ frame_progress = 0.378247
 script = ExtResource("11_j04ey")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
+[connection signal="moved" from="Player" to="." method="_on_player_moved"]
 [connection signal="widget_action_requested" from="Player" to="." method="_on_player_widget_action_requested"]
 [connection signal="accelerate_time_pressed" from="HUD" to="." method="_on_hud_accelerate_time_pressed"]
 [connection signal="action_bar_button_pressed" from="HUD" to="." method="_on_hud_action_bar_button_pressed"]

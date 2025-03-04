@@ -128,3 +128,14 @@ func _on_hud_action_bar_button_pressed() -> void:
 
 func _on_hud_accelerate_time_pressed(irl_seconds_per_5_min: float) -> void:
 	$DayTimer.wait_time = irl_seconds_per_5_min
+
+
+func _on_player_moved(player_global_position: Vector2) -> void:
+	print("called")
+	var tile_coord = $TileMapLayer.local_to_map($TileMapLayer.to_local(player_global_position))
+	var tile_data = $TileMapLayer.get_cell_tile_data(tile_coord)
+	print(tile_coord)
+	if tile_data:
+		var custom_data = tile_data.get_custom_data("is_exit")
+		print(custom_data)
+		

@@ -3,6 +3,7 @@ extends CharacterBody2D
 signal furniture_placement_requested(position: Vector2)
 signal package_widget_requested(position: Vector2)
 signal widget_action_requested(position: Vector2)
+signal moved(position: Vector2)
 
 @export var speed = 375
 @export var widget_container: Node2D
@@ -16,12 +17,16 @@ func _ready() -> void:
 	hide()
 
 func _process(delta: float) -> void:
+	if !visible:
+		return
+	
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = input_dir * speed
 	
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
 		$AnimatedSprite2D.play()
+		moved.emit(global_position)
 	else:
 		$AnimatedSprite2D.stop()
 
@@ -33,7 +38,7 @@ func _process(delta: float) -> void:
 	elif velocity.y != 0:
 		$AnimatedSprite2D.animation = "up"
 		$AnimatedSprite2D.flip_h = false
-	
+
 func start(pos):
 	position = pos
 	show()
