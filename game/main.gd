@@ -131,11 +131,14 @@ func _on_hud_accelerate_time_pressed(irl_seconds_per_5_min: float) -> void:
 
 
 func _on_player_moved(player_global_position: Vector2) -> void:
-	print("called")
 	var tile_coord = $TileMapLayer.local_to_map($TileMapLayer.to_local(player_global_position))
 	var tile_data = $TileMapLayer.get_cell_tile_data(tile_coord)
-	print(tile_coord)
 	if tile_data:
-		var custom_data = tile_data.get_custom_data("is_exit")
-		print(custom_data)
+		var is_exit = tile_data.get_custom_data("is_exit")
+		if is_exit:
+			$HUD.show_commute_panel()
 		
+
+
+func _on_hud_overlaying_panel_visibility_changed(overlaying_panel_visible: bool) -> void:
+	$Player.prevent_player_movement = overlaying_panel_visible

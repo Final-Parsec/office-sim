@@ -11,6 +11,7 @@ signal moved(position: Vector2)
 @export var package_container: Node2D
 
 var screen_size
+var prevent_player_movement = false
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -18,6 +19,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if !visible:
+		return
+		
+	if prevent_player_movement:
+		$AnimatedSprite2D.stop()
 		return
 	
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
