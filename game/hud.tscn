@@ -141,6 +141,7 @@ toggle_mode = true
 text = "HR"
 
 [node name="HRPanel" type="Panel" parent="."]
+visible = false
 offset_top = 58.0
 offset_right = 1152.0
 offset_bottom = 616.0
@@ -236,24 +237,27 @@ offset_right = 250.0
 offset_bottom = 40.0
 
 [node name="CommutePanel" type="Panel" parent="."]
-visible = false
+offset_top = 52.0
 offset_right = 1160.0
 offset_bottom = 648.0
 
 [node name="Title" type="Label" parent="CommutePanel"]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 18.0
-offset_right = 95.0
-offset_bottom = 41.0
+offset_left = 8.0
+offset_top = 37.0
+offset_right = 1152.0
+offset_bottom = 115.0
+theme_override_fonts/font = ExtResource("1_3xhbu")
+theme_override_font_sizes/font_size = 64
 text = "Commute"
+horizontal_alignment = 1
 
 [node name="RestButton" type="Button" parent="CommutePanel"]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 52.0
-offset_right = 196.0
-offset_bottom = 83.0
+offset_left = 496.0
+offset_top = 133.0
+offset_right = 674.0
+offset_bottom = 164.0
 text = "Rest & Return at 6 AM"
 
 [node name="CloseCommutePanelButton" type="Button" parent="CommutePanel"]
