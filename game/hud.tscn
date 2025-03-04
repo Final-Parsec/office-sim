@@ -111,9 +111,9 @@ text = "Widget"
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 64.0
+offset_left = 65.0
 offset_top = -31.0
-offset_right = 145.0
+offset_right = 146.0
 grow_vertical = 0
 toggle_mode = true
 text = "Furniture"
@@ -122,9 +122,9 @@ text = "Furniture"
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 147.0
+offset_left = 149.0
 offset_top = -31.0
-offset_right = 228.0
+offset_right = 230.0
 grow_vertical = 0
 toggle_mode = true
 text = "Pack"
@@ -133,12 +133,24 @@ text = "Pack"
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 231.0
+offset_left = 233.0
 offset_top = -31.0
-offset_right = 312.0
+offset_right = 314.0
 grow_vertical = 0
 toggle_mode = true
 text = "HR"
+
+[node name="CarryButton" type="Button" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 317.0
+offset_top = -31.0
+offset_right = 398.0
+grow_vertical = 0
+toggle_mode = true
+text = "Carry
+"
 
 [node name="HRPanel" type="Panel" parent="."]
 visible = false
@@ -237,6 +249,7 @@ offset_right = 250.0
 offset_bottom = 40.0
 
 [node name="CommutePanel" type="Panel" parent="."]
+visible = false
 offset_top = 52.0
 offset_right = 1160.0
 offset_bottom = 648.0
@@ -280,6 +293,7 @@ text = "X"
 [connection signal="pressed" from="FurnitureButton" to="." method="on_furniture_button_pressed"]
 [connection signal="pressed" from="PackButton" to="." method="_on_pack_button_pressed"]
 [connection signal="pressed" from="HRButton" to="." method="_on_hr_button_pressed"]
+[connection signal="pressed" from="CarryButton" to="." method="_on_carry_button_pressed"]
 [connection signal="visibility_changed" from="HRPanel" to="." method="_on_hr_panel_visibility_changed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton" to="." method="_on_run_payroll_button_pressed"]

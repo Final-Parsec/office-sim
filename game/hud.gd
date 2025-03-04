@@ -133,3 +133,7 @@ func _on_commute_panel_visibility_changed() -> void:
 
 func _on_rest_button_pressed() -> void:
 	player_rest_requested.emit()
+
+
+func _on_carry_button_pressed() -> void:
+	set_selected_action(Enums.Actions.CARRY)
