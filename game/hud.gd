@@ -51,6 +51,7 @@ func on_furniture_button_pressed() -> void:
 func update_time(time):
 	if !$AccelerateTimeButton.visible:
 		$AccelerateTimeButton.visible = true
+		$TopBarBackground.visible = true
 	
 	var meridiem_suffix = "AM" if time < 12 * 60 else "PM"
 	var hour = time / 60 if time < 12 * 60 else (time / 60 - 12)
@@ -104,6 +105,8 @@ func _on_accelerate_time_pressed() -> void:
 func _ready() -> void:
 	$AccelerateTimeButton.visible = false
 	$CommutePanel.visible = false
+	$DriveProgressBar.visible = false
+	$TopBarBackground.visible = false
 
 func update_drive_points(drive_points) -> void:
 	$DriveProgressBar.visible = true
