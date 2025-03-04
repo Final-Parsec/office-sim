@@ -22,16 +22,21 @@ animations = [{
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0jbru")
 
+[node name="TopBarBackground" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 41.0
+color = Color(0.392157, 0.584314, 0.929412, 0.733333)
+
 [node name="NetWorthLabel" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -22.5
-offset_right = 22.5
-offset_bottom = 78.0
+offset_left = -22.0
+offset_right = 23.0
+offset_bottom = 39.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_3xhbu")
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -137,6 +142,7 @@ text = "HR"
 
 [node name="HRPanel" type="Panel" parent="."]
 visible = false
+offset_top = 58.0
 offset_right = 1152.0
 offset_bottom = 616.0
 script = ExtResource("4_lgdrw")
@@ -144,7 +150,7 @@ script = ExtResource("4_lgdrw")
 [node name="TabContainer" type="TabContainer" parent="HRPanel"]
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 616.0
+offset_bottom = 558.0
 current_tab = 1
 
 [node name="Recruiting" type="Control" parent="HRPanel/TabContainer"]
@@ -226,6 +232,47 @@ grow_horizontal = 0
 focus_mode = 0
 text = ">"
 
+[node name="DriveProgressBar" type="ProgressBar" parent="."]
+offset_right = 250.0
+offset_bottom = 40.0
+
+[node name="CommutePanel" type="Panel" parent="."]
+offset_top = 52.0
+offset_right = 1160.0
+offset_bottom = 648.0
+
+[node name="Title" type="Label" parent="CommutePanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 37.0
+offset_right = 1152.0
+offset_bottom = 115.0
+theme_override_fonts/font = ExtResource("1_3xhbu")
+theme_override_font_sizes/font_size = 64
+text = "Commute"
+horizontal_alignment = 1
+
+[node name="RestButton" type="Button" parent="CommutePanel"]
+layout_mode = 0
+offset_left = 496.0
+offset_top = 133.0
+offset_right = 674.0
+offset_bottom = 164.0
+text = "Rest & Return at 6 AM"
+
+[node name="CloseCommutePanelButton" type="Button" parent="CommutePanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_top = 5.0
+offset_right = -8.0
+offset_bottom = 36.0
+grow_horizontal = 0
+focus_mode = 0
+text = "X"
+
 [connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
@@ -233,7 +280,11 @@ text = ">"
 [connection signal="pressed" from="FurnitureButton" to="." method="on_furniture_button_pressed"]
 [connection signal="pressed" from="PackButton" to="." method="_on_pack_button_pressed"]
 [connection signal="pressed" from="HRButton" to="." method="_on_hr_button_pressed"]
+[connection signal="visibility_changed" from="HRPanel" to="." method="_on_hr_panel_visibility_changed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton" to="." method="_on_run_payroll_button_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/FireButton" to="." method="_on_fire_button_pressed"]
 [connection signal="pressed" from="AccelerateTimeButton" to="." method="_on_accelerate_time_pressed"]
+[connection signal="visibility_changed" from="CommutePanel" to="." method="_on_commute_panel_visibility_changed"]
+[connection signal="pressed" from="CommutePanel/RestButton" to="." method="_on_rest_button_pressed"]
+[connection signal="pressed" from="CommutePanel/CloseCommutePanelButton" to="." method="_on_close_commute_panel_button_pressed"]

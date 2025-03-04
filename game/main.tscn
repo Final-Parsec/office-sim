@@ -104,15 +104,6 @@ employee_scene = ExtResource("3_u4axo")
 employee_container = NodePath("EmployeeContainer")
 widget_scene = ExtResource("3_xbnie")
 
-[node name="Background" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.294118, 0.415686, 0.811765, 1)
-
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
@@ -168,12 +159,15 @@ frame_progress = 0.378247
 script = ExtResource("11_j04ey")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
+[connection signal="moved" from="Player" to="." method="_on_player_moved"]
 [connection signal="widget_action_requested" from="Player" to="." method="_on_player_widget_action_requested"]
 [connection signal="accelerate_time_pressed" from="HUD" to="." method="_on_hud_accelerate_time_pressed"]
 [connection signal="action_bar_button_pressed" from="HUD" to="." method="_on_hud_action_bar_button_pressed"]
 [connection signal="employee_fired" from="HUD" to="." method="_on_hud_employee_fired"]
 [connection signal="employee_recruited" from="HUD" to="." method="_on_hud_employee_recruited"]
 [connection signal="employee_run_payroll_pressed" from="HUD" to="." method="_on_hud_employee_run_payroll_pressed"]
+[connection signal="overlaying_panel_visibility_changed" from="HUD" to="." method="_on_hud_overlaying_panel_visibility_changed"]
+[connection signal="player_rest_requested" from="HUD" to="." method="_on_hud_player_rest_requested"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="timeout" from="DayTimer" to="." method="_on_day_timer_timeout"]
 [connection signal="package_collected" from="Mailman" to="." method="_on_mailman_package_collected"]

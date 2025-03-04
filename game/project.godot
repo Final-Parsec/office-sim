@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Enums="*res://enums.gd"
 GameState="*res://game_state.gd"
+DamageNumbers="*res://damage_numbers.gd"
 
 [display]
 

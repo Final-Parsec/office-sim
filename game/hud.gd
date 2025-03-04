@@ -6,6 +6,8 @@ signal employee_recruited
 signal employee_fired
 signal employee_run_payroll_pressed
 signal accelerate_time_pressed(irl_seconds_per_5_min: float)
+signal overlaying_panel_visibility_changed(overlaying_panel_visible: bool)
+signal player_rest_requested
 
 enum AccelerateTimeOptions {
 	DEFAULT = 0,
@@ -14,6 +16,7 @@ enum AccelerateTimeOptions {
 }
 
 var current_accelerate_time_option = AccelerateTimeOptions.DEFAULT
+var overlaying_panel_visible = false
 
 func show_message(text):
 	$Message.text = text
@@ -49,6 +52,7 @@ func on_furniture_button_pressed() -> void:
 func update_time(time):
 	if !$AccelerateTimeButton.visible:
 		$AccelerateTimeButton.visible = true
+		$TopBarBackground.visible = true
 	
 	var meridiem_suffix = "AM" if time < 12 * 60 else "PM"
 	var hour = time / 60 if time < 12 * 60 else (time / 60 - 12)
@@ -101,3 +105,31 @@ func _on_accelerate_time_pressed() -> void:
 			
 func _ready() -> void:
 	$AccelerateTimeButton.visible = false
+	$CommutePanel.visible = false
+	$DriveProgressBar.visible = false
+	$TopBarBackground.visible = false
+
+func update_drive_points(drive_points) -> void:
+	$DriveProgressBar.visible = true
+	$DriveProgressBar.value = drive_points
+
+func show_commute_panel() -> void:
+	$CommutePanel.visible = true
+
+func _on_close_commute_panel_button_pressed() -> void:
+	$CommutePanel.visible = false
+
+
+func _on_hr_panel_visibility_changed() -> void:
+	if overlaying_panel_visible != $HRPanel.visible:
+		overlaying_panel_visible = $HRPanel.visible
+		overlaying_panel_visibility_changed.emit(overlaying_panel_visible)
+
+func _on_commute_panel_visibility_changed() -> void:
+	if overlaying_panel_visible != $CommutePanel.visible:
+		overlaying_panel_visible = $CommutePanel.visible
+		overlaying_panel_visibility_changed.emit(overlaying_panel_visible)
+
+
+func _on_rest_button_pressed() -> void:
+	player_rest_requested.emit()

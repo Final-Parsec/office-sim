@@ -11,6 +11,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
 	
 func build(additional_progress: int):
+	DamageNumbers.display_number(additional_progress, $NumberSpawn.global_position, additional_progress > 10)
 	progress += additional_progress
 	if progress > 100:
 		progress = 100
