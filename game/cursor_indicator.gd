@@ -34,9 +34,21 @@ func _process(_delta: float) -> void:
 		visible = global_position.distance_to($"../Player".position) <= 100
 	elif GameState.selected_action == Enums.Actions.FURNITURE:
 		visible = global_position.distance_to($"../Player".position) <= 100
+	elif GameState.selected_action == Enums.Actions.CARRY:
+		visible = global_position.distance_to($"../Player".position) <= 100
+		
+		scale = Vector2(.5, .5)
+		var package = $"../PackageContainer".get_package_at_position(global_position)
+		if package != null:
+			animation = "carry_grabbable"
+		else:
+			animation = "carry"
 
 func _on_hud_action_bar_button_pressed() -> void:
 	if GameState.selected_action == Enums.Actions.FURNITURE:
+		visible = true
+		
+	if GameState.selected_action == Enums.Actions.CARRY:
 		visible = true
 	
 	if GameState.selected_action == Enums.Actions.WIDGET:

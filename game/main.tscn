@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=31 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -17,11 +17,14 @@
 [ext_resource type="Texture2D" uid="uid://7qi17hucq46s" path="res://art/widget_build2.png" id="10_5uig0"]
 [ext_resource type="Texture2D" uid="uid://ke0rfj74784h" path="res://art/widget_create2.png" id="10_c7lq0"]
 [ext_resource type="Script" path="res://cursor_indicator.gd" id="11_j04ey"]
+[ext_resource type="Script" path="res://package_container.gd" id="12_mohxw"]
 [ext_resource type="Script" path="res://widget_container.gd" id="14_0md0v"]
 [ext_resource type="Texture2D" uid="uid://d2l0gmod4mml6" path="res://art/basic_workbench_create1.png" id="14_8b740"]
 [ext_resource type="Texture2D" uid="uid://hscmf3ecjywg" path="res://art/basic_workbench_invalid1.png" id="14_8bxa5"]
 [ext_resource type="Texture2D" uid="uid://cn1f8b36um0nh" path="res://art/basic_workbench_create2.png" id="15_2uysg"]
 [ext_resource type="Texture2D" uid="uid://dbarb441y4ck" path="res://art/basic_workbench_invalid2.png" id="15_c5p6a"]
+[ext_resource type="Texture2D" uid="uid://dyphviqmre33k" path="res://art/hand1.png" id="19_hgwrt"]
+[ext_resource type="Texture2D" uid="uid://p4dst3dueqpl" path="res://art/hand2.png" id="20_81fmh"]
 
 [sub_resource type="Curve2D" id="Curve2D_oeg6j"]
 _data = {
@@ -71,6 +74,25 @@ animations = [{
 }],
 "loop": true,
 "name": &"basic_workbench_placement",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_hgwrt")
+}],
+"loop": true,
+"name": &"carry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_hgwrt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_81fmh")
+}],
+"loop": true,
+"name": &"carry_grabbable",
 "speed": 5.0
 }, {
 "frames": [{
@@ -137,6 +159,7 @@ stream = ExtResource("5_ppkhf")
 script = ExtResource("14_0md0v")
 
 [node name="PackageContainer" type="Node2D" parent="."]
+script = ExtResource("12_mohxw")
 
 [node name="EmployeeContainer" type="Node2D" parent="."]
 
@@ -154,8 +177,9 @@ sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [node name="CursorIndicator" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hsts8")
-animation = &"basic_workbench_invalid"
-frame_progress = 0.378247
+animation = &"carry_grabbable"
+frame = 1
+frame_progress = 0.622083
 script = ExtResource("11_j04ey")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
