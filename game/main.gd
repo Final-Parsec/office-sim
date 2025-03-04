@@ -4,6 +4,7 @@ var net_worth
 var current_time
 var drive_points
 var player_tile_position
+var carry_package
 
 @export var furniture_scene: PackedScene
 @export var furniture_container: Node2D
