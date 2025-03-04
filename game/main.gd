@@ -3,6 +3,7 @@ extends Node
 var net_worth
 var current_time
 var drive_points
+var player_tile_position
 
 @export var furniture_scene: PackedScene
 @export var furniture_container: Node2D
@@ -125,30 +126,28 @@ func place_widget(spawn_location: Vector2):
 func _on_hud_action_bar_button_pressed() -> void:
 	$Player.action_selected()
 
-
 func _on_hud_accelerate_time_pressed(irl_seconds_per_5_min: float) -> void:
 	$DayTimer.wait_time = irl_seconds_per_5_min
 
-
 func _on_player_moved(player_global_position: Vector2) -> void:
 	var tile_coord = $TileMapLayer.local_to_map($TileMapLayer.to_local(player_global_position))
-	var tile_data = $TileMapLayer.get_cell_tile_data(tile_coord)
-	if tile_data:
-		var is_exit = tile_data.get_custom_data("is_exit")
-		if is_exit:
-			$HUD.show_commute_panel()
-		
-
+	if tile_coord != player_tile_position:
+		player_tile_position = tile_coord
+		var tile_data = $TileMapLayer.get_cell_tile_data(tile_coord)
+		if tile_data:
+			var is_exit = tile_data.get_custom_data("is_exit")
+			if is_exit:
+				$HUD.show_commute_panel()
 
 func _on_hud_overlaying_panel_visibility_changed(overlaying_panel_visible: bool) -> void:
 	$Player.prevent_player_movement = overlaying_panel_visible
-
 
 func _on_hud_player_rest_requested() -> void:
 	$DayTimer.paused = true
 	while current_time != 6 * 60:
 		_on_day_timer_timeout()
-		drive_points += 1
-		$HUD.update_drive_points(drive_points)
+		if drive_points < 100:
+			drive_points += 1
+			$HUD.update_drive_points(drive_points)
 		
 	$DayTimer.paused = false
