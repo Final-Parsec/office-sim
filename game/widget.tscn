@@ -36,8 +36,6 @@ animation = &"idle"
 rotation = 1.5708
 shape = SubResource("CircleShape2D_6hbh8")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-
 [node name="ProgressLabel" type="Label" parent="."]
 offset_left = -33.0
 offset_top = -12.0
@@ -48,5 +46,3 @@ horizontal_alignment = 1
 
 [node name="NumberSpawn" type="Node2D" parent="."]
 position = Vector2(-10, -30)
-
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

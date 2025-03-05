@@ -1,12 +1,53 @@
-[gd_scene load_steps=8 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=19 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
+[ext_resource type="Texture2D" uid="uid://dqlvc1tmxi238" path="res://art/widget1.png" id="3_2amy2"]
 [ext_resource type="ButtonGroup" uid="uid://ccfmiaex7mmvt" path="res://action_bar.tres" id="3_63eek"]
 [ext_resource type="Script" path="res://hr_panel.gd" id="4_lgdrw"]
 [ext_resource type="Texture2D" uid="uid://ndlb74qnveg0" path="res://art/colm_reeves1.png" id="5_epwqy"]
 
 [sub_resource type="Shortcut" id="Shortcut_wpxgg"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_qhti0"]
+device = -1
+keycode = 49
+unicode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_o56nb"]
+events = [SubResource("InputEventKey_qhti0")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_cff42"]
+device = -1
+keycode = 50
+unicode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_ff7vr"]
+events = [SubResource("InputEventKey_cff42")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_fkb0y"]
+device = -1
+keycode = 51
+unicode = 51
+
+[sub_resource type="Shortcut" id="Shortcut_dr0wh"]
+events = [SubResource("InputEventKey_fkb0y")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_a6gk2"]
+device = -1
+keycode = 52
+unicode = 52
+
+[sub_resource type="Shortcut" id="Shortcut_ilu61"]
+events = [SubResource("InputEventKey_a6gk2")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_8fpgi"]
+device = -1
+keycode = 53
+unicode = 53
+
+[sub_resource type="Shortcut" id="Shortcut_yqswv"]
+events = [SubResource("InputEventKey_8fpgi")]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fm8g5"]
 animations = [{
@@ -94,6 +135,13 @@ text = "Start"
 wait_time = 2.0
 one_shot = true
 
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_left = 38.0
+offset_top = 552.0
+offset_right = 78.0
+offset_bottom = 592.0
+texture_normal = ExtResource("3_2amy2")
+
 [node name="WidgetButton" type="Button" parent="."]
 anchors_preset = 2
 anchor_top = 1.0
@@ -105,6 +153,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 8
 toggle_mode = true
 button_group = ExtResource("3_63eek")
+shortcut = SubResource("Shortcut_o56nb")
 text = "Widget"
 
 [node name="FurnitureButton" type="Button" parent="."]
@@ -116,6 +165,7 @@ offset_top = -31.0
 offset_right = 146.0
 grow_vertical = 0
 toggle_mode = true
+shortcut = SubResource("Shortcut_ff7vr")
 text = "Furniture"
 
 [node name="PackButton" type="Button" parent="."]
@@ -127,6 +177,7 @@ offset_top = -31.0
 offset_right = 230.0
 grow_vertical = 0
 toggle_mode = true
+shortcut = SubResource("Shortcut_dr0wh")
 text = "Pack"
 
 [node name="HRButton" type="Button" parent="."]
@@ -138,6 +189,7 @@ offset_top = -31.0
 offset_right = 314.0
 grow_vertical = 0
 toggle_mode = true
+shortcut = SubResource("Shortcut_ilu61")
 text = "HR"
 
 [node name="CarryButton" type="Button" parent="."]
@@ -149,6 +201,7 @@ offset_top = -31.0
 offset_right = 398.0
 grow_vertical = 0
 toggle_mode = true
+shortcut = SubResource("Shortcut_yqswv")
 text = "Carry
 "
 
