@@ -2,20 +2,15 @@
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
-[ext_resource type="ButtonGroup" uid="uid://ccfmiaex7mmvt" path="res://action_bar.tres" id="3_63eek"]
+[ext_resource type="PackedScene" uid="uid://ch8shnq0q41cr" path="res://action_bar_button.tscn" id="3_7j8t7"]
 [ext_resource type="Texture2D" uid="uid://dw5bycki4sxtv" path="res://art/action_bar_one1.png" id="4_jvfae"]
 [ext_resource type="Script" path="res://hr_panel.gd" id="4_lgdrw"]
+[ext_resource type="Texture2D" uid="uid://du1253hbh50bo" path="res://art/action_bar_one2.png" id="5_b4bj4"]
 [ext_resource type="Texture2D" uid="uid://ndlb74qnveg0" path="res://art/colm_reeves1.png" id="5_epwqy"]
 
 [sub_resource type="Shortcut" id="Shortcut_wpxgg"]
 
-[sub_resource type="InputEventKey" id="InputEventKey_qhti0"]
-device = -1
-keycode = 49
-unicode = 49
-
-[sub_resource type="Shortcut" id="Shortcut_o56nb"]
-events = [SubResource("InputEventKey_qhti0")]
+[sub_resource type="ButtonGroup" id="ButtonGroup_bhlso"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_cff42"]
 device = -1
@@ -135,28 +130,19 @@ text = "Start"
 wait_time = 2.0
 one_shot = true
 
-[node name="WidgetButton" type="Button" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 2.0
-offset_top = -62.0
-offset_right = 102.0
-offset_bottom = 38.0
-grow_vertical = 0
-scale = Vector2(0.6, 0.6)
-size_flags_horizontal = 0
-size_flags_vertical = 8
-toggle_mode = true
-action_mode = 0
-button_group = ExtResource("3_63eek")
-shortcut = SubResource("Shortcut_o56nb")
-
-[node name="TextureRect" type="TextureRect" parent="WidgetButton"]
-layout_mode = 0
+[node name="ActionBar" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("4_jvfae")
+
+[node name="WidgetButton" parent="ActionBar" instance=ExtResource("3_7j8t7")]
+layout_mode = 1
+offset_top = 546.0
+offset_bottom = 646.0
+button_group = SubResource("ButtonGroup_bhlso")
+default_texture = ExtResource("4_jvfae")
+active_texture = ExtResource("5_b4bj4")
 
 [node name="FurnitureButton" type="Button" parent="."]
 anchors_preset = 2
@@ -344,7 +330,7 @@ text = "X"
 [connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
-[connection signal="pressed" from="WidgetButton" to="." method="on_widget_button_pressed"]
+[connection signal="pressed" from="ActionBar/WidgetButton" to="." method="on_widget_button_pressed"]
 [connection signal="pressed" from="FurnitureButton" to="." method="on_furniture_button_pressed"]
 [connection signal="pressed" from="PackButton" to="." method="_on_pack_button_pressed"]
 [connection signal="pressed" from="HRButton" to="." method="_on_hr_button_pressed"]

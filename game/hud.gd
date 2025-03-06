@@ -44,13 +44,9 @@ func _on_message_timer_timeout() -> void:
 	$Message.hide()
 
 func on_widget_button_pressed() -> void:
-	$WidgetButton.button_pressed = true
-	$WidgetButton/TextureRect.texture = load("res://art/action_bar_one2.png")
 	set_selected_action(Enums.Actions.WIDGET)
 	
 func on_furniture_button_pressed() -> void:
-	$WidgetButton.button_pressed = false
-	$WidgetButton/TextureRect.texture = load("res://art/action_bar_one1.png")
 	set_selected_action(Enums.Actions.FURNITURE)
 	
 func update_time(time):
@@ -73,6 +69,13 @@ func _on_hr_button_pressed() -> void:
 	set_selected_action(Enums.Actions.HR)
 
 func set_selected_action(selected_action: Enums.Actions) -> void:
+	for action_bar_button in $ActionBar.get_children():
+		action_bar_button.set_default_texture()
+		
+	match selected_action:
+		Enums.Actions.WIDGET:
+			$ActionBar/WidgetButton.set_active_texture()
+	
 	GameState.selected_action = selected_action
 	action_bar_button_pressed.emit()
 

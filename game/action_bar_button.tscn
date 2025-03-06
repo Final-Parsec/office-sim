@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://ch8shnq0q41cr"]
+
+[ext_resource type="ButtonGroup" uid="uid://ccfmiaex7mmvt" path="res://action_bar.tres" id="1_v5cjg"]
+[ext_resource type="Script" path="res://action_bar_button.gd" id="2_5s3vm"]
+[ext_resource type="Texture2D" uid="uid://dw5bycki4sxtv" path="res://art/action_bar_one1.png" id="2_46ajc"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_qhti0"]
+device = -1
+keycode = 49
+unicode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_o56nb"]
+events = [SubResource("InputEventKey_qhti0")]
+
+[node name="WidgetButton" type="Button"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -62.0
+offset_right = 102.0
+offset_bottom = 38.0
+grow_vertical = 0
+scale = Vector2(0.6, 0.6)
+size_flags_horizontal = 0
+size_flags_vertical = 8
+toggle_mode = true
+action_mode = 0
+button_group = ExtResource("1_v5cjg")
+shortcut = SubResource("Shortcut_o56nb")
+script = ExtResource("2_5s3vm")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_46ajc")
