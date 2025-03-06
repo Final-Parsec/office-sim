@@ -44,9 +44,13 @@ func _on_message_timer_timeout() -> void:
 	$Message.hide()
 
 func on_widget_button_pressed() -> void:
+	$WidgetButton.button_pressed = true
+	$WidgetButton/TextureRect.texture = load("res://art/action_bar_one2.png")
 	set_selected_action(Enums.Actions.WIDGET)
 	
 func on_furniture_button_pressed() -> void:
+	$WidgetButton.button_pressed = false
+	$WidgetButton/TextureRect.texture = load("res://art/action_bar_one1.png")
 	set_selected_action(Enums.Actions.FURNITURE)
 	
 func update_time(time):

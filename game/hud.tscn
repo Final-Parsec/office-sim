@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
-[ext_resource type="Texture2D" uid="uid://dqlvc1tmxi238" path="res://art/widget1.png" id="3_2amy2"]
 [ext_resource type="ButtonGroup" uid="uid://ccfmiaex7mmvt" path="res://action_bar.tres" id="3_63eek"]
+[ext_resource type="Texture2D" uid="uid://dw5bycki4sxtv" path="res://art/action_bar_one1.png" id="4_jvfae"]
 [ext_resource type="Script" path="res://hr_panel.gd" id="4_lgdrw"]
 [ext_resource type="Texture2D" uid="uid://ndlb74qnveg0" path="res://art/colm_reeves1.png" id="5_epwqy"]
 
@@ -135,26 +135,28 @@ text = "Start"
 wait_time = 2.0
 one_shot = true
 
-[node name="TextureButton" type="TextureButton" parent="."]
-offset_left = 38.0
-offset_top = 552.0
-offset_right = 78.0
-offset_bottom = 592.0
-texture_normal = ExtResource("3_2amy2")
-
 [node name="WidgetButton" type="Button" parent="."]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -8.0
-offset_right = 8.0
+offset_left = 2.0
+offset_top = -62.0
+offset_right = 102.0
+offset_bottom = 38.0
 grow_vertical = 0
+scale = Vector2(0.6, 0.6)
 size_flags_horizontal = 0
 size_flags_vertical = 8
 toggle_mode = true
+action_mode = 0
 button_group = ExtResource("3_63eek")
 shortcut = SubResource("Shortcut_o56nb")
-text = "Widget"
+
+[node name="TextureRect" type="TextureRect" parent="WidgetButton"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("4_jvfae")
 
 [node name="FurnitureButton" type="Button" parent="."]
 anchors_preset = 2
