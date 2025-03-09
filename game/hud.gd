@@ -74,6 +74,8 @@ func set_selected_action(selected_action: Enums.Actions) -> void:
 			$ActionBar/WidgetButton.set_active_texture()
 		Enums.Actions.FURNITURE:
 			$ActionBar/FurnitureButton.set_active_texture()
+		Enums.Actions.PACK:
+			$ActionBar/PackButton.set_active_texture()
 	
 	GameState.selected_action = selected_action
 	action_bar_button_pressed.emit()
