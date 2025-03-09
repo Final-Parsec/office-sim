@@ -46,9 +46,6 @@ func _on_message_timer_timeout() -> void:
 func on_widget_button_pressed() -> void:
 	set_selected_action(Enums.Actions.WIDGET)
 	
-func on_furniture_button_pressed() -> void:
-	set_selected_action(Enums.Actions.FURNITURE)
-	
 func update_time(time):
 	if !$AccelerateTimeButton.visible:
 		$AccelerateTimeButton.visible = true
@@ -75,6 +72,8 @@ func set_selected_action(selected_action: Enums.Actions) -> void:
 	match selected_action:
 		Enums.Actions.WIDGET:
 			$ActionBar/WidgetButton.set_active_texture()
+		Enums.Actions.FURNITURE:
+			$ActionBar/FurnitureButton.set_active_texture()
 	
 	GameState.selected_action = selected_action
 	action_bar_button_pressed.emit()
@@ -144,3 +143,7 @@ func _on_rest_button_pressed() -> void:
 
 func _on_carry_button_pressed() -> void:
 	set_selected_action(Enums.Actions.CARRY)
+
+
+func _on_furniture_button_pressed() -> void:
+	set_selected_action(Enums.Actions.FURNITURE)
