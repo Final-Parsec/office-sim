@@ -145,6 +145,7 @@ func _on_hud_overlaying_panel_visibility_changed(overlaying_panel_visible: bool)
 func _on_hud_player_rest_requested() -> void:
 	$DayTimer.paused = true
 	while current_time != 6 * 60:
+		print('advancing time ' + str(current_time) + ' - ' + str(drive_points))
 		_on_day_timer_timeout()
 		if drive_points < 100:
 			drive_points += 1

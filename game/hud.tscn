@@ -1,12 +1,70 @@
-[gd_scene load_steps=8 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=32 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
-[ext_resource type="ButtonGroup" uid="uid://ccfmiaex7mmvt" path="res://action_bar.tres" id="3_63eek"]
+[ext_resource type="PackedScene" uid="uid://ch8shnq0q41cr" path="res://action_bar_button.tscn" id="3_7j8t7"]
+[ext_resource type="Texture2D" uid="uid://dw5bycki4sxtv" path="res://art/action_bar_one1.png" id="4_jvfae"]
 [ext_resource type="Script" path="res://hr_panel.gd" id="4_lgdrw"]
+[ext_resource type="Texture2D" uid="uid://du1253hbh50bo" path="res://art/action_bar_one2.png" id="5_b4bj4"]
 [ext_resource type="Texture2D" uid="uid://ndlb74qnveg0" path="res://art/colm_reeves1.png" id="5_epwqy"]
+[ext_resource type="Texture2D" uid="uid://cwqbw2815e21a" path="res://art/action_bar_two1.png" id="6_qj8jc"]
+[ext_resource type="Texture2D" uid="uid://cymqmdhhbkcc0" path="res://art/action_bar_two2.png" id="7_aa0w3"]
+[ext_resource type="Texture2D" uid="uid://dqsp2j0yxw1f0" path="res://art/action_bar_three1.png" id="8_bk342"]
+[ext_resource type="Texture2D" uid="uid://coo65m6357sbn" path="res://art/action_bar_three2.png" id="9_upxfc"]
+[ext_resource type="Texture2D" uid="uid://c4oye0i6qj157" path="res://art/action_bar_four1.png" id="10_hl7e8"]
+[ext_resource type="Texture2D" uid="uid://02he7g1rqbqy" path="res://art/action_bar_four2.png" id="11_7k55l"]
+[ext_resource type="Texture2D" uid="uid://76pl0icdalaw" path="res://art/action_bar_five1.png" id="12_ibhiq"]
+[ext_resource type="Texture2D" uid="uid://csg6mcyx2jvpm" path="res://art/action_bar_five2.png" id="13_ddm14"]
 
 [sub_resource type="Shortcut" id="Shortcut_wpxgg"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_bhlso"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_kxbst"]
+device = -1
+keycode = 49
+unicode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_ycck1"]
+events = [SubResource("InputEventKey_kxbst")]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_cdplk"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_o0y8p"]
+device = -1
+keycode = 50
+unicode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_f1fsn"]
+events = [SubResource("InputEventKey_o0y8p")]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_y3mkh"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_mrumb"]
+device = -1
+keycode = 51
+unicode = 51
+
+[sub_resource type="Shortcut" id="Shortcut_6cy3v"]
+events = [SubResource("InputEventKey_mrumb")]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_bmb7w"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_3jk3g"]
+device = -1
+keycode = 52
+unicode = 52
+
+[sub_resource type="Shortcut" id="Shortcut_aa2ab"]
+events = [SubResource("InputEventKey_3jk3g")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_5q3fm"]
+device = -1
+keycode = 53
+unicode = 53
+
+[sub_resource type="Shortcut" id="Shortcut_e0ubf"]
+events = [SubResource("InputEventKey_5q3fm")]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fm8g5"]
 animations = [{
@@ -94,75 +152,85 @@ text = "Start"
 wait_time = 2.0
 one_shot = true
 
-[node name="WidgetButton" type="Button" parent="."]
+[node name="ActionBar" type="Control" parent="."]
+layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -8.0
+offset_top = -56.0
+offset_right = 1152.0
+grow_vertical = 0
+
+[node name="WidgetButton" parent="ActionBar" instance=ExtResource("3_7j8t7")]
+layout_mode = 1
+offset_left = 0.0
+offset_top = -59.0
 offset_right = 8.0
-grow_vertical = 0
-size_flags_horizontal = 0
-size_flags_vertical = 8
-toggle_mode = true
-button_group = ExtResource("3_63eek")
-text = "Widget"
+offset_bottom = -51.0
+tooltip_text = "Create / Build Widget"
+button_group = SubResource("ButtonGroup_bhlso")
+shortcut = SubResource("Shortcut_ycck1")
+default_texture = ExtResource("4_jvfae")
+active_texture = ExtResource("5_b4bj4")
 
-[node name="FurnitureButton" type="Button" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 65.0
-offset_top = -31.0
-offset_right = 146.0
-grow_vertical = 0
-toggle_mode = true
-text = "Furniture"
+[node name="FurnitureButton" parent="ActionBar" instance=ExtResource("3_7j8t7")]
+layout_mode = 1
+offset_left = 62.0
+offset_top = -59.0
+offset_right = 162.0
+offset_bottom = 41.0
+tooltip_text = "Place Workbench"
+button_group = SubResource("ButtonGroup_cdplk")
+shortcut = SubResource("Shortcut_f1fsn")
+default_texture = ExtResource("6_qj8jc")
+active_texture = ExtResource("7_aa0w3")
 
-[node name="PackButton" type="Button" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 149.0
-offset_top = -31.0
-offset_right = 230.0
-grow_vertical = 0
-toggle_mode = true
-text = "Pack"
+[node name="PackButton" parent="ActionBar" instance=ExtResource("3_7j8t7")]
+layout_mode = 1
+offset_left = 124.0
+offset_top = -59.0
+offset_right = 132.0
+offset_bottom = -51.0
+tooltip_text = "Pack Widget"
+button_group = SubResource("ButtonGroup_y3mkh")
+shortcut = SubResource("Shortcut_6cy3v")
+default_texture = ExtResource("8_bk342")
+active_texture = ExtResource("9_upxfc")
 
-[node name="HRButton" type="Button" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 233.0
-offset_top = -31.0
-offset_right = 314.0
-grow_vertical = 0
-toggle_mode = true
-text = "HR"
+[node name="HRButton" parent="ActionBar" instance=ExtResource("3_7j8t7")]
+layout_mode = 1
+offset_left = 186.0
+offset_top = -59.0
+offset_right = 194.0
+offset_bottom = -51.0
+tooltip_text = "Human Resources"
+button_group = SubResource("ButtonGroup_bmb7w")
+shortcut = SubResource("Shortcut_aa2ab")
+default_texture = ExtResource("10_hl7e8")
+active_texture = ExtResource("11_7k55l")
 
-[node name="CarryButton" type="Button" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 317.0
-offset_top = -31.0
-offset_right = 398.0
-grow_vertical = 0
-toggle_mode = true
-text = "Carry
-"
+[node name="CarryButton" parent="ActionBar" instance=ExtResource("3_7j8t7")]
+layout_mode = 1
+offset_left = 248.0
+offset_top = -59.0
+offset_right = 256.0
+offset_bottom = -51.0
+tooltip_text = "Carry"
+button_group = SubResource("ButtonGroup_bhlso")
+shortcut = SubResource("Shortcut_e0ubf")
+default_texture = ExtResource("12_ibhiq")
+active_texture = ExtResource("13_ddm14")
 
 [node name="HRPanel" type="Panel" parent="."]
-visible = false
-offset_top = 58.0
+offset_top = 41.0
 offset_right = 1152.0
-offset_bottom = 616.0
+offset_bottom = 589.0
 script = ExtResource("4_lgdrw")
 
 [node name="TabContainer" type="TabContainer" parent="HRPanel"]
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 558.0
+offset_bottom = 548.0
 current_tab = 1
 
 [node name="Recruiting" type="Control" parent="HRPanel/TabContainer"]
@@ -289,11 +357,11 @@ text = "X"
 [connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
-[connection signal="pressed" from="WidgetButton" to="." method="on_widget_button_pressed"]
-[connection signal="pressed" from="FurnitureButton" to="." method="on_furniture_button_pressed"]
-[connection signal="pressed" from="PackButton" to="." method="_on_pack_button_pressed"]
-[connection signal="pressed" from="HRButton" to="." method="_on_hr_button_pressed"]
-[connection signal="pressed" from="CarryButton" to="." method="_on_carry_button_pressed"]
+[connection signal="pressed" from="ActionBar/WidgetButton" to="." method="on_widget_button_pressed"]
+[connection signal="pressed" from="ActionBar/FurnitureButton" to="." method="_on_furniture_button_pressed"]
+[connection signal="pressed" from="ActionBar/PackButton" to="." method="_on_pack_button_pressed"]
+[connection signal="pressed" from="ActionBar/HRButton" to="." method="_on_hr_button_pressed"]
+[connection signal="pressed" from="ActionBar/CarryButton" to="." method="_on_carry_button_pressed"]
 [connection signal="visibility_changed" from="HRPanel" to="." method="_on_hr_panel_visibility_changed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton" to="." method="_on_run_payroll_button_pressed"]

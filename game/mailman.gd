@@ -24,6 +24,9 @@ func act(current_time: int) -> void:
 	visible = true
 	var collectible_package = null
 	for package in package_container.get_children():
+		if package.is_queued_for_deletion():
+			continue
+		
 		var tile_coord = $"../TileMapLayer".local_to_map($"../TileMapLayer".to_local(package.global_position))
 		var tile_data = $"../TileMapLayer".get_cell_tile_data(tile_coord)
 		if tile_data:
