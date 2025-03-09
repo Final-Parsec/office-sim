@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=32 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
@@ -13,18 +13,20 @@
 [ext_resource type="Texture2D" uid="uid://coo65m6357sbn" path="res://art/action_bar_three2.png" id="9_upxfc"]
 [ext_resource type="Texture2D" uid="uid://c4oye0i6qj157" path="res://art/action_bar_four1.png" id="10_hl7e8"]
 [ext_resource type="Texture2D" uid="uid://02he7g1rqbqy" path="res://art/action_bar_four2.png" id="11_7k55l"]
+[ext_resource type="Texture2D" uid="uid://76pl0icdalaw" path="res://art/action_bar_five1.png" id="12_ibhiq"]
+[ext_resource type="Texture2D" uid="uid://csg6mcyx2jvpm" path="res://art/action_bar_five2.png" id="13_ddm14"]
 
 [sub_resource type="Shortcut" id="Shortcut_wpxgg"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_bhlso"]
 
-[sub_resource type="InputEventKey" id="InputEventKey_5q3fm"]
+[sub_resource type="InputEventKey" id="InputEventKey_kxbst"]
 device = -1
 keycode = 49
 unicode = 49
 
-[sub_resource type="Shortcut" id="Shortcut_c1ew4"]
-events = [SubResource("InputEventKey_5q3fm")]
+[sub_resource type="Shortcut" id="Shortcut_ycck1"]
+events = [SubResource("InputEventKey_kxbst")]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_cdplk"]
 
@@ -46,6 +48,8 @@ unicode = 51
 [sub_resource type="Shortcut" id="Shortcut_6cy3v"]
 events = [SubResource("InputEventKey_mrumb")]
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_bmb7w"]
+
 [sub_resource type="InputEventKey" id="InputEventKey_3jk3g"]
 device = -1
 keycode = 52
@@ -54,13 +58,13 @@ unicode = 52
 [sub_resource type="Shortcut" id="Shortcut_aa2ab"]
 events = [SubResource("InputEventKey_3jk3g")]
 
-[sub_resource type="InputEventKey" id="InputEventKey_8fpgi"]
+[sub_resource type="InputEventKey" id="InputEventKey_5q3fm"]
 device = -1
 keycode = 53
 unicode = 53
 
-[sub_resource type="Shortcut" id="Shortcut_yqswv"]
-events = [SubResource("InputEventKey_8fpgi")]
+[sub_resource type="Shortcut" id="Shortcut_e0ubf"]
+events = [SubResource("InputEventKey_5q3fm")]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fm8g5"]
 animations = [{
@@ -164,7 +168,7 @@ offset_top = -59.0
 offset_right = 8.0
 offset_bottom = -51.0
 button_group = SubResource("ButtonGroup_bhlso")
-shortcut = SubResource("Shortcut_c1ew4")
+shortcut = SubResource("Shortcut_ycck1")
 default_texture = ExtResource("4_jvfae")
 active_texture = ExtResource("5_b4bj4")
 
@@ -196,23 +200,21 @@ offset_left = 186.0
 offset_top = -59.0
 offset_right = 194.0
 offset_bottom = -51.0
-button_group = SubResource("ButtonGroup_bhlso")
+button_group = SubResource("ButtonGroup_bmb7w")
 shortcut = SubResource("Shortcut_aa2ab")
 default_texture = ExtResource("10_hl7e8")
 active_texture = ExtResource("11_7k55l")
 
-[node name="CarryButton" type="Button" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 317.0
-offset_top = -31.0
-offset_right = 398.0
-grow_vertical = 0
-toggle_mode = true
-shortcut = SubResource("Shortcut_yqswv")
-text = "Carry
-"
+[node name="CarryButton" parent="ActionBar" instance=ExtResource("3_7j8t7")]
+layout_mode = 1
+offset_left = 248.0
+offset_top = -59.0
+offset_right = 256.0
+offset_bottom = -51.0
+button_group = SubResource("ButtonGroup_bhlso")
+shortcut = SubResource("Shortcut_e0ubf")
+default_texture = ExtResource("12_ibhiq")
+active_texture = ExtResource("13_ddm14")
 
 [node name="HRPanel" type="Panel" parent="."]
 visible = false
@@ -355,7 +357,7 @@ text = "X"
 [connection signal="pressed" from="ActionBar/FurnitureButton" to="." method="_on_furniture_button_pressed"]
 [connection signal="pressed" from="ActionBar/PackButton" to="." method="_on_pack_button_pressed"]
 [connection signal="pressed" from="ActionBar/HRButton" to="." method="_on_hr_button_pressed"]
-[connection signal="pressed" from="CarryButton" to="." method="_on_carry_button_pressed"]
+[connection signal="pressed" from="ActionBar/CarryButton" to="." method="_on_carry_button_pressed"]
 [connection signal="visibility_changed" from="HRPanel" to="." method="_on_hr_panel_visibility_changed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton" to="." method="_on_run_payroll_button_pressed"]
