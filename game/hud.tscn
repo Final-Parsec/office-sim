@@ -217,16 +217,15 @@ default_texture = ExtResource("12_ibhiq")
 active_texture = ExtResource("13_ddm14")
 
 [node name="HRPanel" type="Panel" parent="."]
-visible = false
-offset_top = 58.0
+offset_top = 41.0
 offset_right = 1152.0
-offset_bottom = 616.0
+offset_bottom = 589.0
 script = ExtResource("4_lgdrw")
 
 [node name="TabContainer" type="TabContainer" parent="HRPanel"]
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 558.0
+offset_bottom = 548.0
 current_tab = 1
 
 [node name="Recruiting" type="Control" parent="HRPanel/TabContainer"]
