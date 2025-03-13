@@ -80,6 +80,8 @@ func set_selected_action(selected_action: Enums.Actions) -> void:
 			$ActionBar/HRButton.set_active_texture()
 		Enums.Actions.CARRY:
 			$ActionBar/CarryButton.set_active_texture()
+		Enums.Actions.COFFEE_VENDING_MACHINE:
+			$ActionBar/CoffeeVendingMachineButton.set_active_texture()
 	
 	GameState.selected_action = selected_action
 	action_bar_button_pressed.emit()
@@ -153,3 +155,7 @@ func _on_carry_button_pressed() -> void:
 
 func _on_furniture_button_pressed() -> void:
 	set_selected_action(Enums.Actions.FURNITURE)
+
+
+func _on_coffee_vending_machine_button_pressed() -> void:
+	set_selected_action(Enums.Actions.COFFEE_VENDING_MACHINE)
