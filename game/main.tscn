@@ -134,6 +134,7 @@ furniture_container = NodePath("FurnitureContainer")
 employee_scene = ExtResource("3_u4axo")
 employee_container = NodePath("EmployeeContainer")
 widget_scene = ExtResource("3_xbnie")
+package_scene = ExtResource("7_g140p")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
 
@@ -191,6 +192,7 @@ script = ExtResource("11_j04ey")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="moved" from="Player" to="." method="_on_player_moved"]
+[connection signal="package_widget_requested" from="Player" to="." method="_on_player_package_widget_requested"]
 [connection signal="widget_action_requested" from="Player" to="." method="_on_player_widget_action_requested"]
 [connection signal="accelerate_time_pressed" from="HUD" to="." method="_on_hud_accelerate_time_pressed"]
 [connection signal="action_bar_button_pressed" from="HUD" to="." method="_on_hud_action_bar_button_pressed"]
