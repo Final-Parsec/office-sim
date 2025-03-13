@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=34 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -26,6 +26,8 @@
 [ext_resource type="Texture2D" uid="uid://dyphviqmre33k" path="res://art/hand1.png" id="19_hgwrt"]
 [ext_resource type="Texture2D" uid="uid://p4dst3dueqpl" path="res://art/hand2.png" id="20_81fmh"]
 [ext_resource type="Texture2D" uid="uid://clqa62kr0vmri" path="res://art/carry_package.png" id="21_2dno5"]
+[ext_resource type="Texture2D" uid="uid://c01n20w6awjy7" path="res://art/cardboard_box.png" id="22_ao1bj"]
+[ext_resource type="Texture2D" uid="uid://cviibp1qgnlj4" path="res://art/cardboard_box_open.png" id="23_3ppwd"]
 
 [sub_resource type="Curve2D" id="Curve2D_oeg6j"]
 _data = {
@@ -102,6 +104,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"carry_package",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_ao1bj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_3ppwd")
+}],
+"loop": true,
+"name": &"package",
 "speed": 5.0
 }, {
 "frames": [{
@@ -187,7 +200,7 @@ sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [node name="CursorIndicator" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hsts8")
-animation = &"carry_package"
+animation = &"package"
 script = ExtResource("11_j04ey")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
