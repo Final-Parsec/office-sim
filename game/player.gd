@@ -59,13 +59,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		if GameState.selected_action == Enums.Actions.PACK:
 			package_widget_requested.emit(get_global_mouse_position(), position)
 		if GameState.selected_action == Enums.Actions.CARRY:
-			if carrying_package:
+			var mouse_position = get_global_mouse_position()
+			if carrying_package && mouse_position.distance_to(position) < 100:
 				var package = package_scene.instantiate()
-				package.position = get_global_mouse_position()
+				package.position = mouse_position
 				package_container.add_child(package)
 				carrying_package = false
 			else:
-				var mouse_position = get_global_mouse_position()
 				var package = package_container.get_package_at_position(mouse_position)
 				if package != null && mouse_position.distance_to(position) < 100:
 					carrying_package = true
