@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmpybft7fkq38"]
+
+[ext_resource type="Texture2D" uid="uid://bpcey1nf8gteo" path="res://art/coffee_vending_machine.png" id="1_yk382"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fr4xa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_yk382")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ck8ht"]
+size = Vector2(49, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q48hr"]
+size = Vector2(33.7846, 9.4294)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4ruj"]
+size = Vector2(20, 12.732)
+
+[node name="CoffeeVendingMachine" type="RigidBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fr4xa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 28.5)
+shape = SubResource("RectangleShape2D_ck8ht")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(7.70231, 34.621)
+rotation = -0.261799
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_q48hr")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(-12.817, 34.1471)
+rotation = 0.523599
+shape = SubResource("RectangleShape2D_c4ruj")
