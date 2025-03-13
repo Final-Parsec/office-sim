@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=33 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
@@ -57,6 +57,8 @@ unicode = 52
 
 [sub_resource type="Shortcut" id="Shortcut_aa2ab"]
 events = [SubResource("InputEventKey_3jk3g")]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_hai5n"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_5q3fm"]
 device = -1
@@ -216,7 +218,7 @@ offset_top = -59.0
 offset_right = 256.0
 offset_bottom = -51.0
 tooltip_text = "Carry"
-button_group = SubResource("ButtonGroup_bhlso")
+button_group = SubResource("ButtonGroup_hai5n")
 shortcut = SubResource("Shortcut_e0ubf")
 default_texture = ExtResource("12_ibhiq")
 active_texture = ExtResource("13_ddm14")
