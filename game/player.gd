@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 signal furniture_placement_requested(position: Vector2)
-signal package_widget_requested(position: Vector2)
+signal package_widget_requested(position: Vector2, actor_position: Vector2)
 signal widget_action_requested(position: Vector2)
 signal moved(position: Vector2)
 
@@ -57,24 +57,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		if GameState.selected_action == Enums.Actions.FURNITURE:
 			furniture_placement_requested.emit(get_global_mouse_position())
 		if GameState.selected_action == Enums.Actions.PACK:
-			package_widget_requested.emit(get_global_mouse_position())
-			for widget in widget_container.get_children():
-				var collision_shape = widget.get_node("CollisionShape2D") as CollisionShape2D
-				var circle = collision_shape.shape as CircleShape2D
-				var radius = circle.radius
-				if get_global_mouse_position().distance_to(collision_shape.global_position) <= radius && widget.is_packable():
-					var package = package_scene.instantiate()
-					package.position = widget.position
-					package_container.add_child(package)
-					widget.queue_free()
+			package_widget_requested.emit(get_global_mouse_position(), position)
 		if GameState.selected_action == Enums.Actions.CARRY:
-			if carrying_package:
+			var mouse_position = get_global_mouse_position()
+			if carrying_package && mouse_position.distance_to(position) < 100:
 				var package = package_scene.instantiate()
-				package.position = get_global_mouse_position()
+				package.position = mouse_position
 				package_container.add_child(package)
 				carrying_package = false
 			else:
-				var mouse_position = get_global_mouse_position()
 				var package = package_container.get_package_at_position(mouse_position)
 				if package != null && mouse_position.distance_to(position) < 100:
 					carrying_package = true

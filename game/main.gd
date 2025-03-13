@@ -11,6 +11,7 @@ var carry_package
 @export var employee_scene: PackedScene
 @export var employee_container: Node2D
 @export var widget_scene: PackedScene
+@export var package_scene: PackedScene
 
 func game_over() -> void:
 	$ScoreTimer.stop()
@@ -152,3 +153,18 @@ func _on_hud_player_rest_requested() -> void:
 			$HUD.update_drive_points(drive_points)
 		
 	$DayTimer.paused = false
+
+
+func _on_player_package_widget_requested(position: Vector2, actor_position: Vector2) -> void:
+	if position.distance_to(actor_position) > 100:
+		return
+		
+	for widget in $WidgetContainer.get_children():
+		var collision_shape = widget.get_node("CollisionShape2D") as CollisionShape2D
+		var circle = collision_shape.shape as CircleShape2D
+		var radius = circle.radius
+		if position.distance_to(collision_shape.global_position) <= radius && widget.is_packable():
+			var package = package_scene.instantiate()
+			package.position = widget.position
+			$PackageContainer.add_child(package)
+			widget.queue_free()

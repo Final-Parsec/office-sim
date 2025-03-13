@@ -46,7 +46,18 @@ func _process(_delta: float) -> void:
 				animation = "carry_grabbable"
 			else:
 				animation = "carry"
-				
+	elif GameState.selected_action == Enums.Actions.PACK:
+		if global_position.distance_to($"../Player".position) <= 100:
+			var widget = $"../WidgetContainer".get_widget_at_position(position)
+			if widget != null && widget.is_packable():
+				scale = Vector2(.5, .5)
+				visible = true
+				animation = "package"
+			else:
+				visible = false
+		else:
+			visible = false
+		
 	if visible:
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	else:
