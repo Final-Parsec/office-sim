@@ -1,8 +1,0 @@
-{
-    "files.exclude": {
-        "**/*.meta": true,
-        "**/*.prefab": true,
-        "**/*.unity": true,
-        "**/*.asset": true
-    }
-}
