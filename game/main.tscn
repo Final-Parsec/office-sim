@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=38 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -27,7 +27,11 @@
 [ext_resource type="Texture2D" uid="uid://p4dst3dueqpl" path="res://art/hand2.png" id="20_81fmh"]
 [ext_resource type="Texture2D" uid="uid://clqa62kr0vmri" path="res://art/carry_package.png" id="21_2dno5"]
 [ext_resource type="Texture2D" uid="uid://c01n20w6awjy7" path="res://art/cardboard_box.png" id="22_ao1bj"]
+[ext_resource type="Texture2D" uid="uid://bmexobajuto2u" path="res://art/coffee_vending_machine_create1.png" id="22_ur6vq"]
 [ext_resource type="Texture2D" uid="uid://cviibp1qgnlj4" path="res://art/cardboard_box_open.png" id="23_3ppwd"]
+[ext_resource type="Texture2D" uid="uid://dspdsb240woc2" path="res://art/coffee_vending_machine_create2.png" id="23_cx7vv"]
+[ext_resource type="Texture2D" uid="uid://dmpnryg8djlpi" path="res://art/coffee_vending_machine_invalid1.png" id="24_7eaxf"]
+[ext_resource type="Texture2D" uid="uid://dssc7md0oscw5" path="res://art/coffee_vending_machine_invalid2.png" id="25_vhv1d"]
 
 [sub_resource type="Curve2D" id="Curve2D_oeg6j"]
 _data = {
@@ -104,6 +108,28 @@ animations = [{
 }],
 "loop": true,
 "name": &"carry_package",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_ur6vq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_cx7vv")
+}],
+"loop": true,
+"name": &"coffee_vending_machine_create",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_7eaxf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_vhv1d")
+}],
+"loop": true,
+"name": &"coffee_vending_machine_invalid",
 "speed": 5.0
 }, {
 "frames": [{
@@ -200,7 +226,7 @@ sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [node name="CursorIndicator" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hsts8")
-animation = &"package"
+animation = &"coffee_vending_machine_invalid"
 script = ExtResource("11_j04ey")
 
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
