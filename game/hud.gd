@@ -107,15 +107,15 @@ func _on_accelerate_time_pressed() -> void:
 		AccelerateTimeOptions.DOUBLE:
 			$AccelerateTimeButton.text = ">>>"
 			current_accelerate_time_option = AccelerateTimeOptions.TRIPLE
-			accelerate_time_pressed.emit(1.0)
+			accelerate_time_pressed.emit(.75)
 		AccelerateTimeOptions.TRIPLE:
 			$AccelerateTimeButton.text = ">"
 			current_accelerate_time_option = AccelerateTimeOptions.DEFAULT
-			accelerate_time_pressed.emit(5.0)
+			accelerate_time_pressed.emit(2.5)
 		_:
 			$AccelerateTimeButton.text = ">>"
 			current_accelerate_time_option = AccelerateTimeOptions.DOUBLE
-			accelerate_time_pressed.emit(2.5)
+			accelerate_time_pressed.emit(1.25)
 			
 func _ready() -> void:
 	$AccelerateTimeButton.visible = false

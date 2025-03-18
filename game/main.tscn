@@ -224,7 +224,7 @@ y_sort_enabled = true
 y_sort_enabled = true
 
 [node name="DayTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 2.5
 
 [node name="Mailman" type="Node2D" parent="." node_paths=PackedStringArray("package_container")]
 script = ExtResource("8_px6ih")

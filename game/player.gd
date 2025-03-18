@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 		moved.emit(global_position)
 	elif in_coffee_zone:
 		$AnimatedSprite2D.play()
-		$AnimatedSprite2D.speed_scale = 0.5
+		$AnimatedSprite2D.speed_scale = 0.125
 		$AnimatedSprite2D.animation = "drink"
 	else:
 		$AnimatedSprite2D.stop()
