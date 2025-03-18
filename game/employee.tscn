@@ -15,8 +15,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvmmo"]
-radius = 7.0
-height = 64.0
+radius = 6.0
+height = 26.0
 
 [node name="Employee" type="RigidBody2D"]
 collision_mask = 0
@@ -30,5 +30,6 @@ sprite_frames = SubResource("SpriteFrames_nxxwv")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 0)
+position = Vector2(5, 30)
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_cvmmo")

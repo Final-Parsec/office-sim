@@ -187,4 +187,5 @@ func _on_player_coffee_vending_machine_placement_requested(position: Vector2) ->
 		$HUD.update_net_worth(net_worth)
 		var coffee_vending_machine = coffee_vending_machine_scene.instantiate()
 		coffee_vending_machine.position = position
+		coffee_vending_machine.y_sort_enabled = true
 		$CoffeeVendingMachineContainer.add_child(coffee_vending_machine)

@@ -15,7 +15,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1xjgm"]
-size = Vector2(65, 60)
+size = Vector2(51.5, 60)
 
 [node name="Furniture" type="RigidBody2D"]
 collision_mask = 0
@@ -28,7 +28,7 @@ sprite_frames = SubResource("SpriteFrames_nxxwv")
 animation = &"idle"
 
 [node name="FurnitureCollisionShape" parent="." instance=ExtResource("2_a84ix")]
-position = Vector2(0.500119, 1)
+position = Vector2(0.500095, 7.75)
 shape = SubResource("RectangleShape2D_1xjgm")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

@@ -44,22 +44,25 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7eu3l"]
-radius = 16.0
-height = 74.0
+radius = 5.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_eb275")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -31)
+y_sort_enabled = true
+position = Vector2(0, -37)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_xmfv8")
 animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -31)
+position = Vector2(4, -7)
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_7eu3l")
 
 [node name="RangeMarker" type="Node2D" parent="."]
+z_index = 1
+z_as_relative = false
 script = ExtResource("4_xip5p")

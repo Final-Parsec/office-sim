@@ -23,10 +23,12 @@ size = Vector2(33.7846, 9.4294)
 size = Vector2(20, 12.732)
 
 [node name="CoffeeVendingMachine" type="RigidBody2D"]
+y_sort_enabled = true
 collision_mask = 0
 gravity_scale = 0.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_fr4xa")
 
