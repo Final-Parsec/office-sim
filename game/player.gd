@@ -14,10 +14,12 @@ signal coffee_vending_machine_placement_requested(position: Vector2)
 var screen_size
 var prevent_player_movement = false
 var carrying_package = false
+var in_coffee_zone = false
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	hide()
+	$AnimatedSprite2D.animation = "walk"
 
 func _process(delta: float) -> void:
 	if !visible:
@@ -34,6 +36,9 @@ func _process(delta: float) -> void:
 		velocity = velocity.normalized() * speed
 		$AnimatedSprite2D.play()
 		moved.emit(global_position)
+	elif in_coffee_zone:
+		$AnimatedSprite2D.play()
+		$AnimatedSprite2D.animation = "drink"
 	else:
 		$AnimatedSprite2D.stop()
 

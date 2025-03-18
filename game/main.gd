@@ -141,6 +141,11 @@ func _on_player_moved(player_global_position: Vector2) -> void:
 			var is_exit = tile_data.get_custom_data("is_exit")
 			if is_exit:
 				$HUD.show_commute_panel()
+				
+	$Player.in_coffee_zone = false
+	for coffee_vending_machine in $CoffeeVendingMachineContainer.get_children():
+		if player_global_position.distance_to(coffee_vending_machine.global_position) <= 100:
+			$Player.in_coffee_zone = true
 
 func _on_hud_overlaying_panel_visibility_changed(overlaying_panel_visible: bool) -> void:
 	$Player.prevent_player_movement = overlaying_panel_visible
