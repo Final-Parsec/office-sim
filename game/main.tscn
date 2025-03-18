@@ -227,10 +227,12 @@ y_sort_enabled = true
 wait_time = 2.5
 
 [node name="Mailman" type="Node2D" parent="." node_paths=PackedStringArray("package_container")]
+y_sort_enabled = true
 script = ExtResource("8_px6ih")
 package_container = NodePath("../PackageContainer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mailman"]
+y_sort_enabled = true
 position = Vector2(832, 440)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_i8n55")

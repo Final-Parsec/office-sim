@@ -60,6 +60,10 @@ func start(pos):
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("perform_action"):
+		if in_coffee_zone:
+			$"../HUD".show_message("Can't perform action on coffee break.")
+			return
+		
 		if GameState.selected_action == Enums.Actions.WIDGET:
 			widget_action_requested.emit(get_global_mouse_position(), position)
 		if GameState.selected_action == Enums.Actions.FURNITURE:
