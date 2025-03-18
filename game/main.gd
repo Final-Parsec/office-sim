@@ -12,6 +12,8 @@ var carry_package
 @export var employee_container: Node2D
 @export var widget_scene: PackedScene
 @export var package_scene: PackedScene
+@export var coffee_vending_machine_scene: PackedScene
+
 
 func game_over() -> void:
 	$ScoreTimer.stop()
@@ -168,3 +170,16 @@ func _on_player_package_widget_requested(position: Vector2, actor_position: Vect
 			package.position = widget.position
 			$PackageContainer.add_child(package)
 			widget.queue_free()
+
+
+func _on_player_coffee_vending_machine_placement_requested(position: Vector2) -> void:
+	if !$CursorIndicator.visible or $CursorIndicator.animation == 'coffee_vending_machine_invalid':
+		return
+
+	var COFFEE_VENDING_MACHINE_COST = 100
+	if net_worth >= COFFEE_VENDING_MACHINE_COST:
+		net_worth -= COFFEE_VENDING_MACHINE_COST
+		$HUD.update_net_worth(net_worth)
+		var coffee_vending_machine = coffee_vending_machine_scene.instantiate()
+		coffee_vending_machine.position = position
+		$CoffeeVendingMachineContainer.add_child(coffee_vending_machine)

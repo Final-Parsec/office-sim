@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=38 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
@@ -69,6 +69,8 @@ unicode = 53
 
 [sub_resource type="Shortcut" id="Shortcut_e0ubf"]
 events = [SubResource("InputEventKey_5q3fm")]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_23gl6"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_bffet"]
 device = -1
@@ -240,7 +242,7 @@ offset_top = -59.0
 offset_right = 318.0
 offset_bottom = -51.0
 tooltip_text = "Create / Build Widget"
-button_group = SubResource("ButtonGroup_bhlso")
+button_group = SubResource("ButtonGroup_23gl6")
 shortcut = SubResource("Shortcut_b83ib")
 default_texture = ExtResource("14_3ea8n")
 active_texture = ExtResource("15_2srnn")

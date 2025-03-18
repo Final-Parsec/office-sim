@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=39 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bw6td1ka2uv5c" path="res://hud.tscn" id="4_oo6vi"]
 [ext_resource type="PackedScene" uid="uid://qw1v0gqpd576" path="res://background.tscn" id="5_1cbru"]
 [ext_resource type="AudioStream" uid="uid://bmow02dut2ayu" path="res://art/gameover.wav" id="5_ppkhf"]
+[ext_resource type="PackedScene" uid="uid://bmpybft7fkq38" path="res://coffee_vending_machine.tscn" id="6_atv1o"]
 [ext_resource type="Script" path="res://follow_player.gd" id="6_ygvik"]
 [ext_resource type="PackedScene" uid="uid://cpn25wurr7ckt" path="res://package.tscn" id="7_g140p"]
 [ext_resource type="Script" path="res://mailman.gd" id="8_px6ih"]
@@ -174,6 +175,7 @@ employee_scene = ExtResource("3_u4axo")
 employee_container = NodePath("EmployeeContainer")
 widget_scene = ExtResource("3_xbnie")
 package_scene = ExtResource("7_g140p")
+coffee_vending_machine_scene = ExtResource("6_atv1o")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
 
@@ -212,6 +214,8 @@ script = ExtResource("12_mohxw")
 
 [node name="EmployeeContainer" type="Node2D" parent="."]
 
+[node name="CoffeeVendingMachineContainer" type="Node2D" parent="."]
+
 [node name="DayTimer" type="Timer" parent="."]
 wait_time = 5.0
 
@@ -229,6 +233,7 @@ sprite_frames = SubResource("SpriteFrames_hsts8")
 animation = &"coffee_vending_machine_invalid"
 script = ExtResource("11_j04ey")
 
+[connection signal="coffee_vending_machine_placement_requested" from="Player" to="." method="_on_player_coffee_vending_machine_placement_requested"]
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="moved" from="Player" to="." method="_on_player_moved"]
 [connection signal="package_widget_requested" from="Player" to="." method="_on_player_package_widget_requested"]
