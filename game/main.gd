@@ -59,6 +59,11 @@ func _on_day_timer_timeout() -> void:
 		employee.act(current_time)
 		
 	$Mailman.act(current_time)
+	
+	if $Player.in_coffee_zone:
+		drive_points += 1
+		$HUD.update_drive_points(drive_points)
+		DamageNumbers.display_number(1, $Player.global_position, false)
 
 func _on_mailman_package_collected() -> void:
 	net_worth += 10
