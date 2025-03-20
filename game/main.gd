@@ -194,3 +194,4 @@ func _on_player_coffee_vending_machine_placement_requested(position: Vector2) ->
 		coffee_vending_machine.position = position
 		coffee_vending_machine.y_sort_enabled = true
 		$CoffeeVendingMachineContainer.add_child(coffee_vending_machine)
+		$Player.in_coffee_zone = true
