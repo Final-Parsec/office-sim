@@ -6,5 +6,6 @@ enum Actions {
 	FURNITURE = 2,
 	PACK = 3,
 	HR = 4,
-	CARRY = 5
+	CARRY = 5,
+	COFFEE_VENDING_MACHINE = 6
 }

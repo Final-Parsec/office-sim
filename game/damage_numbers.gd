@@ -9,7 +9,7 @@ func display_number(value: int, position: Vector2, is_critical: bool = false):
 	
 	var color = "#FFF"
 	if is_critical:
-		color = "#B22"
+		color = "#2B2"
 	if value == 0:
 		color = "#FFF8"
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=39 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bw6td1ka2uv5c" path="res://hud.tscn" id="4_oo6vi"]
 [ext_resource type="PackedScene" uid="uid://qw1v0gqpd576" path="res://background.tscn" id="5_1cbru"]
 [ext_resource type="AudioStream" uid="uid://bmow02dut2ayu" path="res://art/gameover.wav" id="5_ppkhf"]
+[ext_resource type="PackedScene" uid="uid://bmpybft7fkq38" path="res://coffee_vending_machine.tscn" id="6_atv1o"]
 [ext_resource type="Script" path="res://follow_player.gd" id="6_ygvik"]
 [ext_resource type="PackedScene" uid="uid://cpn25wurr7ckt" path="res://package.tscn" id="7_g140p"]
 [ext_resource type="Script" path="res://mailman.gd" id="8_px6ih"]
@@ -27,7 +28,11 @@
 [ext_resource type="Texture2D" uid="uid://p4dst3dueqpl" path="res://art/hand2.png" id="20_81fmh"]
 [ext_resource type="Texture2D" uid="uid://clqa62kr0vmri" path="res://art/carry_package.png" id="21_2dno5"]
 [ext_resource type="Texture2D" uid="uid://c01n20w6awjy7" path="res://art/cardboard_box.png" id="22_ao1bj"]
+[ext_resource type="Texture2D" uid="uid://bmexobajuto2u" path="res://art/coffee_vending_machine_create1.png" id="22_ur6vq"]
 [ext_resource type="Texture2D" uid="uid://cviibp1qgnlj4" path="res://art/cardboard_box_open.png" id="23_3ppwd"]
+[ext_resource type="Texture2D" uid="uid://dspdsb240woc2" path="res://art/coffee_vending_machine_create2.png" id="23_cx7vv"]
+[ext_resource type="Texture2D" uid="uid://dmpnryg8djlpi" path="res://art/coffee_vending_machine_invalid1.png" id="24_7eaxf"]
+[ext_resource type="Texture2D" uid="uid://dssc7md0oscw5" path="res://art/coffee_vending_machine_invalid2.png" id="25_vhv1d"]
 
 [sub_resource type="Curve2D" id="Curve2D_oeg6j"]
 _data = {
@@ -108,6 +113,28 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("22_ur6vq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_cx7vv")
+}],
+"loop": true,
+"name": &"coffee_vending_machine_create",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_7eaxf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_vhv1d")
+}],
+"loop": true,
+"name": &"coffee_vending_machine_invalid",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("22_ao1bj")
 }, {
 "duration": 1.0,
@@ -140,7 +167,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("furniture_container", "employee_container")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("furniture_container", "employee_container")]
+y_sort_enabled = true
 script = ExtResource("1_jxwdf")
 furniture_scene = ExtResource("4_mg1l2")
 furniture_container = NodePath("FurnitureContainer")
@@ -148,6 +176,7 @@ employee_scene = ExtResource("3_u4axo")
 employee_container = NodePath("EmployeeContainer")
 widget_scene = ExtResource("3_xbnie")
 package_scene = ExtResource("7_g140p")
+coffee_vending_machine_scene = ExtResource("6_atv1o")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
 
@@ -156,6 +185,7 @@ script = ExtResource("6_ygvik")
 player = NodePath("../Player")
 
 [node name="Player" parent="." node_paths=PackedStringArray("widget_container", "package_container") instance=ExtResource("1_7mjmw")]
+y_sort_enabled = true
 widget_container = NodePath("../WidgetContainer")
 package_scene = ExtResource("7_g140p")
 package_container = NodePath("../PackageContainer")
@@ -177,32 +207,43 @@ stream = SubResource("AudioStreamOggVorbis_5efd5")
 stream = ExtResource("5_ppkhf")
 
 [node name="FurnitureContainer" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="WidgetContainer" type="Node2D" parent="."]
+y_sort_enabled = true
 script = ExtResource("14_0md0v")
 
 [node name="PackageContainer" type="Node2D" parent="."]
+y_sort_enabled = true
 script = ExtResource("12_mohxw")
 
 [node name="EmployeeContainer" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="CoffeeVendingMachineContainer" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="DayTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 2.5
 
 [node name="Mailman" type="Node2D" parent="." node_paths=PackedStringArray("package_container")]
+y_sort_enabled = true
 script = ExtResource("8_px6ih")
 package_container = NodePath("../PackageContainer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mailman"]
+y_sort_enabled = true
 position = Vector2(832, 440)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [node name="CursorIndicator" type="AnimatedSprite2D" parent="."]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_hsts8")
-animation = &"package"
+animation = &"coffee_vending_machine_invalid"
 script = ExtResource("11_j04ey")
 
+[connection signal="coffee_vending_machine_placement_requested" from="Player" to="." method="_on_player_coffee_vending_machine_placement_requested"]
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="moved" from="Player" to="." method="_on_player_moved"]
 [connection signal="package_widget_requested" from="Player" to="." method="_on_player_package_widget_requested"]

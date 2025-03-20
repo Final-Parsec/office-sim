@@ -80,6 +80,8 @@ func set_selected_action(selected_action: Enums.Actions) -> void:
 			$ActionBar/HRButton.set_active_texture()
 		Enums.Actions.CARRY:
 			$ActionBar/CarryButton.set_active_texture()
+		Enums.Actions.COFFEE_VENDING_MACHINE:
+			$ActionBar/CoffeeVendingMachineButton.set_active_texture()
 	
 	GameState.selected_action = selected_action
 	action_bar_button_pressed.emit()
@@ -105,15 +107,15 @@ func _on_accelerate_time_pressed() -> void:
 		AccelerateTimeOptions.DOUBLE:
 			$AccelerateTimeButton.text = ">>>"
 			current_accelerate_time_option = AccelerateTimeOptions.TRIPLE
-			accelerate_time_pressed.emit(1.0)
+			accelerate_time_pressed.emit(.75)
 		AccelerateTimeOptions.TRIPLE:
 			$AccelerateTimeButton.text = ">"
 			current_accelerate_time_option = AccelerateTimeOptions.DEFAULT
-			accelerate_time_pressed.emit(5.0)
+			accelerate_time_pressed.emit(2.5)
 		_:
 			$AccelerateTimeButton.text = ">>"
 			current_accelerate_time_option = AccelerateTimeOptions.DOUBLE
-			accelerate_time_pressed.emit(2.5)
+			accelerate_time_pressed.emit(1.25)
 			
 func _ready() -> void:
 	$AccelerateTimeButton.visible = false
@@ -153,3 +155,7 @@ func _on_carry_button_pressed() -> void:
 
 func _on_furniture_button_pressed() -> void:
 	set_selected_action(Enums.Actions.FURNITURE)
+
+
+func _on_coffee_vending_machine_button_pressed() -> void:
+	set_selected_action(Enums.Actions.COFFEE_VENDING_MACHINE)

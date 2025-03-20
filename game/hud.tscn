@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=38 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://02he7g1rqbqy" path="res://art/action_bar_four2.png" id="11_7k55l"]
 [ext_resource type="Texture2D" uid="uid://76pl0icdalaw" path="res://art/action_bar_five1.png" id="12_ibhiq"]
 [ext_resource type="Texture2D" uid="uid://csg6mcyx2jvpm" path="res://art/action_bar_five2.png" id="13_ddm14"]
+[ext_resource type="Texture2D" uid="uid://bxj1a8eg23fpx" path="res://art/action_bar_six1.png" id="14_3ea8n"]
+[ext_resource type="Texture2D" uid="uid://d4b1ksfdmwn1j" path="res://art/action_bar_six2.png" id="15_2srnn"]
 
 [sub_resource type="Shortcut" id="Shortcut_wpxgg"]
 
@@ -67,6 +69,16 @@ unicode = 53
 
 [sub_resource type="Shortcut" id="Shortcut_e0ubf"]
 events = [SubResource("InputEventKey_5q3fm")]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_23gl6"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_bffet"]
+device = -1
+keycode = 54
+unicode = 54
+
+[sub_resource type="Shortcut" id="Shortcut_b83ib"]
+events = [SubResource("InputEventKey_bffet")]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fm8g5"]
 animations = [{
@@ -223,6 +235,18 @@ shortcut = SubResource("Shortcut_e0ubf")
 default_texture = ExtResource("12_ibhiq")
 active_texture = ExtResource("13_ddm14")
 
+[node name="CoffeeVendingMachineButton" parent="ActionBar" instance=ExtResource("3_7j8t7")]
+layout_mode = 1
+offset_left = 310.0
+offset_top = -59.0
+offset_right = 318.0
+offset_bottom = -51.0
+tooltip_text = "Create / Build Widget"
+button_group = SubResource("ButtonGroup_23gl6")
+shortcut = SubResource("Shortcut_b83ib")
+default_texture = ExtResource("14_3ea8n")
+active_texture = ExtResource("15_2srnn")
+
 [node name="HRPanel" type="Panel" parent="."]
 offset_top = 41.0
 offset_right = 1152.0
@@ -364,6 +388,7 @@ text = "X"
 [connection signal="pressed" from="ActionBar/PackButton" to="." method="_on_pack_button_pressed"]
 [connection signal="pressed" from="ActionBar/HRButton" to="." method="_on_hr_button_pressed"]
 [connection signal="pressed" from="ActionBar/CarryButton" to="." method="_on_carry_button_pressed"]
+[connection signal="pressed" from="ActionBar/CoffeeVendingMachineButton" to="." method="_on_coffee_vending_machine_button_pressed"]
 [connection signal="visibility_changed" from="HRPanel" to="." method="_on_hr_panel_visibility_changed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton" to="." method="_on_run_payroll_button_pressed"]

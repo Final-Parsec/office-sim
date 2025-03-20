@@ -12,6 +12,8 @@ var carry_package
 @export var employee_container: Node2D
 @export var widget_scene: PackedScene
 @export var package_scene: PackedScene
+@export var coffee_vending_machine_scene: PackedScene
+
 
 func game_over() -> void:
 	$ScoreTimer.stop()
@@ -57,6 +59,18 @@ func _on_day_timer_timeout() -> void:
 		employee.act(current_time)
 		
 	$Mailman.act(current_time)
+	
+	if $Player.in_coffee_zone:
+		if drive_points >= 100:
+			$HUD.show_message("Max drive!")
+		elif net_worth < 5:
+			$HUD.show_message("Can't afford coffee.")
+		else:
+			net_worth -= 5
+			$HUD.update_net_worth(net_worth)
+			drive_points += 1
+			$HUD.update_drive_points(drive_points)
+			DamageNumbers.display_number(1, $Player/NumberSpawn.global_position, true)
 
 func _on_mailman_package_collected() -> void:
 	net_worth += 10
@@ -139,6 +153,11 @@ func _on_player_moved(player_global_position: Vector2) -> void:
 			var is_exit = tile_data.get_custom_data("is_exit")
 			if is_exit:
 				$HUD.show_commute_panel()
+				
+	$Player.in_coffee_zone = false
+	for coffee_vending_machine in $CoffeeVendingMachineContainer.get_children():
+		if player_global_position.distance_to(coffee_vending_machine.global_position) <= 100:
+			$Player.in_coffee_zone = true
 
 func _on_hud_overlaying_panel_visibility_changed(overlaying_panel_visible: bool) -> void:
 	$Player.prevent_player_movement = overlaying_panel_visible
@@ -168,3 +187,18 @@ func _on_player_package_widget_requested(position: Vector2, actor_position: Vect
 			package.position = widget.position
 			$PackageContainer.add_child(package)
 			widget.queue_free()
+
+
+func _on_player_coffee_vending_machine_placement_requested(position: Vector2) -> void:
+	if !$CursorIndicator.visible or $CursorIndicator.animation == 'coffee_vending_machine_invalid':
+		return
+
+	var COFFEE_VENDING_MACHINE_COST = 100
+	if net_worth >= COFFEE_VENDING_MACHINE_COST:
+		net_worth -= COFFEE_VENDING_MACHINE_COST
+		$HUD.update_net_worth(net_worth)
+		var coffee_vending_machine = coffee_vending_machine_scene.instantiate()
+		coffee_vending_machine.position = position
+		coffee_vending_machine.y_sort_enabled = true
+		$CoffeeVendingMachineContainer.add_child(coffee_vending_machine)
+		$Player.in_coffee_zone = true

@@ -20,6 +20,20 @@ func _physics_process(_delta: float) -> void:
 			animation = "basic_workbench_invalid"
 		else:
 			animation = "basic_workbench_placement"
+	elif GameState.selected_action == Enums.Actions.COFFEE_VENDING_MACHINE:
+		var world_space = get_world_2d().direct_space_state
+		var params = PhysicsShapeQueryParameters2D.new()
+		params.collide_with_areas = true
+		params.collide_with_bodies = true
+		params.shape = RectangleShape2D.new()
+		params.shape.size = Vector2(38, 68)
+		params.transform = Transform2D(0, global_position)
+		var collision = world_space.collide_shape(params, 1)
+		scale = Vector2(.75, .75)
+		if !collision.is_empty():
+			animation = "coffee_vending_machine_invalid"
+		else:
+			animation = "coffee_vending_machine_create"
 
 func _process(_delta: float) -> void:
 	global_position = get_global_mouse_position()
@@ -57,6 +71,9 @@ func _process(_delta: float) -> void:
 				visible = false
 		else:
 			visible = false
+			
+	elif GameState.selected_action == Enums.Actions.COFFEE_VENDING_MACHINE:
+		visible = global_position.distance_to($"../Player".position) <= 100
 		
 	if visible:
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
