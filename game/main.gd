@@ -60,10 +60,17 @@ func _on_day_timer_timeout() -> void:
 		
 	$Mailman.act(current_time)
 	
-	if $Player.in_coffee_zone && drive_points < 100:
-		drive_points += 1
-		$HUD.update_drive_points(drive_points)
-		DamageNumbers.display_number(1, $Player/NumberSpawn.global_position, true)
+	if $Player.in_coffee_zone:
+		if drive_points >= 100:
+			$HUD.show_message("Max drive!")
+		elif net_worth < 5:
+			$HUD.show_message("Can't afford coffee.")
+		else:
+			net_worth -= 5
+			$HUD.update_net_worth(net_worth)
+			drive_points += 1
+			$HUD.update_drive_points(drive_points)
+			DamageNumbers.display_number(1, $Player/NumberSpawn.global_position, true)
 
 func _on_mailman_package_collected() -> void:
 	net_worth += 10
