@@ -66,3 +66,6 @@ shape = SubResource("CapsuleShape2D_7eu3l")
 z_index = 1
 z_as_relative = false
 script = ExtResource("4_xip5p")
+
+[node name="NumberSpawn" type="Node2D" parent="."]
+position = Vector2(0, -80)

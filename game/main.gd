@@ -63,7 +63,7 @@ func _on_day_timer_timeout() -> void:
 	if $Player.in_coffee_zone && drive_points < 100:
 		drive_points += 1
 		$HUD.update_drive_points(drive_points)
-		DamageNumbers.display_number(1, $Player.global_position, true)
+		DamageNumbers.display_number(1, $Player/NumberSpawn.global_position, true)
 
 func _on_mailman_package_collected() -> void:
 	net_worth += 10

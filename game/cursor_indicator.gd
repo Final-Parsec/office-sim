@@ -26,7 +26,7 @@ func _physics_process(_delta: float) -> void:
 		params.collide_with_areas = true
 		params.collide_with_bodies = true
 		params.shape = RectangleShape2D.new()
-		params.shape.size = Vector2(65, 60)
+		params.shape.size = Vector2(38, 68)
 		params.transform = Transform2D(0, global_position)
 		var collision = world_space.collide_shape(params, 1)
 		scale = Vector2(.75, .75)
