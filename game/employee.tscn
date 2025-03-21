@@ -14,13 +14,11 @@ animations = [{
 "speed": 3.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvmmo"]
-radius = 6.0
-height = 26.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_cojay"]
 
-[node name="Employee" type="RigidBody2D"]
-collision_mask = 0
-gravity_scale = 0.0
+[node name="Employee" type="CharacterBody2D"]
+motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_5cld6")
 metadata/_edit_group_ = true
 
@@ -30,6 +28,13 @@ sprite_frames = SubResource("SpriteFrames_nxxwv")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(5, 30)
+position = Vector2(3, 30)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_cvmmo")
+shape = SubResource("CircleShape2D_cojay")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+radius = 20.0
+debug_enabled = true
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
