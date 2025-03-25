@@ -202,7 +202,7 @@ package_scene = ExtResource("7_g140p")
 package_container = NodePath("../PackageContainer")
 
 [node name="StartPosition" type="Marker2D" parent="."]
-position = Vector2(240, 450)
+position = Vector2(1056, 776)
 
 [node name="MobPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_oeg6j")
@@ -254,6 +254,11 @@ z_index = 1
 sprite_frames = SubResource("SpriteFrames_hsts8")
 animation = &"coffee_vending_machine_invalid"
 script = ExtResource("11_j04ey")
+
+[node name="EmployeeWorkArea" type="Marker2D" parent="."]
+position = Vector2(448, 264)
+
+[node name="EmployeeExit" type="Marker2D" parent="."]
 
 [connection signal="coffee_vending_machine_placement_requested" from="Player" to="." method="_on_player_coffee_vending_machine_placement_requested"]
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]

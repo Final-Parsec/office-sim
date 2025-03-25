@@ -1,17 +1,32 @@
-[gd_scene load_steps=5 format=3 uid="uid://0xswmswqjexh"]
+[gd_scene load_steps=6 format=3 uid="uid://0xswmswqjexh"]
 
 [ext_resource type="Script" path="res://employee.gd" id="1_5cld6"]
 [ext_resource type="Texture2D" uid="uid://ndlb74qnveg0" path="res://art/colm_reeves1.png" id="1_maxdl"]
+[ext_resource type="Texture2D" uid="uid://cr5q4ecww1wyr" path="res://art/colm_reeves2.png" id="3_8gy4f"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nxxwv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_maxdl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8gy4f")
 }],
 "loop": true,
-"name": &"idle",
-"speed": 3.0
+"name": &"up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_maxdl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8gy4f")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cojay"]
@@ -25,7 +40,7 @@ metadata/_edit_group_ = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_nxxwv")
-animation = &"idle"
+animation = &"up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3, 30)

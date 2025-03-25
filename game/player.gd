@@ -6,7 +6,7 @@ signal widget_action_requested(position: Vector2)
 signal moved(position: Vector2)
 signal coffee_vending_machine_placement_requested(position: Vector2)
 
-@export var speed = 375
+@export var speed = 375.0
 @export var widget_container: Node2D
 @export var package_scene: PackedScene
 @export var package_container: Node2D
