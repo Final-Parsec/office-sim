@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 signal money_owed_updated(money_owed)
 signal widget_action_requested(position: Vector2, actor_position: Vector2)
+signal package_widget_requested(position: Vector2, actor_position: Vector2)
 
 var schedule_start = 7 * 60
 var schedule_end = 16 * 60
@@ -45,7 +46,13 @@ func act(current_time: int) -> void:
 		# Try to build to my right.
 		if RandomNumberGenerator.new().randf() > .3:
 			$AnimatedSprite2D.flip_h = false
-			widget_action_requested.emit(position + Vector2(50,0), position)
+			var build_location = global_position + Vector2(50, 0)
+			var widget = $"../../WidgetContainer".get_widget_at_position(build_location)
+			if widget == null || widget.progress < 100:
+				widget_action_requested.emit(position + Vector2(50,0), position)
+			if widget != null && widget.progress == 100:
+				package_widget_requested.emit(build_location, global_position)
+			
 	else:
 		if visible:
 			var employee_exit = $"../../EmployeeExit".global_position
