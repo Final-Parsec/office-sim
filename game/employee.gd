@@ -25,7 +25,6 @@ func _ready() -> void:
 
 func act(current_time: int) -> void:
 	var on_the_clock = current_time > schedule_start && current_time < schedule_end
-	on_the_clock = true
 	if on_the_clock:
 		# Base conditions. On the map and drawing a paycheck.
 		visible = true
@@ -37,7 +36,6 @@ func act(current_time: int) -> void:
 		var work_area = $"../../EmployeeWorkArea".global_position
 		if global_position.distance_to(work_area) > 50:
 			walking_to_work_area = true
-			print("walking to work area")
 			$NavigationAgent2D.target_position = work_area
 			return
 		
@@ -51,7 +49,7 @@ func act(current_time: int) -> void:
 	else:
 		if visible:
 			var employee_exit = $"../../EmployeeExit".global_position
-			if global_position.distance_to(employee_exit) > 100:
+			if global_position.distance_to(employee_exit) > 50:
 				walking_to_commute_tile = true
 				$NavigationAgent2D.target_position = employee_exit
 				return
@@ -65,7 +63,7 @@ func pay(money_paid) -> void:
 	money_owed_updated.emit(money_owed)
 	
 func _physics_process(delta: float) -> void:
-	if !walking_to_work_area:
+	if !walking_to_work_area && !walking_to_commute_tile:
 		return
 	
 	if navigation_agent.is_navigation_finished():

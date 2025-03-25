@@ -259,6 +259,7 @@ script = ExtResource("11_j04ey")
 position = Vector2(448, 264)
 
 [node name="EmployeeExit" type="Marker2D" parent="."]
+position = Vector2(1128, 816)
 
 [connection signal="coffee_vending_machine_placement_requested" from="Player" to="." method="_on_player_coffee_vending_machine_placement_requested"]
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
