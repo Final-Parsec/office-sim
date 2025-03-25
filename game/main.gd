@@ -55,7 +55,6 @@ func _on_player_furniture_placement_requested(position: Vector2) -> void:
 		]
 		nav_outline.global_position = collision_shape.global_position
 		nav_outline.color = Color(1, 0, 0, 0.5)
-		print(nav_outline.polygon)
 		$NavigationRegion2D.add_child(nav_outline)
 		$NavigationRegion2D.bake_navigation_polygon()
 

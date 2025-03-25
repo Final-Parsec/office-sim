@@ -35,9 +35,9 @@
 [ext_resource type="Texture2D" uid="uid://dssc7md0oscw5" path="res://art/coffee_vending_machine_invalid2.png" id="25_vhv1d"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_bf4m7"]
-vertices = PackedVector2Array(911.117, 539.617, 1120.88, 434.742, 1739.45, 160.898, 2145.87, 367.938, 1067.5, 911.07, 891.367, 999.141, -595.641, 527, -953.078, 359.68, 615.828, -428.711, -17.0625, 203.172, 690.219, 538.078, 229.477, 295.992, 364.656, 224.852, 487.859, 163.242, 758.547, 431.922, 860.797, 361.133, 364.648, 224.844, 689.758, 550.656, 522.047, 623.656, 631.789, 1140.72, -9.20312, 326.312, -18.0078, 264.633, 1035.23, 349.094, 1067.79, 235.117, 897.703, -271.547, 508.422, -76.5234, 897.656, -276.367)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(6, 7, 8, 9), PackedInt32Array(10, 11, 12, 13, 14), PackedInt32Array(13, 15, 14), PackedInt32Array(12, 16, 13), PackedInt32Array(17, 10, 14, 0, 5), PackedInt32Array(18, 17, 5, 19), PackedInt32Array(18, 19, 6, 20), PackedInt32Array(21, 20, 6), PackedInt32Array(2, 1, 22, 23), PackedInt32Array(24, 2, 23, 25), PackedInt32Array(9, 21, 6), PackedInt32Array(25, 9, 8), PackedInt32Array(24, 25, 8, 26)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(616, -440, -976, 360, -600, 536, 632, 1152, 896, 1008, 1072, 920, 2168, 368, 1744, 152, 872, -296, 496, -72, 1056, 240, 1024, 352, 1104, 432, 912, 528, 776, 432, 880, 360, 488, 152, 360, 216, 208, 296, 680, 544, 522.611, 612.506, 0, 320, -8, 264, -7.15133, 209.226, 912, -280)])
+vertices = PackedVector2Array(1066.11, 325.789, 2146.16, 367.906, 631.906, 1140.81, 928.188, 403.359, 657.977, 513.961, 246.383, 296.508, 495.781, 179.148, 1065.89, 313.844, 615.922, -428.758, 479.992, 12.75, -953.539, 359.906, -42.0391, 281.922, -41.9609, 294.203, 544.172, 587.273, 658.023, 525.961)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 3), PackedInt32Array(1, 0, 7), PackedInt32Array(8, 1, 7, 9), PackedInt32Array(10, 8, 9, 11), PackedInt32Array(10, 11, 12), PackedInt32Array(2, 10, 12, 13), PackedInt32Array(3, 2, 13, 14), PackedInt32Array(3, 14, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(616, -440, -976, 360, 632, 1152, 2168, 368)])
 
 [sub_resource type="Curve2D" id="Curve2D_oeg6j"]
 _data = {
@@ -187,6 +187,9 @@ coffee_vending_machine_scene = ExtResource("6_atv1o")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_bf4m7")
+
+[node name="WallObstacle" type="Polygon2D" parent="NavigationRegion2D"]
+polygon = PackedVector2Array(544, 576, -32, 288, 480, 24, 1056, 320, 928, 392, 496, 168, 224, 296, 648, 520)
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("6_ygvik")
