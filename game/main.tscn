@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=40 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -33,6 +33,12 @@
 [ext_resource type="Texture2D" uid="uid://dspdsb240woc2" path="res://art/coffee_vending_machine_create2.png" id="23_cx7vv"]
 [ext_resource type="Texture2D" uid="uid://dmpnryg8djlpi" path="res://art/coffee_vending_machine_invalid1.png" id="24_7eaxf"]
 [ext_resource type="Texture2D" uid="uid://dssc7md0oscw5" path="res://art/coffee_vending_machine_invalid2.png" id="25_vhv1d"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_bf4m7"]
+vertices = PackedVector2Array(1066.11, 325.789, 2146.16, 367.906, 631.906, 1140.81, 928.188, 403.359, 657.977, 513.961, 246.383, 296.508, 495.781, 179.148, 1065.89, 313.844, 615.922, -428.758, 479.992, 12.75, -953.539, 359.906, -42.0391, 281.922, -41.9609, 294.203, 544.172, 587.273, 658.023, 525.961)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 3), PackedInt32Array(1, 0, 7), PackedInt32Array(8, 1, 7, 9), PackedInt32Array(10, 8, 9, 11), PackedInt32Array(10, 11, 12), PackedInt32Array(2, 10, 12, 13), PackedInt32Array(3, 2, 13, 14), PackedInt32Array(3, 14, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(616, -440, -976, 360, 632, 1152, 2168, 368)])
+agent_radius = 20.0
 
 [sub_resource type="Curve2D" id="Curve2D_oeg6j"]
 _data = {
@@ -180,6 +186,12 @@ coffee_vending_machine_scene = ExtResource("6_atv1o")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
 
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_bf4m7")
+
+[node name="WallObstacle" type="Polygon2D" parent="NavigationRegion2D"]
+polygon = PackedVector2Array(544, 576, -32, 288, 480, 24, 1056, 320, 928, 392, 496, 168, 224, 296, 648, 520)
+
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("6_ygvik")
 player = NodePath("../Player")
@@ -191,7 +203,7 @@ package_scene = ExtResource("7_g140p")
 package_container = NodePath("../PackageContainer")
 
 [node name="StartPosition" type="Marker2D" parent="."]
-position = Vector2(240, 450)
+position = Vector2(1056, 776)
 
 [node name="MobPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_oeg6j")
@@ -199,6 +211,7 @@ curve = SubResource("Curve2D_oeg6j")
 [node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
 
 [node name="HUD" parent="." instance=ExtResource("4_oo6vi")]
+visible = false
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamOggVorbis_5efd5")
@@ -242,6 +255,15 @@ z_index = 1
 sprite_frames = SubResource("SpriteFrames_hsts8")
 animation = &"coffee_vending_machine_invalid"
 script = ExtResource("11_j04ey")
+
+[node name="EmployeeWorkArea" type="Marker2D" parent="."]
+position = Vector2(448, 264)
+
+[node name="EmployeeExit" type="Marker2D" parent="."]
+position = Vector2(1128, 816)
+
+[node name="EmployeeShippingDrop" type="Marker2D" parent="."]
+position = Vector2(928, 432)
 
 [connection signal="coffee_vending_machine_placement_requested" from="Player" to="." method="_on_player_coffee_vending_machine_placement_requested"]
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]

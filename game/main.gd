@@ -31,11 +31,6 @@ func new_game():
 	$HUD.update_time(current_time)
 	$HUD.show_message("Rise & Grind")
 	$HUD.update_drive_points(drive_points)
-	#$Music.play()
-
-func _on_player_furniture_placed() -> void:
-	net_worth -= 100
-	$HUD.update_net_worth(net_worth)
 
 func _on_player_furniture_placement_requested(position: Vector2) -> void:
 	if !$CursorIndicator.visible or $CursorIndicator.animation == 'basic_workbench_invalid':
@@ -48,6 +43,20 @@ func _on_player_furniture_placement_requested(position: Vector2) -> void:
 		var furniture = furniture_scene.instantiate()
 		furniture.position = position
 		furniture_container.add_child(furniture)
+		var collision_shape = furniture.get_node("FurnitureCollisionShape")
+		var rect_shape = collision_shape.shape
+		var nav_outline = Polygon2D.new()
+		var extents = (rect_shape.size / 2) + Vector2(20, 20)
+		nav_outline.polygon = [
+			Vector2(-extents.x, -extents.y),
+			Vector2(extents.x, -extents.y),
+			Vector2(extents.x, extents.y),
+			Vector2(-extents.x, extents.y)
+		]
+		nav_outline.global_position = collision_shape.global_position
+		nav_outline.color = Color(1, 0, 0, 0.5)
+		$NavigationRegion2D.add_child(nav_outline)
+		$NavigationRegion2D.bake_navigation_polygon()
 
 func _on_day_timer_timeout() -> void:
 	current_time += 5
@@ -83,6 +92,7 @@ func _on_hud_employee_recruited() -> void:
 	employee_container.add_child(employee)
 	employee.money_owed_updated.connect(_on_employee_money_owed_updated)
 	employee.widget_action_requested.connect(_on_employee_widget_action_requested)
+	employee.package_widget_requested.connect(_on_player_package_widget_requested)
 
 
 func _on_hud_employee_fired() -> void:

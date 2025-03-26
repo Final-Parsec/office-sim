@@ -122,6 +122,7 @@ func _ready() -> void:
 	$CommutePanel.visible = false
 	$DriveProgressBar.visible = false
 	$TopBarBackground.visible = false
+	visible = true
 
 func update_drive_points(drive_points) -> void:
 	$DriveProgressBar.visible = true
