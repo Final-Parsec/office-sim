@@ -1,9 +1,10 @@
-[gd_scene load_steps=40 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=41 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
 [ext_resource type="PackedScene" uid="uid://0xswmswqjexh" path="res://employee.tscn" id="3_u4axo"]
 [ext_resource type="PackedScene" uid="uid://c4xywe4atv1fa" path="res://widget.tscn" id="3_xbnie"]
+[ext_resource type="PackedScene" uid="uid://cqtmkmiobv7hx" path="res://employee_carry.tscn" id="4_ah1jg"]
 [ext_resource type="PackedScene" uid="uid://cu5shp7i66fhf" path="res://furniture.tscn" id="4_mg1l2"]
 [ext_resource type="PackedScene" uid="uid://bw6td1ka2uv5c" path="res://hud.tscn" id="4_oo6vi"]
 [ext_resource type="PackedScene" uid="uid://qw1v0gqpd576" path="res://background.tscn" id="5_1cbru"]
@@ -179,6 +180,7 @@ script = ExtResource("1_jxwdf")
 furniture_scene = ExtResource("4_mg1l2")
 furniture_container = NodePath("FurnitureContainer")
 employee_scene = ExtResource("3_u4axo")
+employee_carry_scene = ExtResource("4_ah1jg")
 employee_container = NodePath("EmployeeContainer")
 widget_scene = ExtResource("3_xbnie")
 package_scene = ExtResource("7_g140p")

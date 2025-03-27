@@ -2,9 +2,9 @@ extends CanvasLayer
 
 signal start_game
 signal action_bar_button_pressed
-signal employee_recruited
-signal employee_fired
-signal employee_run_payroll_pressed
+signal employee_recruited(employee: Enums.Employees)
+signal employee_fired(employee: Enums.Employees)
+signal employee_run_payroll_pressed(employee: Enums.Employees)
 signal accelerate_time_pressed(irl_seconds_per_5_min: float)
 signal overlaying_panel_visibility_changed(overlaying_panel_visible: bool)
 signal player_rest_requested
@@ -90,16 +90,16 @@ func set_selected_action(selected_action: Enums.Actions) -> void:
 func _on_recruit_pressed() -> void:
 	$HRPanel/TabContainer/Recruiting/Recruit.visible = false
 	$HRPanel/TabContainer/Employees/Employee.visible = true
-	employee_recruited.emit()
+	employee_recruited.emit(Enums.Employees.COLM)
 
 func _on_fire_button_pressed() -> void:
 	$HRPanel/TabContainer/Recruiting/Recruit.visible = true
 	$HRPanel/TabContainer/Employees/Employee.visible = false
-	employee_fired.emit()
+	employee_fired.emit(Enums.Employees.COLM)
 
 
 func _on_run_payroll_button_pressed() -> void:
-	employee_run_payroll_pressed.emit()
+	employee_run_payroll_pressed.emit(Enums.Employees.COLM)
 
 
 func _on_accelerate_time_pressed() -> void:
@@ -160,3 +160,19 @@ func _on_furniture_button_pressed() -> void:
 
 func _on_coffee_vending_machine_button_pressed() -> void:
 	set_selected_action(Enums.Actions.COFFEE_VENDING_MACHINE)
+
+
+func _on_recruit_carry_pressed() -> void:
+	$HRPanel/TabContainer/Recruiting/RecruitCarry.visible = false
+	$HRPanel/TabContainer/Employees/EmployeeCarry.visible = true
+	employee_recruited.emit(Enums.Employees.CARRY)
+
+
+func _on_run_payroll_carry_button_pressed() -> void:
+	employee_run_payroll_pressed.emit(Enums.Employees.CARRY)
+
+
+func _on_fire_carry_button_pressed() -> void:
+	$HRPanel/TabContainer/Recruiting/RecruitCarry.visible = true
+	$HRPanel/TabContainer/Employees/EmployeeCarry.visible = false
+	employee_fired.emit(Enums.Employees.CARRY)

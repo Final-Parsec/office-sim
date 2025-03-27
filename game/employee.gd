@@ -46,8 +46,15 @@ func act(current_time: int) -> void:
 		# Try to get to specified work area.
 		var work_area = $"../../EmployeeWorkArea".global_position
 		if global_position.distance_to(work_area) > 50:
-			walking_to_work_area = true
-			$NavigationAgent2D.target_position = work_area
+			if walking_to_work_area:
+				if !$NavigationAgent2D.is_target_reachable():
+					print('not reachable')
+					walking_to_work_area = false
+			else:
+				work_area = Vector2(work_area.x + randi_range(-50, 50), work_area.y + randi_range(-50, 50))
+				print('setting work area target')
+				$NavigationAgent2D.target_position = work_area
+				walking_to_work_area = true
 			return
 		
 		if walking_to_work_area || walking_to_commute_tile:
