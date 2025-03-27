@@ -95,6 +95,7 @@ func _on_hud_employee_recruited(recruited_employee: Enums.Employees) -> void:
 	var employee = scene_to_use.instantiate()
 	var spawn_position = $StartPosition.position
 	spawn_position = Vector2(spawn_position.x + randi_range(-20, 20), spawn_position.y + randi_range(-20, 20)) # give it a lil wiggle
+	employee.identity = recruited_employee
 	employee.position = spawn_position
 	employee_container.add_child(employee)
 	employee.money_owed_updated.connect(_on_employee_money_owed_updated)
@@ -109,17 +110,20 @@ func _on_hud_employee_fired(fired_employee: Enums.Employees) -> void:
 	$HUD.update_net_worth(net_worth)
 	employee.queue_free()
 
-func _on_employee_money_owed_updated(money_owed) -> void:
-	$HUD/HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton.text = "Run Payroll ($" + str(snapped(money_owed, 0)) + ")"
+func _on_employee_money_owed_updated(money_owed, employee) -> void:
+	if employee == Enums.Employees.COLM:
+		$HUD/HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton.text = "Run Payroll ($" + str(snapped(money_owed, 0)) + ")"
+	elif employee == Enums.Employees.CARRY:
+		$HUD/HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer/RunPayrollCarryButton.text = "Run Payroll ($" + str(snapped(money_owed, 0)) + ")"
+	else:
+		push_error("invalid employee")
 	
-func _on_hud_employee_run_payroll_pressed() -> void:
-	var employee = employee_container.get_children().front()
+func _on_hud_employee_run_payroll_pressed(paid_employee: Enums.Employees) -> void:
+	var employee = employee_instances[paid_employee]
 	var amount_to_pay = employee.money_owed
 	net_worth -= amount_to_pay
 	employee.pay(amount_to_pay)
 	$HUD.update_net_worth(net_worth)
-	
-
 
 func _on_player_widget_action_requested(position: Vector2, actor_position: Vector2) -> void:
 	if position.distance_to(actor_position) > 100:

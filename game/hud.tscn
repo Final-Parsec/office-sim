@@ -334,6 +334,7 @@ layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="Employee" type="HBoxContainer" parent="HRPanel/TabContainer/Employees"]
+visible = false
 layout_mode = 0
 offset_right = 449.0
 offset_bottom = 224.0
@@ -367,6 +368,7 @@ layout_mode = 2
 text = "Fire"
 
 [node name="EmployeeCarry" type="HBoxContainer" parent="HRPanel/TabContainer/Employees"]
+visible = false
 layout_mode = 0
 offset_top = 158.0
 offset_right = 449.0

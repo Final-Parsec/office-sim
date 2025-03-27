@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-signal money_owed_updated(money_owed)
+signal money_owed_updated(money_owed, identity)
 signal widget_action_requested(position: Vector2, actor_position: Vector2)
 signal package_widget_requested(position: Vector2, actor_position: Vector2)
 
@@ -13,6 +13,7 @@ var walking_to_work_area := false
 var walking_to_commute_tile := false
 var movement_delta: float
 var carrying_package := false
+var identity
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 
@@ -32,7 +33,7 @@ func act(current_time: int) -> void:
 		visible = true
 		$CollisionShape2D.disabled = false
 		money_owed += hourly_rate * (5.0 / 60.0)
-		money_owed_updated.emit(money_owed)
+		money_owed_updated.emit(money_owed, identity)
 		
 		if carrying_package:
 			if navigation_agent.is_navigation_finished():
@@ -51,7 +52,7 @@ func act(current_time: int) -> void:
 					print('not reachable')
 					walking_to_work_area = false
 			else:
-				work_area = Vector2(work_area.x + randi_range(-50, 50), work_area.y + randi_range(-50, 50))
+				work_area = Vector2(work_area.x + randi_range(-100, 100), work_area.y + randi_range(-100, 100))
 				print('setting work area target')
 				$NavigationAgent2D.target_position = work_area
 				walking_to_work_area = true
@@ -93,7 +94,7 @@ func act(current_time: int) -> void:
 
 func pay(money_paid) -> void:
 	money_owed -= money_paid
-	money_owed_updated.emit(money_owed)
+	money_owed_updated.emit(money_owed, identity)
 	
 func _physics_process(delta: float) -> void:
 	if !walking_to_work_area && !walking_to_commute_tile && !carrying_package:
