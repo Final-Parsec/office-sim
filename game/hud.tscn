@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=40 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://csg6mcyx2jvpm" path="res://art/action_bar_five2.png" id="13_ddm14"]
 [ext_resource type="Texture2D" uid="uid://bxj1a8eg23fpx" path="res://art/action_bar_six1.png" id="14_3ea8n"]
 [ext_resource type="Texture2D" uid="uid://d4b1ksfdmwn1j" path="res://art/action_bar_six2.png" id="15_2srnn"]
+[ext_resource type="Texture2D" uid="uid://bhndpva7hvglu" path="res://art/carry_moore1.png" id="18_brpx8"]
 
 [sub_resource type="Shortcut" id="Shortcut_wpxgg"]
 
@@ -85,6 +86,17 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("5_epwqy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qiqxs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_brpx8")
 }],
 "loop": true,
 "name": &"default",
@@ -290,11 +302,39 @@ text = "$5 / hour"
 position = Vector2(73, 61)
 sprite_frames = SubResource("SpriteFrames_fm8g5")
 
+[node name="RecruitCarry" type="Button" parent="HRPanel/TabContainer/Recruiting"]
+layout_mode = 0
+offset_top = 129.0
+offset_right = 320.0
+offset_bottom = 258.0
+tooltip_text = "Click to hire"
+
+[node name="Name" type="Label" parent="HRPanel/TabContainer/Recruiting/RecruitCarry"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 49.0
+offset_right = 248.0
+offset_bottom = 72.0
+text = "Carry Moore"
+
+[node name="Rate" type="Label" parent="HRPanel/TabContainer/Recruiting/RecruitCarry"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 73.0
+offset_right = 248.0
+offset_bottom = 96.0
+text = "$5 / hour"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HRPanel/TabContainer/Recruiting/RecruitCarry"]
+position = Vector2(73, 61)
+sprite_frames = SubResource("SpriteFrames_qiqxs")
+
 [node name="Employees" type="Control" parent="HRPanel/TabContainer"]
 layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="Employee" type="HBoxContainer" parent="HRPanel/TabContainer/Employees"]
+visible = false
 layout_mode = 0
 offset_right = 449.0
 offset_bottom = 224.0
@@ -324,6 +364,42 @@ layout_mode = 2
 text = "Run Payroll ($0)"
 
 [node name="FireButton" type="Button" parent="HRPanel/TabContainer/Employees/Employee/VBoxContainer"]
+layout_mode = 2
+text = "Fire"
+
+[node name="EmployeeCarry" type="HBoxContainer" parent="HRPanel/TabContainer/Employees"]
+visible = false
+layout_mode = 0
+offset_top = 158.0
+offset_right = 449.0
+offset_bottom = 382.0
+
+[node name="TextureRect" type="TextureRect" parent="HRPanel/TabContainer/Employees/EmployeeCarry"]
+layout_mode = 2
+texture = ExtResource("18_brpx8")
+stretch_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HRPanel/TabContainer/Employees/EmployeeCarry"]
+layout_mode = 2
+
+[node name="Rate" type="Label" parent="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer"]
+layout_mode = 2
+text = "$5 / hour"
+
+[node name="Name" type="Label" parent="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer"]
+layout_mode = 2
+text = "Carry Moore
+"
+
+[node name="Schedule" type="Label" parent="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer"]
+layout_mode = 2
+text = "7 AM - 4 PM"
+
+[node name="RunPayrollCarryButton" type="Button" parent="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer"]
+layout_mode = 2
+text = "Run Payroll ($0)"
+
+[node name="FireCarryButton" type="Button" parent="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer"]
 layout_mode = 2
 text = "Fire"
 
@@ -391,8 +467,11 @@ text = "X"
 [connection signal="pressed" from="ActionBar/CoffeeVendingMachineButton" to="." method="_on_coffee_vending_machine_button_pressed"]
 [connection signal="visibility_changed" from="HRPanel" to="." method="_on_hr_panel_visibility_changed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
+[connection signal="pressed" from="HRPanel/TabContainer/Recruiting/RecruitCarry" to="." method="_on_recruit_carry_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton" to="." method="_on_run_payroll_button_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/FireButton" to="." method="_on_fire_button_pressed"]
+[connection signal="pressed" from="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer/RunPayrollCarryButton" to="." method="_on_run_payroll_carry_button_pressed"]
+[connection signal="pressed" from="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer/FireCarryButton" to="." method="_on_fire_carry_button_pressed"]
 [connection signal="pressed" from="AccelerateTimeButton" to="." method="_on_accelerate_time_pressed"]
 [connection signal="visibility_changed" from="CommutePanel" to="." method="_on_commute_panel_visibility_changed"]
 [connection signal="pressed" from="CommutePanel/RestButton" to="." method="_on_rest_button_pressed"]

@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://cqtmkmiobv7hx"]
+
+[ext_resource type="Script" path="res://employee.gd" id="1_rroan"]
+[ext_resource type="Texture2D" uid="uid://dtsrwmb2cwc8q" path="res://art/carry_moore_carry1.png" id="2_ssahv"]
+[ext_resource type="Texture2D" uid="uid://gqua5nh33sjs" path="res://art/carry_moore_carry2.png" id="3_oo32n"]
+[ext_resource type="Texture2D" uid="uid://bhndpva7hvglu" path="res://art/carry_moore1.png" id="4_6x0wc"]
+[ext_resource type="Texture2D" uid="uid://d26ty28t047p" path="res://art/carry_moore2.png" id="5_7k5d0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cvqi5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ssahv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_oo32n")
+}],
+"loop": true,
+"name": &"carry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_6x0wc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7k5d0")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_6x0wc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7k5d0")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cojay"]
+
+[node name="Employee (Carry)" type="CharacterBody2D"]
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_rroan")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_cvqi5")
+animation = &"carry"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, 30)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_cojay")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+radius = 20.0
+debug_enabled = true
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

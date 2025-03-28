@@ -5,10 +5,12 @@ var current_time
 var drive_points
 var player_tile_position
 var carry_package
+var employee_instances = {}
 
 @export var furniture_scene: PackedScene
 @export var furniture_container: Node2D
 @export var employee_scene: PackedScene
+@export var employee_carry_scene: PackedScene
 @export var employee_container: Node2D
 @export var widget_scene: PackedScene
 @export var package_scene: PackedScene
@@ -86,32 +88,42 @@ func _on_mailman_package_collected() -> void:
 	$HUD.update_net_worth(net_worth)
 
 
-func _on_hud_employee_recruited() -> void:
-	var employee = employee_scene.instantiate()
-	employee.position = $StartPosition.position
+func _on_hud_employee_recruited(recruited_employee: Enums.Employees) -> void:
+	var scene_to_use = employee_scene
+	if recruited_employee == Enums.Employees.CARRY:
+		scene_to_use = employee_carry_scene
+	var employee = scene_to_use.instantiate()
+	var spawn_position = $StartPosition.position
+	spawn_position = Vector2(spawn_position.x + randi_range(-20, 20), spawn_position.y + randi_range(-20, 20)) # give it a lil wiggle
+	employee.identity = recruited_employee
+	employee.position = spawn_position
 	employee_container.add_child(employee)
 	employee.money_owed_updated.connect(_on_employee_money_owed_updated)
 	employee.widget_action_requested.connect(_on_employee_widget_action_requested)
 	employee.package_widget_requested.connect(_on_player_package_widget_requested)
+	employee_instances[recruited_employee] = employee
 
 
-func _on_hud_employee_fired() -> void:
-	var employee = employee_container.get_children().front()
+func _on_hud_employee_fired(fired_employee: Enums.Employees) -> void:
+	var employee = employee_instances[fired_employee]
 	net_worth -= employee.money_owed
 	$HUD.update_net_worth(net_worth)
 	employee.queue_free()
 
-func _on_employee_money_owed_updated(money_owed) -> void:
-	$HUD/HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton.text = "Run Payroll ($" + str(snapped(money_owed, 0)) + ")"
+func _on_employee_money_owed_updated(money_owed, employee) -> void:
+	if employee == Enums.Employees.COLM:
+		$HUD/HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton.text = "Run Payroll ($" + str(snapped(money_owed, 0)) + ")"
+	elif employee == Enums.Employees.CARRY:
+		$HUD/HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer/RunPayrollCarryButton.text = "Run Payroll ($" + str(snapped(money_owed, 0)) + ")"
+	else:
+		push_error("invalid employee")
 	
-func _on_hud_employee_run_payroll_pressed() -> void:
-	var employee = employee_container.get_children().front()
+func _on_hud_employee_run_payroll_pressed(paid_employee: Enums.Employees) -> void:
+	var employee = employee_instances[paid_employee]
 	var amount_to_pay = employee.money_owed
 	net_worth -= amount_to_pay
 	employee.pay(amount_to_pay)
 	$HUD.update_net_worth(net_worth)
-	
-
 
 func _on_player_widget_action_requested(position: Vector2, actor_position: Vector2) -> void:
 	if position.distance_to(actor_position) > 100:
