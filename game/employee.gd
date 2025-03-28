@@ -46,7 +46,7 @@ func act(current_time: int) -> void:
 
 		# Try to get to specified work area.
 		var work_area = $"../../EmployeeWorkArea".global_position
-		if global_position.distance_to(work_area) > 50:
+		if global_position.distance_to(work_area) > 100:
 			if walking_to_work_area:
 				if !$NavigationAgent2D.is_target_reachable():
 					print('not reachable')
