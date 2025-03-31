@@ -37,9 +37,7 @@ func act(current_time: int) -> void:
 		
 		if carrying_package:
 			if navigation_agent.is_navigation_finished():
-				var package = $"../../Player".package_scene.instantiate()
-				package.position = navigation_agent.target_position
-				$"../../PackageContainer".add_child(package)
+				$"../../PackageContainer".create_package(navigation_agent.target_position)
 				carrying_package = false
 			else:
 				return

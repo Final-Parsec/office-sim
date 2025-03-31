@@ -13,7 +13,6 @@ var employee_instances = {}
 @export var employee_carry_scene: PackedScene
 @export var employee_container: Node2D
 @export var widget_scene: PackedScene
-@export var package_scene: PackedScene
 @export var coffee_vending_machine_scene: PackedScene
 
 
@@ -58,7 +57,6 @@ func _on_player_furniture_placement_requested(position: Vector2) -> void:
 		nav_outline.global_position = collision_shape.global_position
 		nav_outline.color = Color(1, 0, 0, 0.5)
 		$NavigationRegion2D.add_child(nav_outline)
-		$NavigationRegion2D.bake_navigation_polygon()
 
 func _on_day_timer_timeout() -> void:
 	current_time += 5
@@ -205,9 +203,7 @@ func _on_player_package_widget_requested(position: Vector2, actor_position: Vect
 		var circle = collision_shape.shape as CircleShape2D
 		var radius = circle.radius
 		if position.distance_to(collision_shape.global_position) <= radius && widget.is_packable():
-			var package = package_scene.instantiate()
-			package.position = widget.position
-			$PackageContainer.add_child(package)
+			$PackageContainer.create_package(widget.position)
 			widget.queue_free()
 
 
@@ -224,3 +220,14 @@ func _on_player_coffee_vending_machine_placement_requested(position: Vector2) ->
 		coffee_vending_machine.y_sort_enabled = true
 		$CoffeeVendingMachineContainer.add_child(coffee_vending_machine)
 		$Player.in_coffee_zone = true
+
+
+func _on_player_carry_action_requested(position: Vector2, actor_position: Vector2) -> void:
+	if $Player.carrying_package && position.distance_to(actor_position) < 100:
+		$PackageContainer.create_package(position)
+		$Player.carrying_package = false
+	else:
+		var package = $PackageContainer.get_package_at_position(position)
+		if package != null && position.distance_to(actor_position) < 100:
+			$Player.carrying_package = true
+			package.queue_free()

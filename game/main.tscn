@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=42 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://mailman.gd" id="8_px6ih"]
 [ext_resource type="Texture2D" uid="uid://ycjfn1nfmonq" path="res://art/widget_create1.png" id="9_71qoh"]
 [ext_resource type="Texture2D" uid="uid://c3ujp3okifr51" path="res://art/mailman.png" id="9_daadb"]
+[ext_resource type="Script" path="res://employee_navigation_region.gd" id="9_gd5qs"]
 [ext_resource type="Texture2D" uid="uid://d1ii3a7joyw4p" path="res://art/widget_build1.png" id="9_mokby"]
 [ext_resource type="Texture2D" uid="uid://7qi17hucq46s" path="res://art/widget_build2.png" id="10_5uig0"]
 [ext_resource type="Texture2D" uid="uid://ke0rfj74784h" path="res://art/widget_create2.png" id="10_c7lq0"]
@@ -183,15 +184,15 @@ employee_scene = ExtResource("3_u4axo")
 employee_carry_scene = ExtResource("4_ah1jg")
 employee_container = NodePath("EmployeeContainer")
 widget_scene = ExtResource("3_xbnie")
-package_scene = ExtResource("7_g140p")
 coffee_vending_machine_scene = ExtResource("6_atv1o")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+[node name="EmployeeNavigationRegion" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_bf4m7")
+script = ExtResource("9_gd5qs")
 
-[node name="WallObstacle" type="Polygon2D" parent="NavigationRegion2D"]
+[node name="WallObstacle" type="Polygon2D" parent="EmployeeNavigationRegion"]
 polygon = PackedVector2Array(544, 576, -32, 288, 480, 24, 1056, 320, 928, 392, 496, 168, 224, 296, 648, 520)
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
@@ -228,9 +229,11 @@ y_sort_enabled = true
 y_sort_enabled = true
 script = ExtResource("14_0md0v")
 
-[node name="PackageContainer" type="Node2D" parent="."]
+[node name="PackageContainer" type="Node2D" parent="." node_paths=PackedStringArray("navigation_region")]
 y_sort_enabled = true
 script = ExtResource("12_mohxw")
+package_scene = ExtResource("7_g140p")
+navigation_region = NodePath("../EmployeeNavigationRegion")
 
 [node name="EmployeeContainer" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -267,6 +270,7 @@ position = Vector2(1128, 816)
 [node name="EmployeeShippingDrop" type="Marker2D" parent="."]
 position = Vector2(928, 432)
 
+[connection signal="carry_action_requested" from="Player" to="." method="_on_player_carry_action_requested"]
 [connection signal="coffee_vending_machine_placement_requested" from="Player" to="." method="_on_player_coffee_vending_machine_placement_requested"]
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="moved" from="Player" to="." method="_on_player_moved"]

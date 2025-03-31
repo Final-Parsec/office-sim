@@ -5,6 +5,7 @@ signal package_widget_requested(position: Vector2, actor_position: Vector2)
 signal widget_action_requested(position: Vector2)
 signal moved(position: Vector2)
 signal coffee_vending_machine_placement_requested(position: Vector2)
+signal carry_action_requested(position: Vector2, actor_position: Vector2)
 
 @export var speed = 375.0
 @export var widget_container: Node2D
@@ -71,17 +72,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if GameState.selected_action == Enums.Actions.PACK:
 			package_widget_requested.emit(get_global_mouse_position(), position)
 		if GameState.selected_action == Enums.Actions.CARRY:
-			var mouse_position = get_global_mouse_position()
-			if carrying_package && mouse_position.distance_to(position) < 100:
-				var package = package_scene.instantiate()
-				package.position = mouse_position
-				package_container.add_child(package)
-				carrying_package = false
-			else:
-				var package = package_container.get_package_at_position(mouse_position)
-				if package != null && mouse_position.distance_to(position) < 100:
-					carrying_package = true
-					package.queue_free()
+			carry_action_requested.emit(get_global_mouse_position(), position)
 		if GameState.selected_action == Enums.Actions.COFFEE_VENDING_MACHINE:
 			coffee_vending_machine_placement_requested.emit(get_global_mouse_position())
 
