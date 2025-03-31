@@ -199,11 +199,8 @@ polygon = PackedVector2Array(544, 576, -32, 288, 480, 24, 1056, 320, 928, 392, 4
 script = ExtResource("6_ygvik")
 player = NodePath("../Player")
 
-[node name="Player" parent="." node_paths=PackedStringArray("widget_container", "package_container") instance=ExtResource("1_7mjmw")]
+[node name="Player" parent="." instance=ExtResource("1_7mjmw")]
 y_sort_enabled = true
-widget_container = NodePath("../WidgetContainer")
-package_scene = ExtResource("7_g140p")
-package_container = NodePath("../PackageContainer")
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(1056, 776)
