@@ -222,9 +222,11 @@ stream = ExtResource("5_ppkhf")
 [node name="FurnitureContainer" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="WidgetContainer" type="Node2D" parent="."]
+[node name="WidgetContainer" type="Node2D" parent="." node_paths=PackedStringArray("navigation_region")]
 y_sort_enabled = true
 script = ExtResource("14_0md0v")
+widget_scene = ExtResource("3_xbnie")
+navigation_region = NodePath("../EmployeeNavigationRegion")
 
 [node name="PackageContainer" type="Node2D" parent="." node_paths=PackedStringArray("navigation_region")]
 y_sort_enabled = true

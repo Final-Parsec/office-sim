@@ -136,7 +136,7 @@ func _on_player_widget_action_requested(position: Vector2, actor_position: Vecto
 		$HUD.update_drive_points(drive_points)
 
 	if $WidgetContainer.is_buildable_position(position):
-		place_widget(position)
+		$WidgetContainer.create_widget(position)
 		drive_points -= 5
 		$HUD.update_drive_points(drive_points)
 		
@@ -149,14 +149,7 @@ func _on_employee_widget_action_requested(position: Vector2, actor_position: Vec
 		clicked_widget.build(10)
 
 	if $WidgetContainer.is_buildable_position(position):
-		place_widget(position)
-
-
-func place_widget(spawn_location: Vector2):
-	var widget = widget_scene.instantiate()
-	widget.position = spawn_location
-	$WidgetContainer.add_child(widget)
-
+		$WidgetContainer.create_widget(position)
 
 func _on_hud_action_bar_button_pressed() -> void:
 	$Player.action_selected()
