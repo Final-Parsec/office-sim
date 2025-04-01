@@ -25,7 +25,9 @@ func game_over() -> void:
 func new_game():
 	net_worth = 1000
 	current_time = 6 * 60
-	drive_points = 100
+	drive_points = 100	
+	$Player.obstacle_added.connect($EmployeeNavigationRegion.obstacle_added)
+	$Player.obstacle_removed.connect($EmployeeNavigationRegion.obstacle_removed)
 	$Player.start($StartPosition.position)
 	$DayTimer.start()
 	$HUD.update_net_worth(net_worth)
