@@ -43,22 +43,7 @@ func _on_player_furniture_placement_requested(position: Vector2) -> void:
 	if net_worth >= FURNITURE_COST:
 		net_worth -= FURNITURE_COST
 		$HUD.update_net_worth(net_worth)
-		var furniture = furniture_scene.instantiate()
-		furniture.position = position
-		furniture_container.add_child(furniture)
-		var collision_shape = furniture.get_node("FurnitureCollisionShape")
-		var rect_shape = collision_shape.shape
-		var nav_outline = Polygon2D.new()
-		var extents = (rect_shape.size / 2) + Vector2(20, 20)
-		nav_outline.polygon = [
-			Vector2(-extents.x, -extents.y),
-			Vector2(extents.x, -extents.y),
-			Vector2(extents.x, extents.y),
-			Vector2(-extents.x, extents.y)
-		]
-		nav_outline.global_position = collision_shape.global_position
-		nav_outline.color = Color(1, 0, 0, 0.5)
-		$NavigationRegion2D.add_child(nav_outline)
+		$FurnitureContainer.create_furniture(position)
 
 func _on_day_timer_timeout() -> void:
 	current_time += 5

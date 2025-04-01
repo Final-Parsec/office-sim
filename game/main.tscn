@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=43 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://ke0rfj74784h" path="res://art/widget_create2.png" id="10_c7lq0"]
 [ext_resource type="Script" path="res://cursor_indicator.gd" id="11_j04ey"]
 [ext_resource type="Script" path="res://package_container.gd" id="12_mohxw"]
+[ext_resource type="Script" path="res://furniture_container.gd" id="13_fed4l"]
 [ext_resource type="Script" path="res://widget_container.gd" id="14_0md0v"]
 [ext_resource type="Texture2D" uid="uid://d2l0gmod4mml6" path="res://art/basic_workbench_create1.png" id="14_8b740"]
 [ext_resource type="Texture2D" uid="uid://hscmf3ecjywg" path="res://art/basic_workbench_invalid1.png" id="14_8bxa5"]
@@ -219,8 +220,11 @@ stream = SubResource("AudioStreamOggVorbis_5efd5")
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ppkhf")
 
-[node name="FurnitureContainer" type="Node2D" parent="."]
+[node name="FurnitureContainer" type="Node2D" parent="." node_paths=PackedStringArray("navigation_region")]
 y_sort_enabled = true
+script = ExtResource("13_fed4l")
+furniture_scene = ExtResource("4_mg1l2")
+navigation_region = NodePath("../EmployeeNavigationRegion")
 
 [node name="WidgetContainer" type="Node2D" parent="." node_paths=PackedStringArray("navigation_region")]
 y_sort_enabled = true
