@@ -1,10 +1,12 @@
 extends RigidBody2D
 
+signal obstacle_added(obstacle_id :int, obstructed_area: Polygon2D)
+signal obstacle_removed(obstacle_id: int)
+
 var progress
 
 func _ready() -> void:
-	var widget_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
-	$AnimatedSprite2D.play(widget_types[randi() % widget_types.size()])
+	$AnimatedSprite2D.play()
 	progress = 0
 	
 func build(additional_progress: int):
