@@ -58,7 +58,9 @@ func act(current_time: int) -> void:
 					print(str(identity) + ': not reachable')
 					walking_to_work_area = false
 			else:
-				work_area = Vector2(work_area.x + randi_range(-100, 100), work_area.y + randi_range(-100, 100))
+				var angle = randf_range(0, TAU)
+				var distance = randf_range(0, 100)
+				work_area = work_area + Vector2(cos(angle), sin(angle)) * distance
 				print(str(identity) + ': setting work area target')
 				$NavigationAgent2D.target_position = work_area
 				walking_to_work_area = true
