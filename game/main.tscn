@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=44 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://hscmf3ecjywg" path="res://art/basic_workbench_invalid1.png" id="14_8bxa5"]
 [ext_resource type="Texture2D" uid="uid://cn1f8b36um0nh" path="res://art/basic_workbench_create2.png" id="15_2uysg"]
 [ext_resource type="Texture2D" uid="uid://dbarb441y4ck" path="res://art/basic_workbench_invalid2.png" id="15_c5p6a"]
+[ext_resource type="Script" path="res://coffee_vending_machine_container.gd" id="16_d0q70"]
 [ext_resource type="Texture2D" uid="uid://dyphviqmre33k" path="res://art/hand1.png" id="19_hgwrt"]
 [ext_resource type="Texture2D" uid="uid://p4dst3dueqpl" path="res://art/hand2.png" id="20_81fmh"]
 [ext_resource type="Texture2D" uid="uid://clqa62kr0vmri" path="res://art/carry_package.png" id="21_2dno5"]
@@ -182,7 +183,6 @@ script = ExtResource("1_jxwdf")
 employee_scene = ExtResource("3_u4axo")
 employee_carry_scene = ExtResource("4_ah1jg")
 employee_container = NodePath("EmployeeContainer")
-coffee_vending_machine_scene = ExtResource("6_atv1o")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
 navigation_enabled = false
@@ -239,8 +239,11 @@ navigation_region = NodePath("../EmployeeNavigationRegion")
 [node name="EmployeeContainer" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="CoffeeVendingMachineContainer" type="Node2D" parent="."]
+[node name="CoffeeVendingMachineContainer" type="Node2D" parent="." node_paths=PackedStringArray("navigation_region")]
 y_sort_enabled = true
+script = ExtResource("16_d0q70")
+coffee_vending_machine_scene = ExtResource("6_atv1o")
+navigation_region = NodePath("../EmployeeNavigationRegion")
 
 [node name="DayTimer" type="Timer" parent="."]
 wait_time = 2.5

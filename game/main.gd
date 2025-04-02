@@ -10,8 +10,6 @@ var employee_instances = {}
 @export var employee_scene: PackedScene
 @export var employee_carry_scene: PackedScene
 @export var employee_container: Node2D
-@export var coffee_vending_machine_scene: PackedScene
-
 
 func game_over() -> void:
 	$ScoreTimer.stop()
@@ -194,10 +192,7 @@ func _on_player_coffee_vending_machine_placement_requested(position: Vector2) ->
 	if net_worth >= COFFEE_VENDING_MACHINE_COST:
 		net_worth -= COFFEE_VENDING_MACHINE_COST
 		$HUD.update_net_worth(net_worth)
-		var coffee_vending_machine = coffee_vending_machine_scene.instantiate()
-		coffee_vending_machine.position = position
-		coffee_vending_machine.y_sort_enabled = true
-		$CoffeeVendingMachineContainer.add_child(coffee_vending_machine)
+		$CoffeeVendingMachineContainer.create_coffee_vending_machine(position)
 		$Player.in_coffee_zone = true
 
 
