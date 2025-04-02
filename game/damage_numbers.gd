@@ -18,7 +18,7 @@ func display_number(value: int, position: Vector2, is_critical: bool = false):
 	number.label_settings.outline_color = "#000"
 	number.label_settings.outline_size = 1
 	
-	call_deferred("add_child", number)
+	get_tree().root.call_deferred("add_child", number)
 	
 	await number.resized
 	number.pivot_offset = Vector2(number.size / 2)
