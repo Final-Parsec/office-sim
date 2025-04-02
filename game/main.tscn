@@ -176,15 +176,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("furniture_container", "employee_container")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("employee_container")]
 y_sort_enabled = true
 script = ExtResource("1_jxwdf")
-furniture_scene = ExtResource("4_mg1l2")
-furniture_container = NodePath("FurnitureContainer")
 employee_scene = ExtResource("3_u4axo")
 employee_carry_scene = ExtResource("4_ah1jg")
 employee_container = NodePath("EmployeeContainer")
-widget_scene = ExtResource("3_xbnie")
 coffee_vending_machine_scene = ExtResource("6_atv1o")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]

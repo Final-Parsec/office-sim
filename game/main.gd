@@ -7,12 +7,9 @@ var player_tile_position
 var carry_package
 var employee_instances = {}
 
-@export var furniture_scene: PackedScene
-@export var furniture_container: Node2D
 @export var employee_scene: PackedScene
 @export var employee_carry_scene: PackedScene
 @export var employee_container: Node2D
-@export var widget_scene: PackedScene
 @export var coffee_vending_machine_scene: PackedScene
 
 
