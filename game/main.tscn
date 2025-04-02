@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=44 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -15,16 +15,19 @@
 [ext_resource type="Script" path="res://mailman.gd" id="8_px6ih"]
 [ext_resource type="Texture2D" uid="uid://ycjfn1nfmonq" path="res://art/widget_create1.png" id="9_71qoh"]
 [ext_resource type="Texture2D" uid="uid://c3ujp3okifr51" path="res://art/mailman.png" id="9_daadb"]
+[ext_resource type="Script" path="res://employee_navigation_region.gd" id="9_gd5qs"]
 [ext_resource type="Texture2D" uid="uid://d1ii3a7joyw4p" path="res://art/widget_build1.png" id="9_mokby"]
 [ext_resource type="Texture2D" uid="uid://7qi17hucq46s" path="res://art/widget_build2.png" id="10_5uig0"]
 [ext_resource type="Texture2D" uid="uid://ke0rfj74784h" path="res://art/widget_create2.png" id="10_c7lq0"]
 [ext_resource type="Script" path="res://cursor_indicator.gd" id="11_j04ey"]
 [ext_resource type="Script" path="res://package_container.gd" id="12_mohxw"]
+[ext_resource type="Script" path="res://furniture_container.gd" id="13_fed4l"]
 [ext_resource type="Script" path="res://widget_container.gd" id="14_0md0v"]
 [ext_resource type="Texture2D" uid="uid://d2l0gmod4mml6" path="res://art/basic_workbench_create1.png" id="14_8b740"]
 [ext_resource type="Texture2D" uid="uid://hscmf3ecjywg" path="res://art/basic_workbench_invalid1.png" id="14_8bxa5"]
 [ext_resource type="Texture2D" uid="uid://cn1f8b36um0nh" path="res://art/basic_workbench_create2.png" id="15_2uysg"]
 [ext_resource type="Texture2D" uid="uid://dbarb441y4ck" path="res://art/basic_workbench_invalid2.png" id="15_c5p6a"]
+[ext_resource type="Script" path="res://coffee_vending_machine_container.gd" id="16_d0q70"]
 [ext_resource type="Texture2D" uid="uid://dyphviqmre33k" path="res://art/hand1.png" id="19_hgwrt"]
 [ext_resource type="Texture2D" uid="uid://p4dst3dueqpl" path="res://art/hand2.png" id="20_81fmh"]
 [ext_resource type="Texture2D" uid="uid://clqa62kr0vmri" path="res://art/carry_package.png" id="21_2dno5"]
@@ -174,35 +177,29 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("furniture_container", "employee_container")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("employee_container")]
 y_sort_enabled = true
 script = ExtResource("1_jxwdf")
-furniture_scene = ExtResource("4_mg1l2")
-furniture_container = NodePath("FurnitureContainer")
 employee_scene = ExtResource("3_u4axo")
 employee_carry_scene = ExtResource("4_ah1jg")
 employee_container = NodePath("EmployeeContainer")
-widget_scene = ExtResource("3_xbnie")
-package_scene = ExtResource("7_g140p")
-coffee_vending_machine_scene = ExtResource("6_atv1o")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
+navigation_enabled = false
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+[node name="EmployeeNavigationRegion" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_bf4m7")
+script = ExtResource("9_gd5qs")
 
-[node name="WallObstacle" type="Polygon2D" parent="NavigationRegion2D"]
+[node name="WallObstacle" type="Polygon2D" parent="EmployeeNavigationRegion"]
 polygon = PackedVector2Array(544, 576, -32, 288, 480, 24, 1056, 320, 928, 392, 496, 168, 224, 296, 648, 520)
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("6_ygvik")
 player = NodePath("../Player")
 
-[node name="Player" parent="." node_paths=PackedStringArray("widget_container", "package_container") instance=ExtResource("1_7mjmw")]
+[node name="Player" parent="." instance=ExtResource("1_7mjmw")]
 y_sort_enabled = true
-widget_container = NodePath("../WidgetContainer")
-package_scene = ExtResource("7_g140p")
-package_container = NodePath("../PackageContainer")
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(1056, 776)
@@ -221,22 +218,32 @@ stream = SubResource("AudioStreamOggVorbis_5efd5")
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ppkhf")
 
-[node name="FurnitureContainer" type="Node2D" parent="."]
+[node name="FurnitureContainer" type="Node2D" parent="." node_paths=PackedStringArray("navigation_region")]
 y_sort_enabled = true
+script = ExtResource("13_fed4l")
+furniture_scene = ExtResource("4_mg1l2")
+navigation_region = NodePath("../EmployeeNavigationRegion")
 
-[node name="WidgetContainer" type="Node2D" parent="."]
+[node name="WidgetContainer" type="Node2D" parent="." node_paths=PackedStringArray("navigation_region")]
 y_sort_enabled = true
 script = ExtResource("14_0md0v")
+widget_scene = ExtResource("3_xbnie")
+navigation_region = NodePath("../EmployeeNavigationRegion")
 
-[node name="PackageContainer" type="Node2D" parent="."]
+[node name="PackageContainer" type="Node2D" parent="." node_paths=PackedStringArray("navigation_region")]
 y_sort_enabled = true
 script = ExtResource("12_mohxw")
+package_scene = ExtResource("7_g140p")
+navigation_region = NodePath("../EmployeeNavigationRegion")
 
 [node name="EmployeeContainer" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="CoffeeVendingMachineContainer" type="Node2D" parent="."]
+[node name="CoffeeVendingMachineContainer" type="Node2D" parent="." node_paths=PackedStringArray("navigation_region")]
 y_sort_enabled = true
+script = ExtResource("16_d0q70")
+coffee_vending_machine_scene = ExtResource("6_atv1o")
+navigation_region = NodePath("../EmployeeNavigationRegion")
 
 [node name="DayTimer" type="Timer" parent="."]
 wait_time = 2.5
@@ -267,6 +274,7 @@ position = Vector2(1128, 816)
 [node name="EmployeeShippingDrop" type="Marker2D" parent="."]
 position = Vector2(928, 432)
 
+[connection signal="carry_action_requested" from="Player" to="." method="_on_player_carry_action_requested"]
 [connection signal="coffee_vending_machine_placement_requested" from="Player" to="." method="_on_player_coffee_vending_machine_placement_requested"]
 [connection signal="furniture_placement_requested" from="Player" to="." method="_on_player_furniture_placement_requested"]
 [connection signal="moved" from="Player" to="." method="_on_player_moved"]

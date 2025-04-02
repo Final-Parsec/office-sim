@@ -7,15 +7,9 @@ var player_tile_position
 var carry_package
 var employee_instances = {}
 
-@export var furniture_scene: PackedScene
-@export var furniture_container: Node2D
 @export var employee_scene: PackedScene
 @export var employee_carry_scene: PackedScene
 @export var employee_container: Node2D
-@export var widget_scene: PackedScene
-@export var package_scene: PackedScene
-@export var coffee_vending_machine_scene: PackedScene
-
 
 func game_over() -> void:
 	$ScoreTimer.stop()
@@ -26,7 +20,9 @@ func game_over() -> void:
 func new_game():
 	net_worth = 1000
 	current_time = 6 * 60
-	drive_points = 100
+	drive_points = 100	
+	$Player.obstacle_added.connect($EmployeeNavigationRegion.obstacle_added)
+	$Player.obstacle_removed.connect($EmployeeNavigationRegion.obstacle_removed)
 	$Player.start($StartPosition.position)
 	$DayTimer.start()
 	$HUD.update_net_worth(net_worth)
@@ -42,23 +38,7 @@ func _on_player_furniture_placement_requested(position: Vector2) -> void:
 	if net_worth >= FURNITURE_COST:
 		net_worth -= FURNITURE_COST
 		$HUD.update_net_worth(net_worth)
-		var furniture = furniture_scene.instantiate()
-		furniture.position = position
-		furniture_container.add_child(furniture)
-		var collision_shape = furniture.get_node("FurnitureCollisionShape")
-		var rect_shape = collision_shape.shape
-		var nav_outline = Polygon2D.new()
-		var extents = (rect_shape.size / 2) + Vector2(20, 20)
-		nav_outline.polygon = [
-			Vector2(-extents.x, -extents.y),
-			Vector2(extents.x, -extents.y),
-			Vector2(extents.x, extents.y),
-			Vector2(-extents.x, extents.y)
-		]
-		nav_outline.global_position = collision_shape.global_position
-		nav_outline.color = Color(1, 0, 0, 0.5)
-		$NavigationRegion2D.add_child(nav_outline)
-		$NavigationRegion2D.bake_navigation_polygon()
+		$FurnitureContainer.create_furniture(position)
 
 func _on_day_timer_timeout() -> void:
 	current_time += 5
@@ -101,6 +81,8 @@ func _on_hud_employee_recruited(recruited_employee: Enums.Employees) -> void:
 	employee.money_owed_updated.connect(_on_employee_money_owed_updated)
 	employee.widget_action_requested.connect(_on_employee_widget_action_requested)
 	employee.package_widget_requested.connect(_on_player_package_widget_requested)
+	employee.obstacle_added.connect($EmployeeNavigationRegion.obstacle_added)
+	employee.obstacle_removed.connect($EmployeeNavigationRegion.obstacle_removed)
 	employee_instances[recruited_employee] = employee
 
 
@@ -138,7 +120,7 @@ func _on_player_widget_action_requested(position: Vector2, actor_position: Vecto
 		$HUD.update_drive_points(drive_points)
 
 	if $WidgetContainer.is_buildable_position(position):
-		place_widget(position)
+		$WidgetContainer.create_widget(position)
 		drive_points -= 5
 		$HUD.update_drive_points(drive_points)
 		
@@ -151,14 +133,7 @@ func _on_employee_widget_action_requested(position: Vector2, actor_position: Vec
 		clicked_widget.build(10)
 
 	if $WidgetContainer.is_buildable_position(position):
-		place_widget(position)
-
-
-func place_widget(spawn_location: Vector2):
-	var widget = widget_scene.instantiate()
-	widget.position = spawn_location
-	$WidgetContainer.add_child(widget)
-
+		$WidgetContainer.create_widget(position)
 
 func _on_hud_action_bar_button_pressed() -> void:
 	$Player.action_selected()
@@ -205,9 +180,7 @@ func _on_player_package_widget_requested(position: Vector2, actor_position: Vect
 		var circle = collision_shape.shape as CircleShape2D
 		var radius = circle.radius
 		if position.distance_to(collision_shape.global_position) <= radius && widget.is_packable():
-			var package = package_scene.instantiate()
-			package.position = widget.position
-			$PackageContainer.add_child(package)
+			$PackageContainer.create_package(widget.position)
 			widget.queue_free()
 
 
@@ -219,8 +192,16 @@ func _on_player_coffee_vending_machine_placement_requested(position: Vector2) ->
 	if net_worth >= COFFEE_VENDING_MACHINE_COST:
 		net_worth -= COFFEE_VENDING_MACHINE_COST
 		$HUD.update_net_worth(net_worth)
-		var coffee_vending_machine = coffee_vending_machine_scene.instantiate()
-		coffee_vending_machine.position = position
-		coffee_vending_machine.y_sort_enabled = true
-		$CoffeeVendingMachineContainer.add_child(coffee_vending_machine)
+		$CoffeeVendingMachineContainer.create_coffee_vending_machine(position)
 		$Player.in_coffee_zone = true
+
+
+func _on_player_carry_action_requested(position: Vector2, actor_position: Vector2) -> void:
+	if $Player.carrying_package && position.distance_to(actor_position) < 100:
+		$PackageContainer.create_package(position)
+		$Player.carrying_package = false
+	else:
+		var package = $PackageContainer.get_package_at_position(position)
+		if package != null && position.distance_to(actor_position) < 100:
+			$Player.carrying_package = true
+			package.queue_free()

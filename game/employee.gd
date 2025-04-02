@@ -3,6 +3,8 @@ extends CharacterBody2D
 signal money_owed_updated(money_owed, identity)
 signal widget_action_requested(position: Vector2, actor_position: Vector2)
 signal package_widget_requested(position: Vector2, actor_position: Vector2)
+signal obstacle_added(obstacle_id :int, obstructed_area: Polygon2D)
+signal obstacle_removed(obstacle_id: int)
 
 var schedule_start = 7 * 60
 var schedule_end = 16 * 60
@@ -14,6 +16,7 @@ var walking_to_commute_tile := false
 var movement_delta: float
 var carrying_package := false
 var identity
+var is_navigation_obstacle := true
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 
@@ -37,23 +40,28 @@ func act(current_time: int) -> void:
 		
 		if carrying_package:
 			if navigation_agent.is_navigation_finished():
-				var package = $"../../Player".package_scene.instantiate()
-				package.position = navigation_agent.target_position
-				$"../../PackageContainer".add_child(package)
-				carrying_package = false
+				if navigation_agent.distance_to_target() < 50:
+					$"../../PackageContainer".create_package(navigation_agent.target_position)
+					carrying_package = false
+				else:
+					set_shipping_drop_destination()
+					return
 			else:
 				return
 
 		# Try to get to specified work area.
 		var work_area = $"../../EmployeeWorkArea".global_position
+		#print(str(identity) + ': distance to work area ' + str(global_position.distance_to(work_area)))
 		if global_position.distance_to(work_area) > 100:
 			if walking_to_work_area:
 				if !$NavigationAgent2D.is_target_reachable():
-					print('not reachable')
+					print(str(identity) + ': not reachable')
 					walking_to_work_area = false
 			else:
-				work_area = Vector2(work_area.x + randi_range(-100, 100), work_area.y + randi_range(-100, 100))
-				print('setting work area target')
+				var angle = randf_range(0, TAU)
+				var distance = randf_range(0, 100)
+				work_area = work_area + Vector2(cos(angle), sin(angle)) * distance
+				print(str(identity) + ': setting work area target')
 				$NavigationAgent2D.target_position = work_area
 				walking_to_work_area = true
 			return
@@ -120,10 +128,14 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	move_and_slide()
 
 func _process(_delta: float) -> void:
-	if walking_to_work_area || walking_to_commute_tile || carrying_package:
+	var has_walking_intent = walking_to_work_area || walking_to_commute_tile || carrying_package
+	var is_navigating = !navigation_agent.is_navigation_finished()
+	if has_walking_intent && is_navigating:
 		$AnimatedSprite2D.play()
+		set_and_signal_obstacle_state(false)
 	else:
 		$AnimatedSprite2D.stop()
+		set_and_signal_obstacle_state(true)
 		return
 	
 	if velocity.x != 0:
@@ -132,3 +144,31 @@ func _process(_delta: float) -> void:
 	elif velocity.y != 0:
 		$AnimatedSprite2D.animation = "carry" if carrying_package else "up"
 		$AnimatedSprite2D.flip_h = false
+		
+func set_and_signal_obstacle_state(desired_obstacle_state: bool) -> void:
+	if is_navigation_obstacle == desired_obstacle_state:
+		return
+		
+	if is_navigation_obstacle && !desired_obstacle_state:
+		is_navigation_obstacle = false
+		obstacle_removed.emit(get_instance_id())
+		
+	if !is_navigation_obstacle && desired_obstacle_state:
+		is_navigation_obstacle = true
+		var collision_shape = $CollisionShape2D
+		var rect_shape = collision_shape.shape.get_rect()
+		var navigation_outline = Polygon2D.new()
+		navigation_outline.polygon = [
+			rect_shape.position,
+			rect_shape.position + Vector2(rect_shape.size.x, 0),
+			rect_shape.position + Vector2(0, rect_shape.size.y),
+			rect_shape.end
+		]
+		navigation_outline.global_position = collision_shape.global_position
+		obstacle_added.emit(get_instance_id(), navigation_outline)
+		
+func set_shipping_drop_destination() -> void:
+	var shipping_drop = $"../../EmployeeShippingDrop".global_position			
+	shipping_drop = Vector2(shipping_drop.x + randi_range(-50, 50), shipping_drop.y + randi_range(-50, 50))
+	if global_position.distance_to(shipping_drop) > 50:
+		$NavigationAgent2D.target_position = shipping_drop

@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmpybft7fkq38"]
+[gd_scene load_steps=5 format=3 uid="uid://bmpybft7fkq38"]
 
+[ext_resource type="Script" path="res://coffee_vending_machine.gd" id="1_6gf7m"]
 [ext_resource type="Texture2D" uid="uid://bpcey1nf8gteo" path="res://art/coffee_vending_machine.png" id="1_yk382"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fr4xa"]
@@ -20,6 +21,7 @@ size = Vector2(38, 13)
 y_sort_enabled = true
 collision_mask = 0
 gravity_scale = 0.0
+script = ExtResource("1_6gf7m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
