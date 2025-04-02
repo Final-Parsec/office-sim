@@ -126,7 +126,9 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	move_and_slide()
 
 func _process(_delta: float) -> void:
-	if walking_to_work_area || walking_to_commute_tile || carrying_package:
+	var has_walking_intent = walking_to_work_area || walking_to_commute_tile || carrying_package
+	var is_navigating = !navigation_agent.is_navigation_finished()
+	if has_walking_intent && is_navigating:
 		$AnimatedSprite2D.play()
 		set_and_signal_obstacle_state(false)
 	else:
