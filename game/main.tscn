@@ -188,6 +188,7 @@ widget_scene = ExtResource("3_xbnie")
 coffee_vending_machine_scene = ExtResource("6_atv1o")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("5_1cbru")]
+navigation_enabled = false
 
 [node name="EmployeeNavigationRegion" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_bf4m7")
