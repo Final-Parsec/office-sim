@@ -86,6 +86,8 @@ func _on_hud_employee_recruited(recruited_employee: Enums.Employees) -> void:
 	employee.money_owed_updated.connect(_on_employee_money_owed_updated)
 	employee.widget_action_requested.connect(_on_employee_widget_action_requested)
 	employee.package_widget_requested.connect(_on_player_package_widget_requested)
+	employee.obstacle_added.connect($EmployeeNavigationRegion.obstacle_added)
+	employee.obstacle_removed.connect($EmployeeNavigationRegion.obstacle_removed)
 	employee_instances[recruited_employee] = employee
 
 

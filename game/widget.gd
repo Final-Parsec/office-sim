@@ -11,12 +11,11 @@ func _ready() -> void:
 	var collision_shape = $CollisionShape2D
 	var rect_shape = collision_shape.shape.get_rect()
 	var navigation_outline = Polygon2D.new()
-	var extents = (rect_shape.size / 2) + Vector2(20, 20)
 	navigation_outline.polygon = [
-		Vector2(-extents.x, -extents.y),
-		Vector2(extents.x, -extents.y),
-		Vector2(extents.x, extents.y),
-		Vector2(-extents.x, extents.y)
+		rect_shape.position,
+		rect_shape.position + Vector2(rect_shape.size.x, 0),
+		rect_shape.position + Vector2(0, rect_shape.size.y),
+		rect_shape.end
 	]
 	navigation_outline.global_position = collision_shape.global_position
 	obstacle_added.emit(get_instance_id(), navigation_outline)
