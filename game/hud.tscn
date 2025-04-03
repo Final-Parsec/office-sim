@@ -472,12 +472,17 @@ size_flags_vertical = 8
 script = ExtResource("19_unre7")
 metadata/_edit_use_anchors_ = true
 
-[node name="QuestSmallBG" type="ColorRect" parent="Quest"]
+[node name="Header" type="Control" parent="Quest"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="QuestSmallBG" type="ColorRect" parent="Quest/Header"]
 offset_right = 256.0
 offset_bottom = 56.0
 color = Color(0.392157, 0.584314, 0.929412, 0.733333)
 
-[node name="TextureRect" type="TextureRect" parent="Quest"]
+[node name="TextureRect" type="TextureRect" parent="Quest/Header"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 6.0
@@ -487,7 +492,7 @@ texture = ExtResource("19_6gm1h")
 expand_mode = 5
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="Quest"]
+[node name="Label" type="Label" parent="Quest/Header"]
 layout_mode = 0
 offset_left = 56.0
 offset_right = 200.0
@@ -498,18 +503,22 @@ text = "Build a Widget"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="Quest"]
+[node name="ProgressBar" type="ProgressBar" parent="Quest/Header"]
 layout_mode = 0
 offset_left = 56.0
 offset_top = 28.0
 offset_right = 200.0
 offset_bottom = 56.0
 
-[node name="CheckButton" type="CheckButton" parent="Quest"]
+[node name="CheckButton" type="CheckButton" parent="Quest/Header"]
 layout_mode = 0
 offset_left = 207.0
 offset_right = 251.0
 offset_bottom = 56.0
+
+[node name="WiggleTimer" type="Timer" parent="Quest/Header"]
+wait_time = 10.0
+autostart = true
 
 [node name="Collapsible" type="Control" parent="Quest"]
 visible = false
@@ -558,4 +567,5 @@ autowrap_mode = 3
 [connection signal="visibility_changed" from="CommutePanel" to="." method="_on_commute_panel_visibility_changed"]
 [connection signal="pressed" from="CommutePanel/RestButton" to="." method="_on_rest_button_pressed"]
 [connection signal="pressed" from="CommutePanel/CloseCommutePanelButton" to="." method="_on_close_commute_panel_button_pressed"]
-[connection signal="toggled" from="Quest/CheckButton" to="Quest" method="_on_check_button_toggled"]
+[connection signal="toggled" from="Quest/Header/CheckButton" to="Quest" method="_on_check_button_toggled"]
+[connection signal="timeout" from="Quest/Header/WiggleTimer" to="Quest" method="_on_wiggle_timer_timeout"]

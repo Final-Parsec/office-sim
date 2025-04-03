@@ -178,3 +178,6 @@ func _on_fire_carry_button_pressed() -> void:
 	$HRPanel/TabContainer/Recruiting/RecruitCarry.visible = true
 	$HRPanel/TabContainer/Employees/EmployeeCarry.visible = false
 	employee_fired.emit(Enums.Employees.CARRY)
+
+func update_quest_progress(current_quest_progress: float) -> void:
+	$Quest.update_quest_progress(current_quest_progress)

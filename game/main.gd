@@ -6,6 +6,7 @@ var drive_points
 var player_tile_position
 var carry_package
 var employee_instances = {}
+var current_quest_progress := 0.0
 
 @export var employee_scene: PackedScene
 @export var employee_carry_scene: PackedScene
@@ -116,11 +117,17 @@ func _on_player_widget_action_requested(position: Vector2, actor_position: Vecto
 		var max_build = 15 if drive_points > 0 else 1
 		var progress = randi_range(1, max_build )
 		clicked_widget.build(progress)
+		if clicked_widget.progress == 100 && current_quest_progress <= 50:
+			current_quest_progress = 50
+			$HUD.update_quest_progress(current_quest_progress)
 		drive_points -= 1
 		$HUD.update_drive_points(drive_points)
 
 	if $WidgetContainer.is_buildable_position(position):
 		$WidgetContainer.create_widget(position)
+		if current_quest_progress <= 25:
+			current_quest_progress = 25
+			$HUD.update_quest_progress(current_quest_progress)
 		drive_points -= 5
 		$HUD.update_drive_points(drive_points)
 		
@@ -181,6 +188,9 @@ func _on_player_package_widget_requested(position: Vector2, actor_position: Vect
 		var radius = circle.radius
 		if position.distance_to(collision_shape.global_position) <= radius && widget.is_packable():
 			$PackageContainer.create_package(widget.position)
+			if current_quest_progress <= 75:
+				current_quest_progress = 75
+				$HUD.update_quest_progress(current_quest_progress)
 			widget.queue_free()
 
 
@@ -199,6 +209,15 @@ func _on_player_coffee_vending_machine_placement_requested(position: Vector2) ->
 func _on_player_carry_action_requested(position: Vector2, actor_position: Vector2) -> void:
 	if $Player.carrying_package && position.distance_to(actor_position) < 100:
 		$PackageContainer.create_package(position)
+		if current_quest_progress <= 100:
+			var dropped_on_shipping_area = false
+			var tile_coord = $TileMapLayer.local_to_map($TileMapLayer.to_local(position))
+			var tile_data = $TileMapLayer.get_cell_tile_data(tile_coord)
+			if tile_data && tile_data.get_custom_data("is_shipping"):
+				dropped_on_shipping_area = true
+			if dropped_on_shipping_area:
+				current_quest_progress = 100
+				$HUD.update_quest_progress(current_quest_progress)
 		$Player.carrying_package = false
 	else:
 		var package = $PackageContainer.get_package_at_position(position)
