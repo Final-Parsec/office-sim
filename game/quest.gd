@@ -1,11 +1,12 @@
 extends Control
 
+@onready var header = $Header
+
 func _on_check_button_toggled(toggled_on: bool) -> void:
 	$Collapsible.visible = toggled_on
 	
 func give_it_lil_wiggle() -> void:
-	var header = $Header
-	var header_start_y = $Header.position.y
+	var header_start_y = header.position.y
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(
@@ -23,3 +24,17 @@ func _on_wiggle_timer_timeout() -> void:
 
 func update_quest_progress(current_quest_progress: float) -> void:
 	$Header/ProgressBar.value = current_quest_progress
+	
+	if current_quest_progress == 100:
+		var header_start_y = header.position.y
+		var tween = get_tree().create_tween()
+		tween.set_parallel(true)
+		tween.tween_property(
+			header, "position:y", header_start_y + 24, 0.25
+		).set_ease(Tween.EASE_OUT)
+		tween.tween_property(
+			header, "position:y", header_start_y, 0.5
+		).set_ease(Tween.EASE_IN).set_delay(0.25)
+		tween.tween_property(
+			header, "scale", Vector2.ZERO, 0.25
+		).set_ease(Tween.EASE_IN).set_delay(0.5)

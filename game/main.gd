@@ -39,6 +39,7 @@ func _on_player_furniture_placement_requested(position: Vector2) -> void:
 	if net_worth >= FURNITURE_COST:
 		net_worth -= FURNITURE_COST
 		$HUD.update_net_worth(net_worth)
+		DamageNumbers.money_number(-100)
 		$FurnitureContainer.create_furniture(position)
 
 func _on_day_timer_timeout() -> void:
@@ -60,6 +61,7 @@ func _on_day_timer_timeout() -> void:
 		else:
 			net_worth -= 5
 			$HUD.update_net_worth(net_worth)
+			DamageNumbers.money_number(-5)
 			drive_points += 1
 			$HUD.update_drive_points(drive_points)
 			DamageNumbers.display_number(1, $Player/NumberSpawn.global_position, true)
@@ -67,6 +69,7 @@ func _on_day_timer_timeout() -> void:
 func _on_mailman_package_collected() -> void:
 	net_worth += 10
 	$HUD.update_net_worth(net_worth)
+	DamageNumbers.money_number(10)
 
 
 func _on_hud_employee_recruited(recruited_employee: Enums.Employees) -> void:
@@ -91,6 +94,7 @@ func _on_hud_employee_fired(fired_employee: Enums.Employees) -> void:
 	var employee = employee_instances[fired_employee]
 	net_worth -= employee.money_owed
 	$HUD.update_net_worth(net_worth)
+	DamageNumbers.money_number(-employee.money_owed)
 	employee.queue_free()
 
 func _on_employee_money_owed_updated(money_owed, employee) -> void:
@@ -106,7 +110,9 @@ func _on_hud_employee_run_payroll_pressed(paid_employee: Enums.Employees) -> voi
 	var amount_to_pay = employee.money_owed
 	net_worth -= amount_to_pay
 	employee.pay(amount_to_pay)
+	
 	$HUD.update_net_worth(net_worth)
+	DamageNumbers.money_number(-amount_to_pay)
 
 func _on_player_widget_action_requested(position: Vector2, actor_position: Vector2) -> void:
 	if position.distance_to(actor_position) > 100:
@@ -202,6 +208,8 @@ func _on_player_coffee_vending_machine_placement_requested(position: Vector2) ->
 	if net_worth >= COFFEE_VENDING_MACHINE_COST:
 		net_worth -= COFFEE_VENDING_MACHINE_COST
 		$HUD.update_net_worth(net_worth)
+		DamageNumbers.money_number(-100)
+		
 		$CoffeeVendingMachineContainer.create_coffee_vending_machine(position)
 		$Player.in_coffee_zone = true
 
@@ -209,7 +217,7 @@ func _on_player_coffee_vending_machine_placement_requested(position: Vector2) ->
 func _on_player_carry_action_requested(position: Vector2, actor_position: Vector2) -> void:
 	if $Player.carrying_package && position.distance_to(actor_position) < 100:
 		$PackageContainer.create_package(position)
-		if current_quest_progress <= 100:
+		if current_quest_progress < 100:
 			var dropped_on_shipping_area = false
 			var tile_coord = $TileMapLayer.local_to_map($TileMapLayer.to_local(position))
 			var tile_data = $TileMapLayer.get_cell_tile_data(tile_coord)
@@ -217,6 +225,7 @@ func _on_player_carry_action_requested(position: Vector2, actor_position: Vector
 				dropped_on_shipping_area = true
 			if dropped_on_shipping_area:
 				current_quest_progress = 100
+				DamageNumbers.money_number(100)
 				$HUD.update_quest_progress(current_quest_progress)
 		$Player.carrying_package = false
 	else:
