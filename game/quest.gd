@@ -26,6 +26,7 @@ func update_quest_progress(current_quest_progress: float) -> void:
 	$Header/ProgressBar.value = current_quest_progress
 	
 	if current_quest_progress == 100:
+		$Collapsible.visible = false
 		var header_start_y = header.position.y
 		var tween = get_tree().create_tween()
 		tween.set_parallel(true)
