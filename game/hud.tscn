@@ -478,6 +478,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="QuestSmallBG" type="ColorRect" parent="Quest/Header"]
+layout_mode = 0
 offset_right = 256.0
 offset_bottom = 56.0
 color = Color(0.392157, 0.584314, 0.929412, 0.733333)
@@ -528,6 +529,7 @@ offset_right = 256.0
 offset_bottom = 547.0
 
 [node name="QuestBigBG" type="ColorRect" parent="Quest/Collapsible"]
+layout_mode = 0
 offset_right = 256.0
 offset_bottom = 491.0
 color = Color(0.392157, 0.584314, 0.929412, 0.733333)

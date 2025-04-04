@@ -225,6 +225,8 @@ func _on_player_carry_action_requested(position: Vector2, actor_position: Vector
 				dropped_on_shipping_area = true
 			if dropped_on_shipping_area:
 				current_quest_progress = 100
+				net_worth += 100
+				$HUD.update_net_worth(net_worth)
 				DamageNumbers.money_number(100)
 				$HUD.update_quest_progress(current_quest_progress)
 		$Player.carrying_package = false
