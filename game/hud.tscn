@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=42 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
@@ -18,6 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://bxj1a8eg23fpx" path="res://art/action_bar_six1.png" id="14_3ea8n"]
 [ext_resource type="Texture2D" uid="uid://d4b1ksfdmwn1j" path="res://art/action_bar_six2.png" id="15_2srnn"]
 [ext_resource type="Texture2D" uid="uid://bhndpva7hvglu" path="res://art/carry_moore1.png" id="18_brpx8"]
+[ext_resource type="Texture2D" uid="uid://dqlvc1tmxi238" path="res://art/widget1.png" id="19_6gm1h"]
+[ext_resource type="Script" path="res://quest.gd" id="19_unre7"]
 
 [sub_resource type="Shortcut" id="Shortcut_wpxgg"]
 
@@ -456,6 +458,97 @@ grow_horizontal = 0
 focus_mode = 0
 text = "X"
 
+[node name="Quest" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -256.0
+offset_top = 42.0
+offset_bottom = 98.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+script = ExtResource("19_unre7")
+metadata/_edit_use_anchors_ = true
+
+[node name="Header" type="Control" parent="Quest"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="QuestSmallBG" type="ColorRect" parent="Quest/Header"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 56.0
+color = Color(0.392157, 0.584314, 0.929412, 0.733333)
+
+[node name="TextureRect" type="TextureRect" parent="Quest/Header"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = 51.0
+offset_bottom = 52.0
+texture = ExtResource("19_6gm1h")
+expand_mode = 5
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Quest/Header"]
+layout_mode = 0
+offset_left = 56.0
+offset_right = 200.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("1_3xhbu")
+theme_override_font_sizes/font_size = 14
+text = "Build a Widget"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="Quest/Header"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 28.0
+offset_right = 200.0
+offset_bottom = 56.0
+
+[node name="CheckButton" type="CheckButton" parent="Quest/Header"]
+layout_mode = 0
+offset_left = 207.0
+offset_right = 251.0
+offset_bottom = 56.0
+
+[node name="WiggleTimer" type="Timer" parent="Quest/Header"]
+wait_time = 10.0
+autostart = true
+
+[node name="Collapsible" type="Control" parent="Quest"]
+visible = false
+anchors_preset = 0
+offset_top = 56.0
+offset_right = 256.0
+offset_bottom = 547.0
+
+[node name="QuestBigBG" type="ColorRect" parent="Quest/Collapsible"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 491.0
+color = Color(0.392157, 0.584314, 0.929412, 0.733333)
+
+[node name="Label" type="Label" parent="Quest/Collapsible"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 22.0
+offset_right = 248.0
+offset_bottom = 262.0
+text = "* Create a widget
+* Build it to 100%
+* Package the widget
+* Carry it to the shiping area
+
+Reward:
+$100"
+autowrap_mode = 3
+
 [connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
@@ -476,3 +569,5 @@ text = "X"
 [connection signal="visibility_changed" from="CommutePanel" to="." method="_on_commute_panel_visibility_changed"]
 [connection signal="pressed" from="CommutePanel/RestButton" to="." method="_on_rest_button_pressed"]
 [connection signal="pressed" from="CommutePanel/CloseCommutePanelButton" to="." method="_on_close_commute_panel_button_pressed"]
+[connection signal="toggled" from="Quest/Header/CheckButton" to="Quest" method="_on_check_button_toggled"]
+[connection signal="timeout" from="Quest/Header/WiggleTimer" to="Quest" method="_on_wiggle_timer_timeout"]

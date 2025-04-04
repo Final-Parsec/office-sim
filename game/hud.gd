@@ -50,6 +50,7 @@ func update_time(time):
 	if !$AccelerateTimeButton.visible:
 		$AccelerateTimeButton.visible = true
 		$TopBarBackground.visible = true
+		$Quest.visible = true
 	
 	var meridiem_suffix = "AM" if time < 12 * 60 else "PM"
 	var hour = time / 60 if time < 12 * 60 else (time / 60 - 12)
@@ -123,6 +124,7 @@ func _ready() -> void:
 	$DriveProgressBar.visible = false
 	$TopBarBackground.visible = false
 	visible = true
+	$Quest.visible = false
 
 func update_drive_points(drive_points) -> void:
 	$DriveProgressBar.visible = true
@@ -176,3 +178,6 @@ func _on_fire_carry_button_pressed() -> void:
 	$HRPanel/TabContainer/Recruiting/RecruitCarry.visible = true
 	$HRPanel/TabContainer/Employees/EmployeeCarry.visible = false
 	employee_fired.emit(Enums.Employees.CARRY)
+
+func update_quest_progress(current_quest_progress: float) -> void:
+	$Quest.update_quest_progress(current_quest_progress)
