@@ -118,6 +118,11 @@ func _on_player_widget_action_requested(position: Vector2, actor_position: Vecto
 	if position.distance_to(actor_position) > 100:
 		return
 		
+	var clicked_furniture = $FurnitureContainer.get_furniture_at_position(position)
+	if clicked_furniture != null:
+		
+		return
+		
 	var clicked_widget = $WidgetContainer.get_widget_at_position(position)
 	if clicked_widget != null && clicked_widget.progress < 100:
 		var max_build = 15 if drive_points > 0 else 1

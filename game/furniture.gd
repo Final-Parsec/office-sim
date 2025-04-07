@@ -19,3 +19,11 @@ func _ready() -> void:
 func _notification(what): 
 	if what == NOTIFICATION_PREDELETE: 
 		obstacle_removed.emit(get_instance_id())
+
+func get_current_frame_rect() -> Rect2:
+	var animated_sprite = $AnimatedSprite2D
+	var size = animated_sprite.sprite_frames.get_frame_texture(animated_sprite.animation, animated_sprite.frame).get_size()
+	var pos = animated_sprite.offset
+	if animated_sprite.centered:
+		pos -= 0.5 * size
+	return Rect2(pos, size)
