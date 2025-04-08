@@ -46,7 +46,8 @@ func act(current_time: int) -> void:
 		
 		if carrying_package:
 			if navigation_agent.is_navigation_finished():
-				if navigation_agent.distance_to_target() < 50:
+				var shipping_drop = $"../../EmployeeShippingDrop".global_position
+				if global_position.distance_to(shipping_drop) < 50:
 					$"../../PackageContainer".create_package(navigation_agent.target_position)
 					carrying_package = false
 				else:
@@ -121,7 +122,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if navigation_agent.is_navigation_finished():
-		print("navigation finished")
+		print(str(identity) + ": navigation finished")
 		walking_to_work_area = false
 		walking_to_commute_tile = false
 		return
@@ -142,12 +143,12 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	
 	if global_position.distance_to(last_position) < movement_threshold:
 		if stuck_timer >= stuck_threshold_time:
-			print("Object is stuck!")
+			print(str(identity) + ": is stuck! Target reachable is " + str($NavigationAgent2D.is_target_reachable()))
 			
-			$NavigationAgent2D.target_position = global_position
+			#$NavigationAgent2D.target_position = global_position
 			var angle = randf_range(0, TAU)
 			var distance = randf_range(0, 1)
-			global_position = global_position + Vector2(cos(angle), sin(angle)) * 1
+			global_position = global_position + Vector2(cos(angle), sin(angle)) * 5
 			# handle the stuck case
 	else:
 		stuck_timer = 0.0

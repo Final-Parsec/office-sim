@@ -61,6 +61,8 @@ rotation = 1.5708
 shape = SubResource("CircleShape2D_cojay")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 25.0
+target_desired_distance = 5.0
 avoidance_enabled = true
 radius = 20.0
 debug_enabled = true

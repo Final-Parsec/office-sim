@@ -151,9 +151,17 @@ func _on_employee_widget_action_requested(position: Vector2, actor_position: Vec
 	if position.distance_to(actor_position) > 100:
 		return
 		
+	var clicked_furniture = $FurnitureContainer.get_furniture_at_position(position)
+	if clicked_furniture != null:
+		position = clicked_furniture.global_position + Vector2(0, -20)
+		
 	var clicked_widget = $WidgetContainer.get_widget_at_position(position)
 	if clicked_widget != null && clicked_widget.progress < 100:
-		clicked_widget.build(10)
+		var max_build = 10
+		if clicked_furniture:
+			max_build += 5
+		var progress = randi_range(1, max_build)
+		clicked_widget.build(progress)
 
 	if $WidgetContainer.is_buildable_position(position):
 		$WidgetContainer.create_widget(position)
