@@ -18,6 +18,11 @@ var carrying_package := false
 var identity
 var is_navigation_obstacle := true
 
+var last_position: Vector2
+var stuck_timer: float = 0.0
+var stuck_threshold_time := 1.0 # seconds
+var movement_threshold := 5.0 # pixels
+
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 
 # Called when the node enters the scene tree for the first time.
@@ -28,6 +33,7 @@ func _ready() -> void:
 	navigation_agent.target_desired_distance = 2.0
 	navigation_agent.debug_enabled = true
 	$AnimatedSprite2D.animation = "walk"
+	last_position = global_position
 
 func act(current_time: int) -> void:
 	var on_the_clock = current_time > schedule_start && current_time < schedule_end
@@ -61,6 +67,12 @@ func act(current_time: int) -> void:
 				var angle = randf_range(0, TAU)
 				var distance = randf_range(0, 100)
 				work_area = work_area + Vector2(cos(angle), sin(angle)) * distance
+				
+				# Prefer workbench
+				for furniture in $"../../FurnitureContainer".get_children():
+					if work_area.distance_to(furniture.global_position) < 100:
+						work_area = furniture.global_position + Vector2(-50, 0)
+				
 				print(str(identity) + ': setting work area target')
 				$NavigationAgent2D.target_position = work_area
 				walking_to_work_area = true
@@ -119,6 +131,7 @@ func _physics_process(delta: float) -> void:
 
 	velocity = current_agent_position.direction_to(next_path_position) * movement_speed * delta
 	$NavigationAgent2D.set_velocity(velocity)
+	stuck_timer += delta
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	if !walking_to_work_area && !walking_to_commute_tile && !carrying_package:
@@ -126,6 +139,19 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 		
 	velocity = safe_velocity
 	move_and_slide()
+	
+	if global_position.distance_to(last_position) < movement_threshold:
+		if stuck_timer >= stuck_threshold_time:
+			print("Object is stuck!")
+			
+			$NavigationAgent2D.target_position = global_position
+			var angle = randf_range(0, TAU)
+			var distance = randf_range(0, 1)
+			global_position = global_position + Vector2(cos(angle), sin(angle)) * 1
+			# handle the stuck case
+	else:
+		stuck_timer = 0.0
+		last_position = global_position
 
 func _process(_delta: float) -> void:
 	var has_walking_intent = walking_to_work_area || walking_to_commute_tile || carrying_package

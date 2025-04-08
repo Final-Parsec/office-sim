@@ -35,3 +35,7 @@ func create_widget(desired_position: Vector2) -> void:
 	widget.obstacle_added.connect(navigation_region.obstacle_added)
 	widget.obstacle_removed.connect(navigation_region.obstacle_removed)
 	add_child(widget)
+	
+	var on_furniture = $"../FurnitureContainer".get_furniture_at_position(desired_position)
+	if on_furniture:
+		widget.z_index = 1

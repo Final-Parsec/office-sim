@@ -20,5 +20,3 @@ func create_package(desired_position: Vector2) -> void:
 	var on_furniture = $"../FurnitureContainer".get_furniture_at_position(desired_position)
 	if on_furniture:
 		package.z_index = 1
-	
-	return
