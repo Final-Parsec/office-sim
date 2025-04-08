@@ -40,8 +40,13 @@ func _process(_delta: float) -> void:
 	
 	if GameState.selected_action == Enums.Actions.WIDGET:
 		scale = Vector2(.5, .5)
+		var furniture = $"../FurnitureContainer".get_furniture_at_position(global_position)
+		if furniture != null:
+			global_position = furniture.global_position
 		if $"../WidgetContainer".is_buildable_position(global_position):
 			animation = "widget_placement"
+			if furniture != null:
+				global_position = global_position + Vector2(0, -20)
 		else:
 			animation = "widget_build"
 		

@@ -3,15 +3,15 @@
 [ext_resource type="Script" path="res://furniture.gd" id="1_4r8bh"]
 [ext_resource type="Texture2D" uid="uid://dfxrfhliyxfcg" path="res://art/basic_workbench.png" id="1_ths7t"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_nxxwv"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_0v7qs"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_ths7t")
 }],
 "loop": true,
-"name": &"idle",
-"speed": 3.0
+"name": &"default",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbnej"]
@@ -25,8 +25,7 @@ metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
-sprite_frames = SubResource("SpriteFrames_nxxwv")
-animation = &"idle"
+sprite_frames = SubResource("SpriteFrames_0v7qs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 7.75)

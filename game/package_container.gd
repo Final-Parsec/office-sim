@@ -16,3 +16,7 @@ func create_package(desired_position: Vector2) -> void:
 	package.obstacle_added.connect(navigation_region.obstacle_added)
 	package.obstacle_removed.connect(navigation_region.obstacle_removed)
 	add_child(package)
+	
+	var on_furniture = $"../FurnitureContainer".get_furniture_at_position(desired_position)
+	if on_furniture:
+		package.z_index = 1
