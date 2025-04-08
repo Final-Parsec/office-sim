@@ -1,3 +1,5 @@
+class_name Package
+
 extends RigidBody2D
 
 signal obstacle_added(obstacle_id :int, obstructed_area: Polygon2D)

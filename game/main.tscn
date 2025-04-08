@@ -260,7 +260,7 @@ scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_i8n55")
 
 [node name="CursorIndicator" type="AnimatedSprite2D" parent="."]
-z_index = 1
+z_index = 2
 sprite_frames = SubResource("SpriteFrames_hsts8")
 animation = &"coffee_vending_machine_invalid"
 script = ExtResource("11_j04ey")

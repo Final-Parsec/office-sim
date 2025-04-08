@@ -120,8 +120,7 @@ func _on_player_widget_action_requested(position: Vector2, actor_position: Vecto
 		
 	var clicked_furniture = $FurnitureContainer.get_furniture_at_position(position)
 	if clicked_furniture != null:
-		
-		return
+		position = clicked_furniture.global_position + Vector2(0, -20)
 		
 	var clicked_widget = $WidgetContainer.get_widget_at_position(position)
 	if clicked_widget != null && clicked_widget.progress < 100:
@@ -136,6 +135,9 @@ func _on_player_widget_action_requested(position: Vector2, actor_position: Vecto
 
 	if $WidgetContainer.is_buildable_position(position):
 		$WidgetContainer.create_widget(position)
+		if clicked_furniture != null:
+			var new_widget = $WidgetContainer.get_widget_at_position(position)
+			new_widget.z_index = 1
 		if current_quest_progress <= 25:
 			current_quest_progress = 25
 			$HUD.update_quest_progress(current_quest_progress)
@@ -192,7 +194,7 @@ func _on_hud_player_rest_requested() -> void:
 func _on_player_package_widget_requested(position: Vector2, actor_position: Vector2) -> void:
 	if position.distance_to(actor_position) > 100:
 		return
-		
+
 	for widget in $WidgetContainer.get_children():
 		var collision_shape = widget.get_node("CollisionShape2D") as CollisionShape2D
 		var circle = collision_shape.shape as CircleShape2D
