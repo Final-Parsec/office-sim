@@ -17,6 +17,8 @@ var movement_delta: float
 var carrying_package := false
 var identity
 var is_navigation_obstacle := true
+var attempted_build_in_current_work_area := false
+var building_failed_in_current_work_area := false
 
 var last_position: Vector2
 var stuck_timer: float = 0.0
@@ -47,7 +49,7 @@ func act(current_time: int) -> void:
 		if carrying_package:
 			if navigation_agent.is_navigation_finished():
 				var shipping_drop = $"../../EmployeeShippingDrop".global_position
-				if global_position.distance_to(shipping_drop) < 50:
+				if global_position.distance_to(shipping_drop) < 100:
 					$"../../PackageContainer".create_package(navigation_agent.target_position)
 					carrying_package = false
 				else:
@@ -59,7 +61,7 @@ func act(current_time: int) -> void:
 		# Try to get to specified work area.
 		var work_area = $"../../EmployeeWorkArea".global_position
 		#print(str(identity) + ': distance to work area ' + str(global_position.distance_to(work_area)))
-		if global_position.distance_to(work_area) > 100:
+		if global_position.distance_to(work_area) > 100 || building_failed_in_current_work_area:
 			if walking_to_work_area:
 				if !$NavigationAgent2D.is_target_reachable():
 					print(str(identity) + ': not reachable')
@@ -74,9 +76,23 @@ func act(current_time: int) -> void:
 					if work_area.distance_to(furniture.global_position) < 100:
 						work_area = furniture.global_position + Vector2(-50, 0)
 				
-				print(str(identity) + ': setting work area target')
-				$NavigationAgent2D.target_position = work_area
-				walking_to_work_area = true
+				var world_space = get_world_2d().direct_space_state
+				var params = PhysicsShapeQueryParameters2D.new()
+				params.collide_with_areas = true
+				params.collide_with_bodies = true
+				params.shape = CircleShape2D.new()
+				params.shape.radius = 10
+				params.transform = Transform2D(0, work_area)
+				var collision = world_space.collide_shape(params, 1)
+				if !collision.is_empty():
+					print(str(identity) + ": work area occupied, abort")
+					return
+				else:
+					print(str(identity) + ': setting work area target')
+					$NavigationAgent2D.target_position = work_area
+					walking_to_work_area = true
+					attempted_build_in_current_work_area = false
+					building_failed_in_current_work_area = false
 			return
 		
 		if walking_to_work_area || walking_to_commute_tile:
@@ -97,7 +113,12 @@ func act(current_time: int) -> void:
 					$NavigationAgent2D.target_position = shipping_drop
 					return
 			var widget = $"../../WidgetContainer".get_widget_at_position(build_location)
-			if widget == null || widget.progress < 100:
+			if widget == null:
+				if attempted_build_in_current_work_area:
+					building_failed_in_current_work_area = true
+				attempted_build_in_current_work_area = true
+				widget_action_requested.emit(build_location, position)
+			if widget != null && widget.progress < 100:
 				widget_action_requested.emit(position + Vector2(50,0), position)
 			if widget != null && widget.progress == 100:
 				package_widget_requested.emit(build_location, global_position)	
@@ -145,10 +166,11 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 		if stuck_timer >= stuck_threshold_time:
 			print(str(identity) + ": is stuck! Target reachable is " + str($NavigationAgent2D.is_target_reachable()))
 			
-			#$NavigationAgent2D.target_position = global_position
+			$NavigationAgent2D.target_position = global_position
 			var angle = randf_range(0, TAU)
 			var distance = randf_range(0, 1)
-			global_position = global_position + Vector2(cos(angle), sin(angle)) * 5
+			#global_position = global_position + Vector2(cos(angle), sin(angle)) * 5
+			$NavigationAgent2D.target_position = global_position + Vector2(cos(angle), sin(angle)) * 5
 			# handle the stuck case
 	else:
 		stuck_timer = 0.0
@@ -195,7 +217,9 @@ func set_and_signal_obstacle_state(desired_obstacle_state: bool) -> void:
 		obstacle_added.emit(get_instance_id(), navigation_outline)
 		
 func set_shipping_drop_destination() -> void:
-	var shipping_drop = $"../../EmployeeShippingDrop".global_position			
-	shipping_drop = Vector2(shipping_drop.x + randi_range(-50, 50), shipping_drop.y + randi_range(-50, 50))
+	var shipping_drop = $"../../EmployeeShippingDrop".global_position
+	var angle = randf_range(0, TAU)
+	var distance = randf_range(0, 99)
+	shipping_drop = shipping_drop + Vector2(cos(angle), sin(angle)) * distance
 	if global_position.distance_to(shipping_drop) > 50:
 		$NavigationAgent2D.target_position = shipping_drop
