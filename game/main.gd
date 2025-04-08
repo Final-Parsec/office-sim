@@ -125,12 +125,15 @@ func _on_player_widget_action_requested(position: Vector2, actor_position: Vecto
 	var clicked_widget = $WidgetContainer.get_widget_at_position(position)
 	if clicked_widget != null && clicked_widget.progress < 100:
 		var max_build = 15 if drive_points > 0 else 1
-		var progress = randi_range(1, max_build )
+		if clicked_furniture:
+			max_build += 5
+		var progress = randi_range(1, max_build)
 		clicked_widget.build(progress)
 		if clicked_widget.progress == 100 && current_quest_progress <= 50:
 			current_quest_progress = 50
 			$HUD.update_quest_progress(current_quest_progress)
-		drive_points -= 1
+		if drive_points > 0:
+			drive_points -= 1
 		$HUD.update_drive_points(drive_points)
 
 	if $WidgetContainer.is_buildable_position(position):
