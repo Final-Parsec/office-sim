@@ -73,7 +73,7 @@ func act(current_time: int) -> void:
 				
 				# Prefer workbench
 				for furniture in $"../../FurnitureContainer".get_children():
-					if work_area.distance_to(furniture.global_position) < 100:
+					if work_area.distance_to(furniture.global_position) < 100 && $"../../WidgetContainer".is_buildable_position(furniture.global_position):
 						work_area = furniture.global_position + Vector2(-50, 0)
 				
 				var world_space = get_world_2d().direct_space_state
