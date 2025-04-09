@@ -233,7 +233,11 @@ func _on_player_coffee_vending_machine_placement_requested(position: Vector2) ->
 
 
 func _on_player_carry_action_requested(position: Vector2, actor_position: Vector2) -> void:
-	if $Player.carrying_package && position.distance_to(actor_position) < 100:
+	const CARRY_ACTION_RANGE = 100
+	if position.distance_to(actor_position) > CARRY_ACTION_RANGE:
+		return
+	
+	if $Player.carrying_package:
 		$PackageContainer.create_package(position)
 		if current_quest_progress < 100:
 			var dropped_on_shipping_area = false
@@ -248,8 +252,18 @@ func _on_player_carry_action_requested(position: Vector2, actor_position: Vector
 				DamageNumbers.money_number(100)
 				$HUD.update_quest_progress(current_quest_progress)
 		$Player.carrying_package = false
+	elif $Player.carrying_furniture:
+		$FurnitureContainer.create_furniture(position)
+		$Player.carrying_furniture = false
 	else:
+		var furniture = $FurnitureContainer.get_furniture_at_position(position)
+		if furniture != null:
+			$Player.carrying_furniture = true
+			furniture.queue_free()
+			return
+		
 		var package = $PackageContainer.get_package_at_position(position)
-		if package != null && position.distance_to(actor_position) < 100:
+		if package != null:
 			$Player.carrying_package = true
 			package.queue_free()
+			return

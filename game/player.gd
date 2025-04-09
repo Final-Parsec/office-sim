@@ -15,6 +15,7 @@ var prevent_player_movement = false
 var carrying_package = false
 var in_coffee_zone = false
 var is_navigation_obstacle := true
+var carrying_furniture := false
 
 func _ready() -> void:
 	hide()
