@@ -126,6 +126,8 @@ func _ready() -> void:
 	$TopBarBackground.visible = false
 	visible = true
 	$Quest.visible = false
+	$HRPanel/TabContainer/Employees/Employee.visible = false
+	$HRPanel/TabContainer/Employees/EmployeeCarry.visible = false
 
 func update_drive_points(drive_points) -> void:
 	$DriveProgressBar.visible = true

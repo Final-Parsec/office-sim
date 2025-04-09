@@ -272,3 +272,4 @@ func _on_player_carry_action_requested(position: Vector2, actor_position: Vector
 func _on_hud_employee_work_area_assigned(assigned_employee: Enums.Employees) -> void:
 	var employee = employee_instances[assigned_employee]
 	employee.assign_work_area($Player.global_position)
+	$HUD.show_message("Assigned to player's current position.")
