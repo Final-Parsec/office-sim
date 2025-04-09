@@ -8,6 +8,7 @@ signal employee_run_payroll_pressed(employee: Enums.Employees)
 signal accelerate_time_pressed(irl_seconds_per_5_min: float)
 signal overlaying_panel_visibility_changed(overlaying_panel_visible: bool)
 signal player_rest_requested
+signal employee_work_area_assigned(employee: Enums.Employees)
 
 enum AccelerateTimeOptions {
 	DEFAULT = 0,
@@ -181,3 +182,11 @@ func _on_fire_carry_button_pressed() -> void:
 
 func update_quest_progress(current_quest_progress: float) -> void:
 	$Quest.update_quest_progress(current_quest_progress)
+
+
+func _on_assign_colm_work_area_pressed() -> void:
+	employee_work_area_assigned.emit(Enums.Employees.COLM)
+
+
+func _on_assign_carry_work_area_pressed() -> void:
+	employee_work_area_assigned.emit(Enums.Employees.CARRY)

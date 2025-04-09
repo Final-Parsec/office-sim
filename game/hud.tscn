@@ -336,7 +336,6 @@ layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="Employee" type="HBoxContainer" parent="HRPanel/TabContainer/Employees"]
-visible = false
 layout_mode = 0
 offset_right = 449.0
 offset_bottom = 224.0
@@ -369,12 +368,15 @@ text = "Run Payroll ($0)"
 layout_mode = 2
 text = "Fire"
 
+[node name="AssignColmWorkArea" type="Button" parent="HRPanel/TabContainer/Employees/Employee/VBoxContainer"]
+layout_mode = 2
+text = "Assign Work Area"
+
 [node name="EmployeeCarry" type="HBoxContainer" parent="HRPanel/TabContainer/Employees"]
-visible = false
 layout_mode = 0
-offset_top = 158.0
+offset_top = 190.0
 offset_right = 449.0
-offset_bottom = 382.0
+offset_bottom = 414.0
 
 [node name="TextureRect" type="TextureRect" parent="HRPanel/TabContainer/Employees/EmployeeCarry"]
 layout_mode = 2
@@ -404,6 +406,10 @@ text = "Run Payroll ($0)"
 [node name="FireCarryButton" type="Button" parent="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer"]
 layout_mode = 2
 text = "Fire"
+
+[node name="AssignCarryWorkArea" type="Button" parent="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer"]
+layout_mode = 2
+text = "Assign Work Area"
 
 [node name="AccelerateTimeButton" type="Button" parent="."]
 anchors_preset = 1
@@ -563,8 +569,10 @@ autowrap_mode = 3
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/RecruitCarry" to="." method="_on_recruit_carry_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/RunPayrollButton" to="." method="_on_run_payroll_button_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/FireButton" to="." method="_on_fire_button_pressed"]
+[connection signal="pressed" from="HRPanel/TabContainer/Employees/Employee/VBoxContainer/AssignColmWorkArea" to="." method="_on_assign_colm_work_area_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer/RunPayrollCarryButton" to="." method="_on_run_payroll_carry_button_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer/FireCarryButton" to="." method="_on_fire_carry_button_pressed"]
+[connection signal="pressed" from="HRPanel/TabContainer/Employees/EmployeeCarry/VBoxContainer/AssignCarryWorkArea" to="." method="_on_assign_carry_work_area_pressed"]
 [connection signal="pressed" from="AccelerateTimeButton" to="." method="_on_accelerate_time_pressed"]
 [connection signal="visibility_changed" from="CommutePanel" to="." method="_on_commute_panel_visibility_changed"]
 [connection signal="pressed" from="CommutePanel/RestButton" to="." method="_on_rest_button_pressed"]

@@ -294,6 +294,7 @@ position = Vector2(928, 432)
 [connection signal="employee_fired" from="HUD" to="." method="_on_hud_employee_fired"]
 [connection signal="employee_recruited" from="HUD" to="." method="_on_hud_employee_recruited"]
 [connection signal="employee_run_payroll_pressed" from="HUD" to="." method="_on_hud_employee_run_payroll_pressed"]
+[connection signal="employee_work_area_assigned" from="HUD" to="." method="_on_hud_employee_work_area_assigned"]
 [connection signal="overlaying_panel_visibility_changed" from="HUD" to="." method="_on_hud_overlaying_panel_visibility_changed"]
 [connection signal="player_rest_requested" from="HUD" to="." method="_on_hud_player_rest_requested"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]

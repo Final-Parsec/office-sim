@@ -26,6 +26,8 @@ var stuck_threshold_time := 1.0 # seconds
 var movement_threshold := 5.0 # pixels
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
+@onready var default_work_area: Marker2D =  $"../../EmployeeWorkArea"
+@onready var preferred_work_area: Marker2D = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -59,7 +61,7 @@ func act(current_time: int) -> void:
 				return
 
 		# Try to get to specified work area.
-		var work_area = $"../../EmployeeWorkArea".global_position
+		var work_area = get_current_work_area()
 		#print(str(identity) + ': distance to work area ' + str(global_position.distance_to(work_area)))
 		if global_position.distance_to(work_area) > 100 || building_failed_in_current_work_area:
 			if walking_to_work_area:
@@ -223,3 +225,17 @@ func set_shipping_drop_destination() -> void:
 	shipping_drop = shipping_drop + Vector2(cos(angle), sin(angle)) * distance
 	if global_position.distance_to(shipping_drop) > 50:
 		$NavigationAgent2D.target_position = shipping_drop
+
+func assign_work_area(desired_position: Vector2) -> void:
+	if preferred_work_area != null:
+		preferred_work_area.queue_free()
+	
+	var new_work_area = Marker2D.new()
+	new_work_area.global_position = desired_position
+	preferred_work_area = new_work_area
+	
+func get_current_work_area() -> Vector2:
+	if preferred_work_area != null:
+		return preferred_work_area.global_position
+	else:
+		return default_work_area.global_position
