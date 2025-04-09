@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://g5esyvn2vduv"]
+[gd_scene load_steps=45 format=4 uid="uid://g5esyvn2vduv"]
 
 [ext_resource type="PackedScene" uid="uid://bhcswl07nrnps" path="res://player.tscn" id="1_7mjmw"]
 [ext_resource type="Script" path="res://main.gd" id="1_jxwdf"]
@@ -36,6 +36,7 @@
 [ext_resource type="Texture2D" uid="uid://cviibp1qgnlj4" path="res://art/cardboard_box_open.png" id="23_3ppwd"]
 [ext_resource type="Texture2D" uid="uid://dspdsb240woc2" path="res://art/coffee_vending_machine_create2.png" id="23_cx7vv"]
 [ext_resource type="Texture2D" uid="uid://dmpnryg8djlpi" path="res://art/coffee_vending_machine_invalid1.png" id="24_7eaxf"]
+[ext_resource type="Texture2D" uid="uid://cq7fvpmmm5l8v" path="res://art/carry_furniture.png" id="25_rcd78"]
 [ext_resource type="Texture2D" uid="uid://dssc7md0oscw5" path="res://art/coffee_vending_machine_invalid2.png" id="25_vhv1d"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_bf4m7"]
@@ -100,6 +101,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"carry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("25_rcd78")
+}],
+"loop": true,
+"name": &"carry_furniture",
 "speed": 5.0
 }, {
 "frames": [{
@@ -262,7 +271,7 @@ sprite_frames = SubResource("SpriteFrames_i8n55")
 [node name="CursorIndicator" type="AnimatedSprite2D" parent="."]
 z_index = 2
 sprite_frames = SubResource("SpriteFrames_hsts8")
-animation = &"coffee_vending_machine_invalid"
+animation = &"carry_furniture"
 script = ExtResource("11_j04ey")
 
 [node name="EmployeeWorkArea" type="Marker2D" parent="."]

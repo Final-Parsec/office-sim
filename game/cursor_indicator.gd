@@ -57,8 +57,11 @@ func _process(_delta: float) -> void:
 		visible = global_position.distance_to($"../Player".position) <= 100
 		
 		scale = Vector2(.5, .5)
-		if $"../Player".carrying_package:
+		var player = $"../Player"
+		if player.carrying_package:
 			animation = "carry_package"
+		elif player.carrying_furniture:
+			animation = "carry_furniture"
 		else:
 			var package = $"../PackageContainer".get_package_at_position(global_position)
 			if package != null:
