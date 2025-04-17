@@ -152,8 +152,11 @@ func _on_commute_panel_visibility_changed() -> void:
 
 
 func _on_rest_button_pressed() -> void:
+	var rest_overlay = $RestOverlay
+	await rest_overlay.fade_to_black()
 	player_rest_requested.emit()
-
+	$CommutePanel.visible = false
+	await rest_overlay.fade_to_trans()
 
 func _on_carry_button_pressed() -> void:
 	set_selected_action(Enums.Actions.CARRY)
