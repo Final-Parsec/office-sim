@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=44 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://bhndpva7hvglu" path="res://art/carry_moore1.png" id="18_brpx8"]
 [ext_resource type="Texture2D" uid="uid://dqlvc1tmxi238" path="res://art/widget1.png" id="19_6gm1h"]
 [ext_resource type="Script" path="res://quest.gd" id="19_unre7"]
+[ext_resource type="Texture2D" uid="uid://bgirpa2wrp2i8" path="res://art/main_character_rest.png" id="21_a2i2j"]
+[ext_resource type="Script" path="res://rest_overlay.gd" id="21_nxrtu"]
 
 [sub_resource type="Shortcut" id="Shortcut_wpxgg"]
 
@@ -554,6 +556,16 @@ Sim"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="RestOverlay" type="TextureRect" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+offset_right = 1152.0
+offset_bottom = 656.0
+texture = ExtResource("21_a2i2j")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("21_nxrtu")
 
 [connection signal="action_bar_button_pressed" from="." to="HRPanel" method="_on_hud_action_bar_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
