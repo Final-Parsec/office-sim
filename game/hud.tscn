@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bw6td1ka2uv5c"]
+[gd_scene load_steps=47 format=3 uid="uid://bw6td1ka2uv5c"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_0jbru"]
 [ext_resource type="FontFile" uid="uid://cw8737f1dq6n3" path="res://fonts/Xolonium-Regular.ttf" id="1_3xhbu"]
@@ -32,8 +32,12 @@ device = -1
 keycode = 49
 unicode = 49
 
+[sub_resource type="InputEventKey" id="InputEventKey_12un0"]
+device = -1
+keycode = 4194305
+
 [sub_resource type="Shortcut" id="Shortcut_ycck1"]
-events = [SubResource("InputEventKey_kxbst")]
+events = [SubResource("InputEventKey_kxbst"), SubResource("InputEventKey_12un0")]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_cdplk"]
 
@@ -106,6 +110,13 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="InputEventKey" id="InputEventKey_lcowi"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_jr6ym"]
+events = [SubResource("InputEventKey_lcowi")]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0jbru")
@@ -242,6 +253,97 @@ button_group = SubResource("ButtonGroup_23gl6")
 shortcut = SubResource("Shortcut_b83ib")
 default_texture = ExtResource("14_3ea8n")
 active_texture = ExtResource("15_2srnn")
+
+[node name="Quest" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -256.0
+offset_top = 42.0
+offset_bottom = 98.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+script = ExtResource("19_unre7")
+metadata/_edit_use_anchors_ = true
+
+[node name="Header" type="Control" parent="Quest"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="QuestSmallBG" type="ColorRect" parent="Quest/Header"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 56.0
+color = Color(0.392157, 0.584314, 0.929412, 0.733333)
+
+[node name="TextureRect" type="TextureRect" parent="Quest/Header"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = 51.0
+offset_bottom = 52.0
+texture = ExtResource("19_6gm1h")
+expand_mode = 5
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Quest/Header"]
+layout_mode = 0
+offset_left = 56.0
+offset_right = 200.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("1_3xhbu")
+theme_override_font_sizes/font_size = 14
+text = "Build a Widget"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="Quest/Header"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 28.0
+offset_right = 200.0
+offset_bottom = 56.0
+
+[node name="CheckButton" type="CheckButton" parent="Quest/Header"]
+layout_mode = 0
+offset_left = 207.0
+offset_right = 251.0
+offset_bottom = 56.0
+
+[node name="WiggleTimer" type="Timer" parent="Quest/Header"]
+wait_time = 10.0
+autostart = true
+
+[node name="Collapsible" type="Control" parent="Quest"]
+visible = false
+anchors_preset = 0
+offset_top = 56.0
+offset_right = 256.0
+offset_bottom = 547.0
+
+[node name="QuestBigBG" type="ColorRect" parent="Quest/Collapsible"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 491.0
+color = Color(0.392157, 0.584314, 0.929412, 0.733333)
+
+[node name="Label" type="Label" parent="Quest/Collapsible"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 22.0
+offset_right = 248.0
+offset_bottom = 262.0
+text = "* Create a widget
+* Build it to 100%
+* Package the widget
+* Carry it to the shiping area
+
+Reward:
+$100"
+autowrap_mode = 3
 
 [node name="HRPanel" type="Panel" parent="."]
 offset_top = 41.0
@@ -444,98 +546,8 @@ offset_right = -8.0
 offset_bottom = 36.0
 grow_horizontal = 0
 focus_mode = 0
+shortcut = SubResource("Shortcut_jr6ym")
 text = "X"
-
-[node name="Quest" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -256.0
-offset_top = 42.0
-offset_bottom = 98.0
-grow_horizontal = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-script = ExtResource("19_unre7")
-metadata/_edit_use_anchors_ = true
-
-[node name="Header" type="Control" parent="Quest"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="QuestSmallBG" type="ColorRect" parent="Quest/Header"]
-layout_mode = 0
-offset_right = 256.0
-offset_bottom = 56.0
-color = Color(0.392157, 0.584314, 0.929412, 0.733333)
-
-[node name="TextureRect" type="TextureRect" parent="Quest/Header"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 6.0
-offset_right = 51.0
-offset_bottom = 52.0
-texture = ExtResource("19_6gm1h")
-expand_mode = 5
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="Quest/Header"]
-layout_mode = 0
-offset_left = 56.0
-offset_right = 200.0
-offset_bottom = 28.0
-theme_override_fonts/font = ExtResource("1_3xhbu")
-theme_override_font_sizes/font_size = 14
-text = "Build a Widget"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ProgressBar" type="ProgressBar" parent="Quest/Header"]
-layout_mode = 0
-offset_left = 56.0
-offset_top = 28.0
-offset_right = 200.0
-offset_bottom = 56.0
-
-[node name="CheckButton" type="CheckButton" parent="Quest/Header"]
-layout_mode = 0
-offset_left = 207.0
-offset_right = 251.0
-offset_bottom = 56.0
-
-[node name="WiggleTimer" type="Timer" parent="Quest/Header"]
-wait_time = 10.0
-autostart = true
-
-[node name="Collapsible" type="Control" parent="Quest"]
-visible = false
-anchors_preset = 0
-offset_top = 56.0
-offset_right = 256.0
-offset_bottom = 547.0
-
-[node name="QuestBigBG" type="ColorRect" parent="Quest/Collapsible"]
-layout_mode = 0
-offset_right = 256.0
-offset_bottom = 491.0
-color = Color(0.392157, 0.584314, 0.929412, 0.733333)
-
-[node name="Label" type="Label" parent="Quest/Collapsible"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 22.0
-offset_right = 248.0
-offset_bottom = 262.0
-text = "* Create a widget
-* Build it to 100%
-* Package the widget
-* Carry it to the shiping area
-
-Reward:
-$100"
-autowrap_mode = 3
 
 [node name="Message" type="Label" parent="."]
 anchors_preset = 8
@@ -576,6 +588,8 @@ script = ExtResource("21_nxrtu")
 [connection signal="pressed" from="ActionBar/HRButton" to="." method="_on_hr_button_pressed"]
 [connection signal="pressed" from="ActionBar/CarryButton" to="." method="_on_carry_button_pressed"]
 [connection signal="pressed" from="ActionBar/CoffeeVendingMachineButton" to="." method="_on_coffee_vending_machine_button_pressed"]
+[connection signal="toggled" from="Quest/Header/CheckButton" to="Quest" method="_on_check_button_toggled"]
+[connection signal="timeout" from="Quest/Header/WiggleTimer" to="Quest" method="_on_wiggle_timer_timeout"]
 [connection signal="visibility_changed" from="HRPanel" to="." method="_on_hr_panel_visibility_changed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/Recruit" to="." method="_on_recruit_pressed"]
 [connection signal="pressed" from="HRPanel/TabContainer/Recruiting/RecruitCarry" to="." method="_on_recruit_carry_pressed"]
@@ -589,5 +603,3 @@ script = ExtResource("21_nxrtu")
 [connection signal="visibility_changed" from="CommutePanel" to="." method="_on_commute_panel_visibility_changed"]
 [connection signal="pressed" from="CommutePanel/RestButton" to="." method="_on_rest_button_pressed"]
 [connection signal="pressed" from="CommutePanel/CloseCommutePanelButton" to="." method="_on_close_commute_panel_button_pressed"]
-[connection signal="toggled" from="Quest/Header/CheckButton" to="Quest" method="_on_check_button_toggled"]
-[connection signal="timeout" from="Quest/Header/WiggleTimer" to="Quest" method="_on_wiggle_timer_timeout"]
